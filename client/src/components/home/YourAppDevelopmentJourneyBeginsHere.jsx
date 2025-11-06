@@ -110,12 +110,7 @@ function YourAppDevelopmentJourneyBeginsHere() {
                             {/* Button */}
                             <button className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer">
                                 
-                                <ShinyText
-                                    text={service.buttonText}
-                                    disabled={false}
-                                    speed={3}
-                                    className='custom-class'
-                                />
+                                {service.buttonText}
                             </button>
                         </div>
                     ))}

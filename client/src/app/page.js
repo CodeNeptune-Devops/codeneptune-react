@@ -1,4 +1,5 @@
 import BuildIntelligentValue from "@/components/home/BuildIntelligentValue";
+import FeaturedCaseStudy from "@/components/home/FeaturedCaseStudy";
 import Hero from "@/components/home/Hero";
 import HowWeBuildIntelligentSolutions from "@/components/home/HowWeBuildIntelligentSolutions";
 import OurImpactInNumbers from "@/components/home/OurImpactInNumbers";
@@ -19,6 +20,7 @@ export default function Home() {
     <HowWeBuildIntelligentSolutions />
     <YourAppDevelopmentJourneyBeginsHere />
     <ROIOfIntelligence />
+    <FeaturedCaseStudy />
    </div>
   );
 }
