@@ -91,7 +91,7 @@ function ROIOfIntelligence() {
       }} />
 
       <div className='w-full pt-16'>
-        <div className='w-full py-8  bg-gray-900 '>
+        <div className='w-full py-8  bg-slate-950 '>
           <div className='max-w-7xl mx-auto w-full px-6 py-12'>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 mb-10">

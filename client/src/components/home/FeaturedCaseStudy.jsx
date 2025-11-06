@@ -18,10 +18,10 @@ function FeaturedCaseStudy() {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
       const scrollY = window.scrollY;
-      
+
       const scrollStart = sectionTop - window.innerHeight / 4;
       const scrollEnd = sectionTop + sectionHeight - window.innerHeight;
-      
+
       if (scrollY >= scrollStart && scrollY <= scrollEnd) {
         const progress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
         setScrollProgress(Math.max(0, Math.min(1, progress)));
@@ -34,7 +34,7 @@ function FeaturedCaseStudy() {
 
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -113,27 +113,28 @@ function FeaturedCaseStudy() {
 
   return (
     <div className="w-full bg-slate-950 pt-16">
-      <div 
+      <div
         ref={sectionRef}
         className="relative"
         style={{ height: `${300 + caseStudies.length * 100}vh` }}
       >
 
-       <div className='max-w-7xl mx-auto w-full'>
-         <SectionTitle textColor='text-white'/>
 
-       </div>
         <div className="sticky top-0 h-screen overflow-hidden">
-          <div className="max-w-7xl mx-auto w-full h-full flex items-end pb-6  ">
-            
-           
+
+          <div className='max-w-7xl mx-auto w-full '>
+            <SectionTitle textColor='text-white' />
+
+          </div>
+          <div className="max-w-7xl mx-auto w-full h-full flex items-start pb-6  ">
+
 
             {/* Horizontal scrolling cards - Centered */}
             <div className="w-full max-w-7xl overflow-hidden h-[80%]">
-              <div 
+              <div
                 ref={cardsRef}
                 className="flex gap-6 transition-transform duration-100 ease-out h-full"
-                style={{ 
+                style={{
                   transform: `translateX(-${horizontalOffset}%)`,
                 }}
               >
@@ -142,7 +143,7 @@ function FeaturedCaseStudy() {
                     key={index}
                     className="flex-shrink-0 w-full h-full"
                   >
-                    <div 
+                    <div
                       className="relative h-full rounded-2xl overflow-hidden bg-cover bg-center"
                       style={{
                         backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%), url(${study.bgImage})`
@@ -155,7 +156,7 @@ function FeaturedCaseStudy() {
                           <div>
                             <h3 className="text-3xl font-bold text-white mb-2">{study.title}</h3>
                             <p className="text-emerald-300 text-lg mb-4">{study.subtitle}</p>
-                            
+
                             <p className="text-white/90 text-sm mb-6 leading-relaxed">
                               {study.description}
                             </p>
@@ -163,7 +164,7 @@ function FeaturedCaseStudy() {
                             {/* Tech stack */}
                             <div className="flex flex-wrap gap-2 mb-6">
                               {study.tech.map((tech, i) => (
-                                <span 
+                                <span
                                   key={i}
                                   className="px-3 py-1.5 rounded-full border border-white/30 text-white text-xs font-medium backdrop-blur-sm bg-white/5"
                                 >
@@ -192,7 +193,7 @@ function FeaturedCaseStudy() {
                           {/* Features */}
                           <div className="space-y-2">
                             {study.features.map((feature, i) => (
-                              <div 
+                              <div
                                 key={i}
                                 className="px-4 py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
                               >
@@ -209,17 +210,17 @@ function FeaturedCaseStudy() {
                             <div className="relative w-64 h-[500px] bg-slate-900 rounded-[3rem] p-3 shadow-2xl border-8 border-slate-800">
                               {/* Notch */}
                               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-b-3xl z-10"></div>
-                              
+
                               {/* Screen */}
                               <div className="w-full h-full rounded-[2.5rem] overflow-hidden bg-white">
-                                <img 
-                                  src={study.phoneScreen} 
+                                <img
+                                  src={study.phoneScreen}
                                   alt={`${study.title} app`}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
                             </div>
-                            
+
                             {/* Glow effect */}
                             <div className="absolute inset-0 bg-emerald-400/20 blur-3xl -z-10 scale-90"></div>
                           </div>
@@ -234,7 +235,7 @@ function FeaturedCaseStudy() {
         </div>
       </div>
 
-     
+
     </div>
   );
 }
