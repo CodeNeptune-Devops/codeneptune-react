@@ -4,6 +4,7 @@ import img2 from '../../assets/home/dev-journey-2.webp'
 import img3 from '../../assets/home/dev-journey-3.webp'
 import Image from 'next/image';
 import SectionTitle from '../titles/SectionTitle';
+import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
 
 function YourAppDevelopmentJourneyBeginsHere() {
     const services = [
@@ -62,30 +63,30 @@ function YourAppDevelopmentJourneyBeginsHere() {
 '
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
                     {services.map((service) => (
                         <div
                             key={service.id}
-                            className="bg-white rounded-3xl border border-gray-200 p-8 pt-6 flex flex-col hover:shadow-md transition-shadow duration-300 relative overflow-visible"
+                            className="bg-white rounded-3xl border border-gray-200 p-8 pt-6 flex flex-col transition-all duration-300 relative overflow-visible cursor-pointer hover:shadow-sm"
                         >
                             {/* Image - Absolute positioned */}
-                            <div className="absolute top-0 right-3 w-28 h-auto md:w-24 ">
+                            <div className="absolute top-0 right-3 w-28 h-auto md:w-24">
                                 <Image
                                     src={service.imageUrl}
                                     alt={service.title}
                                     height={100}
                                     width={100}
-                                    className="w-full h-full object-cover "
+                                    className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* Title */}
-                            <h3 className="text-blue-600 text-md  font-semibold mb-2 pr-20">
+                            <h3 className="text-blue-600 text-md font-semibold mb-2 pr-20">
                                 {service.title}
                             </h3>
 
                             {/* Subtitle */}
-                            <h4 className="text-gray-900 text-xl  font-bold mb-4 pr-32">
+                            <h4 className="text-gray-900 text-xl font-bold mb-4 pr-32">
                                 {service.subtitle}
                             </h4>
 
@@ -108,11 +109,18 @@ function YourAppDevelopmentJourneyBeginsHere() {
 
                             {/* Button */}
                             <button className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer">
-                                {service.buttonText}
+                                
+                                <ShinyText
+                                    text={service.buttonText}
+                                    disabled={false}
+                                    speed={3}
+                                    className='custom-class'
+                                />
                             </button>
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     );

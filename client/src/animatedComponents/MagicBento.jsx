@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+import SectionTitle from '@/components/titles/SectionTitle';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
@@ -11,39 +12,21 @@ const MOBILE_BREAKPOINT = 768;
 const cardData = [
   {
     color: '#060010',
-    title: 'Analytics',
-    description: 'We believe innovation begins with purpose. Every product we build is designed to create impact, solve challenges, and drive measurable growth.',
-    label: 'Innovating with Purpose'
-  },
-  {
-    color: '#060010',
-    title: 'Dashboard',
-    description: 'Centralized data view',
-    label: 'Overview'
-  },
-  {
-    color: '#060010',
     title: 'Collaboration',
-    description: 'Work together seamlessly',
-    label: 'Teamwork'
-  },
-  {
-    color: '#060010',
-    title: 'Automation',
-    description: 'Streamline workflows',
+    description: 'Automate complex workflows and reduce manual efforts. Our AI Agents streamline operations and help businesses cut costs by up to 30 percent.',
     label: 'Efficiency'
   },
   {
     color: '#060010',
     title: 'Integration',
-    description: 'Connect favorite tools',
-    label: 'Connectivity'
+    description: 'Enhance engagement and retention with personalized experiences. Machine learning models boost customer lifetime value through data-driven decisions.',
+    label: 'Growth'
   },
   {
     color: '#060010',
     title: 'Security',
-    description: 'Enterprise-grade protection',
-    label: 'Protection'
+    description: 'Accelerate product development with Generative AI and adaptive automation that shortens R&D cycles and delivers faster time to market.',
+    label: 'Innovation'
   }
 ];
 
@@ -525,22 +508,25 @@ const MagicBento = ({
           
           @media (min-width: 1024px) {
             .card-responsive {
-              grid-template-columns: repeat(4, 1fr);
+              grid-template-columns: repeat(2, 1fr);
             }
             
-            .card-responsive .card:nth-child(3) {
+            .card-responsive .card:nth-child(1) {
               grid-column: span 2;
-              grid-row: span 2;
+            }
+          }
+          
+          @media (max-width: 599px) {
+            .card-responsive {
+              grid-template-columns: 1fr;
+              width: 90%;
+              margin: 0 auto;
+              padding: 0.5rem;
             }
             
-            .card-responsive .card:nth-child(4) {
-              grid-column: 1 / span 2;
-              grid-row: 2 / span 2;
-            }
-            
-            .card-responsive .card:nth-child(6) {
-              grid-column: 4;
-              grid-row: 3;
+            .card-responsive .card {
+              width: 100%;
+              min-height: 180px;
             }
           }
           
@@ -604,20 +590,6 @@ const MagicBento = ({
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          
-          @media (max-width: 599px) {
-            .card-responsive {
-              grid-template-columns: 1fr;
-              width: 90%;
-              margin: 0 auto;
-              padding: 0.5rem;
-            }
-            
-            .card-responsive .card {
-              width: 100%;
-              min-height: 180px;
-            }
-          }
         `}
       </style>
 
@@ -632,181 +604,202 @@ const MagicBento = ({
       )}
 
       <BentoCardGrid gridRef={gridRef}>
-        <div className="card-responsive p-5 w-full grid gap-2">
-          {cardData.map((card, index) => {
-            const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
-              enableBorderGlow ? 'card--border-glow' : ''
-            }`;
+        <div className="flex flex-col lg:flex-row gap-8 w-full px-4">
+          {/* Left Side - Headings */}
+          <div className="lg:flex-1 flex flex-col justify-center space-y-6">
+            <div>
+              <h3 className="text-5xl font-bold text-white mb-2">ROI of Intelligence</h3>
+              {/* <p className="text-lg text-gray-300 leading-relaxed">
+                We believe innovation begins with purpose. Every product we build is designed to create impact, solve challenges, and drive measurable growth.
+              </p> */}
+            </div>
+            <div className='w-md'>
+              <SectionTitle
+                title='The Smarter You Build, the Faster You Grow'
+                description='Discover how intelligent automation and AI Agents deliver measurable results across industries. Every solution we create combines innovation and strategy to unlock efficiency, accelerate growth, and reduce operational costs.'
+                textColor='text-white'
+                align='text-start'
+              />
+            </div>
+          </div>
 
-            const cardStyle = {
-              backgroundColor: card.color || 'var(--background-dark)',
-              borderColor: 'var(--border-color)',
-              color: 'var(--white)',
-              '--glow-x': '50%',
-              '--glow-y': '50%',
-              '--glow-intensity': '0',
-              '--glow-radius': '200px'
-            };
+          {/* Right Side - Grid */}
+          <div className="lg:flex-1 card-responsive p-5 w-full grid gap-2">
+            {cardData.map((card, index) => {
+              const baseClassName = `card flex flex-col justify-between relative aspect-[16/9] min-h-[180px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''
+                }`;
 
-            if (enableStars) {
+              const cardStyle = {
+                backgroundColor: card.color || 'var(--background-dark)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--white)',
+                '--glow-x': '50%',
+                '--glow-y': '50%',
+                '--glow-intensity': '0',
+                '--glow-radius': '200px'
+              };
+
+              if (enableStars) {
+                return (
+                  <ParticleCard
+                    key={index}
+                    className={baseClassName}
+                    style={cardStyle}
+                    disableAnimations={shouldDisableAnimations}
+                    particleCount={particleCount}
+                    glowColor={glowColor}
+                    enableTilt={enableTilt}
+                    clickEffect={clickEffect}
+                    enableMagnetism={enableMagnetism}
+                  >
+                    <div className="card__header flex justify-between gap-3 relative text-white">
+                      <span className="card__label text-lg">{card.label}</span>
+                    </div>
+                    {/* <div className='flex-1 bg-red-500'>ffs</div> */}
+                    <div className="card__content flex flex-col relative text-white">
+                      <p
+                        className={`card__description text-[15px] leading-5 opacity-90 ${textAutoHide ? 'text-clamp-3' : ''}`}
+                      >
+                        {card.description}
+                      </p>
+                    </div>
+                  </ParticleCard>
+                );
+              }
+
               return (
-                <ParticleCard
+                <div
                   key={index}
                   className={baseClassName}
                   style={cardStyle}
-                  disableAnimations={shouldDisableAnimations}
-                  particleCount={particleCount}
-                  glowColor={glowColor}
-                  enableTilt={enableTilt}
-                  clickEffect={clickEffect}
-                  enableMagnetism={enableMagnetism}
+                  ref={el => {
+                    if (!el) return;
+
+                    const handleMouseMove = e => {
+                      if (shouldDisableAnimations) return;
+
+                      const rect = el.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+                      const centerX = rect.width / 2;
+                      const centerY = rect.height / 2;
+
+                      if (enableTilt) {
+                        const rotateX = ((y - centerY) / centerY) * -10;
+                        const rotateY = ((x - centerX) / centerX) * 10;
+
+                        gsap.to(el, {
+                          rotateX,
+                          rotateY,
+                          duration: 0.1,
+                          ease: 'power2.out',
+                          transformPerspective: 1000
+                        });
+                      }
+
+                      if (enableMagnetism) {
+                        const magnetX = (x - centerX) * 0.05;
+                        const magnetY = (y - centerY) * 0.05;
+
+                        gsap.to(el, {
+                          x: magnetX,
+                          y: magnetY,
+                          duration: 0.3,
+                          ease: 'power2.out'
+                        });
+                      }
+                    };
+
+                    const handleMouseLeave = () => {
+                      if (shouldDisableAnimations) return;
+
+                      if (enableTilt) {
+                        gsap.to(el, {
+                          rotateX: 0,
+                          rotateY: 0,
+                          duration: 0.3,
+                          ease: 'power2.out'
+                        });
+                      }
+
+                      if (enableMagnetism) {
+                        gsap.to(el, {
+                          x: 0,
+                          y: 0,
+                          duration: 0.3,
+                          ease: 'power2.out'
+                        });
+                      }
+                    };
+
+                    const handleClick = e => {
+                      if (!clickEffect || shouldDisableAnimations) return;
+
+                      const rect = el.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+
+                      const maxDistance = Math.max(
+                        Math.hypot(x, y),
+                        Math.hypot(x - rect.width, y),
+                        Math.hypot(x, y - rect.height),
+                        Math.hypot(x - rect.width, y - rect.height)
+                      );
+
+                      const ripple = document.createElement('div');
+                      ripple.style.cssText = `
+                        position: absolute;
+                        width: ${maxDistance * 2}px;
+                        height: ${maxDistance * 2}px;
+                        border-radius: 50%;
+                        background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
+                        left: ${x - maxDistance}px;
+                        top: ${y - maxDistance}px;
+                        pointer-events: none;
+                        z-index: 1000;
+                      `;
+
+                      el.appendChild(ripple);
+
+                      gsap.fromTo(
+                        ripple,
+                        {
+                          scale: 0,
+                          opacity: 1
+                        },
+                        {
+                          scale: 1,
+                          opacity: 0,
+                          duration: 0.8,
+                          ease: 'power2.out',
+                          onComplete: () => ripple.remove()
+                        }
+                      );
+                    };
+
+                    el.addEventListener('mousemove', handleMouseMove);
+                    el.addEventListener('mouseleave', handleMouseLeave);
+                    el.addEventListener('click', handleClick);
+                  }}
                 >
                   <div className="card__header flex justify-between gap-3 relative text-white">
                     <span className="card__label text-base">{card.label}</span>
                   </div>
                   <div className="card__content flex flex-col relative text-white">
-                    {/* <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
+                    <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
                       {card.title}
-                    </h3> */}
+                    </h3>
                     <p
-                      className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}
+                      className={`card__description text-lg leading-6 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}
+                      style={{ fontSize: '2rem', lineHeight: '1.75rem' }}
                     >
                       {card.description}
                     </p>
                   </div>
-                </ParticleCard>
+                </div>
               );
-            }
-
-            return (
-              <div
-                key={index}
-                className={baseClassName}
-                style={cardStyle}
-                ref={el => {
-                  if (!el) return;
-
-                  const handleMouseMove = e => {
-                    if (shouldDisableAnimations) return;
-
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-
-                    if (enableTilt) {
-                      const rotateX = ((y - centerY) / centerY) * -10;
-                      const rotateY = ((x - centerX) / centerX) * 10;
-
-                      gsap.to(el, {
-                        rotateX,
-                        rotateY,
-                        duration: 0.1,
-                        ease: 'power2.out',
-                        transformPerspective: 1000
-                      });
-                    }
-
-                    if (enableMagnetism) {
-                      const magnetX = (x - centerX) * 0.05;
-                      const magnetY = (y - centerY) * 0.05;
-
-                      gsap.to(el, {
-                        x: magnetX,
-                        y: magnetY,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                      });
-                    }
-                  };
-
-                  const handleMouseLeave = () => {
-                    if (shouldDisableAnimations) return;
-
-                    if (enableTilt) {
-                      gsap.to(el, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                      });
-                    }
-
-                    if (enableMagnetism) {
-                      gsap.to(el, {
-                        x: 0,
-                        y: 0,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                      });
-                    }
-                  };
-
-                  const handleClick = e => {
-                    if (!clickEffect || shouldDisableAnimations) return;
-
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const maxDistance = Math.max(
-                      Math.hypot(x, y),
-                      Math.hypot(x - rect.width, y),
-                      Math.hypot(x, y - rect.height),
-                      Math.hypot(x - rect.width, y - rect.height)
-                    );
-
-                    const ripple = document.createElement('div');
-                    ripple.style.cssText = `
-                      position: absolute;
-                      width: ${maxDistance * 2}px;
-                      height: ${maxDistance * 2}px;
-                      border-radius: 50%;
-                      background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
-                      left: ${x - maxDistance}px;
-                      top: ${y - maxDistance}px;
-                      pointer-events: none;
-                      z-index: 1000;
-                    `;
-
-                    el.appendChild(ripple);
-
-                    gsap.fromTo(
-                      ripple,
-                      {
-                        scale: 0,
-                        opacity: 1
-                      },
-                      {
-                        scale: 1,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        onComplete: () => ripple.remove()
-                      }
-                    );
-                  };
-
-                  el.addEventListener('mousemove', handleMouseMove);
-                  el.addEventListener('mouseleave', handleMouseLeave);
-                  el.addEventListener('click', handleClick);
-                }}
-              >
-                <div className="card__header flex justify-between gap-3 relative text-white">
-                  <span className="card__label text-base">{card.label}</span>
-                </div>
-                <div className="card__content flex flex-col relative text-white">
-                  <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
-                    {card.title}
-                  </h3>
-                  <p className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}>
-                    {card.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
       </BentoCardGrid>
     </>

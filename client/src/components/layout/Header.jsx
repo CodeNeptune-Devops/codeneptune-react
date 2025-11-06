@@ -1,3 +1,4 @@
+import ContactButton from '@/animatedComponents/button/GlowButton';
 import Image from 'next/image';
 import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
@@ -76,14 +77,14 @@ function Header() {
     return (
         <header className={`fixed top-0 w-full z-[999999] bg-transparent  transition-all duration-300 py-2`}>
             <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${isScrolled
-                    ? 'py-2 px-3 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
-                    : 'py-2 px-4 border-[#D8D8D8] text-white'
+                    ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
+                    : 'py-3 px-3 border-[#D8D8D8] text-white'
                 }`}>
                 <Link href='/'>
                     <Image
                         className={`h-auto transition-all duration-300 ${isScrolled
-                                ? 'w-20 lg:w-24'
-                                : 'w-24 lg:w-32'
+                                ? 'w-20 lg:w-28'
+                                : 'w-24 lg:w-40'
                             }`}
                         src={`${isScrolled ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
                         alt="Code Neptune Logo"
@@ -180,7 +181,7 @@ function Header() {
                     <Link href='/solutions' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link>
                     <Link href='/blog' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
                 </nav>
-
+{/* 
                 <a
                     href='tel:+1(408) 909-7848'
                     className={`hidden md:block text-white rounded-full font-bold transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer ${isScrolled
@@ -194,7 +195,9 @@ function Header() {
                     }}
                 >
                     Contact Us
-                </a>
+                </a> */}
+
+                <ContactButton isScrolled={isScrolled}/>
 
                 {/* Mobile Hamburger Menu */}
                 <button

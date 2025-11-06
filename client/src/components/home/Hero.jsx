@@ -86,8 +86,8 @@ export default function Hero() {
             <Image
               src={'/home/hero-icon-1.svg'}
               alt='Image'
-              height={30}
-              width={30}
+              height={20}
+              width={20}
             />
             <span className="text-sm sm:text-md font-medium text-white/90">
               Best mobile app development company in India and USA

@@ -47,7 +47,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="w-full flex flex-col justify-center items-center z-[52] pt-16">
+    <footer className="w-full flex flex-col justify-center items-center z-[52] ">
       <div className="w-full hidden lg:block bg-[#171717] text-white">
         <div className="max-w-7xl mx-auto w-full pt-20 py-5">
           <div className="flex justify-around items-start">
