@@ -6,9 +6,16 @@ import ShinyText from '@/animatedTexts/ShinyText/ShinyText'
 function WorkWithUs() {
     return (
         <div className='w-full pt-16 bg-black'>
-            <div className='max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-start items-center lg:justify-center gap-4 bg-black text-white rounded-xl py-8'>
+            <div className='max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-start items-center lg:justify-center gap-4 bg-black text-white rounded-xl py-14 px-12'
+                style={{
+                    backgroundImage: "url('/cta1.webp')", // 🔁 your image path here
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            >
 
-                <div className='flex-1  flex justify-center items-center'>
+                {/* <div className='flex-1  flex justify-center items-center'>
 
                     <Image
                         src={founder}
@@ -17,7 +24,9 @@ function WorkWithUs() {
                         width={300}
                     />
 
-                </div>
+                </div> */}
+
+               
 
                 <div className='flex-1 flex flex-col justify-start items-start gap-6 lg:pr-32'>
                     <h5 className='text-3xl font-semibold leading-9'>
@@ -33,6 +42,8 @@ function WorkWithUs() {
                         />
                     </button>
                 </div>
+
+                 <div className='flex-1'></div>
 
             </div>
         </div>

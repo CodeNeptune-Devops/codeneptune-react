@@ -1,15 +1,24 @@
-
-
 'use client'
 
-import BlurText from '@/animatedTexts/blurText/BlurText';
 import React, { useEffect, useRef, useState } from 'react'
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Image from 'next/image';
-import GradientText from '@/animatedTexts/gradientText/GradientText';
-import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import LightRays from '@/backgrounds/light-rays/LightRays';
 
 const plus_jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'], weight: '500' });
+
+// Placeholder components - replace with your actual implementations
+const BlurText = ({ text, delay, animateBy, direction, onAnimationComplete, className }) => (
+  <span className={className}>{text}</span>
+);
+
+const GradientText = ({ children, colors, animationSpeed, showBorder, className }) => (
+  <span className={className}>{children}</span>
+);
+
+const ShinyText = ({ text, disabled, speed, className }) => (
+  <span className={className}>{text}</span>
+);
 
 export default function Hero() {
   const scrollRef = useRef(null);
@@ -18,8 +27,6 @@ export default function Hero() {
   const [headingScaleComplete, setHeadingScaleComplete] = useState(false);
   const [headingPositionComplete, setHeadingPositionComplete] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-
-
 
   const scrollText = [
     'Measurable Client Success.',
@@ -32,6 +39,7 @@ export default function Hero() {
     { icon: '/home/label-2.svg', text1: 'Scalable', text2: 'Mobile Apps' },
     { icon: '/home/label-3.svg', text1: 'UI/UX', text2: 'Design & Branding' },
   ]
+
   const stats = [
     { name: 'Digital transformation drives success', percentage: 70 },
     { name: 'First impressions are design-based', percentage: 94 },
@@ -65,10 +73,29 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-screen flex justify-center items-center h-fit overflow-hidden bg-[#090412] text-white pt-24 pb-10">
-      {/* Background */}
+      {/* Light Rays Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="w-full h-full bg-gradient-to-b from-purple-900/20 to-transparent" />
-        <div className="absolute inset-0 bg-black/28 z-10 pointer-events-none" />
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffffff"
+          raysSpeed={0.8}
+          lightSpread={6}
+          rayLength={14}
+          pulsating={true}
+          fadeDistance={1.2}
+          saturation={5}
+          followMouse={true}
+          mouseInfluence={0.15}
+          noiseAmount={0.1}
+          distortion={0.05}
+          className="opacity-40"
+        />
+      </div>
+
+      {/* Background overlays */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <div className="w-full h-full bg-gradient-to-b from-purple-900/10 to-transparent" />
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
       </div>
 
       {/* Foreground content */}
@@ -126,7 +153,7 @@ export default function Hero() {
 
             {/* Second heading - Only appears after first heading completes its animation */}
             <h2
-              className={`text-3xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent  transition-all duration-700 ease-out ${isLoaded
+              className={`text-3xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${isLoaded
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-12'
                 }`}
@@ -139,7 +166,6 @@ export default function Hero() {
                 className="custom-class text-3xl md:text-5xl lg:text-5xl"
               >
                 AI Agents That Redefine Possibility
-
               </GradientText>
             </h2>
           </div>

@@ -4,26 +4,27 @@ import Image from 'next/image';
 
 function IndustriesWeServe() {
 
-     const industries = [
-        { id: 1, name: 'Health Care', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 2, name: 'Entertainment', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 3, name: 'Government', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 4, name: 'Restaurant', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 5, name: 'E-commerce', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 6, name: 'Travel', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 7, name: 'Social Media', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 8, name: 'Agriculture', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 9, name: 'Education', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 10, name: 'Real Estate', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 11, name: 'Logistics', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 12, name: 'Aviation', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 13, name: 'Finance', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 14, name: 'On Demand',icon: '/industries-we-serve/healthCare.svg' },
-        { id: 15, name: 'Cyber Security', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 16, name: 'Energy & Utilities', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 17, name: 'Retail', icon: '/industries-we-serve/healthCare.svg' },
-        { id: 18, name: 'Sports & Fitness', icon: '/industries-we-serve/healthCare.svg' },
-    ];
+    const industries = [
+  { id: 1, name: 'Health Care', icon: '/industries-we-serve/healthCare.svg' },
+  { id: 2, name: 'Entertainment', icon: '/industries-we-serve/entertainment.svg' },
+  { id: 3, name: 'Government', icon: '/industries-we-serve/government.svg' },
+  { id: 4, name: 'Restaurant', icon: '/industries-we-serve/restaurant.svg' },
+  { id: 5, name: 'E-commerce', icon: '/industries-we-serve/eCommerce.svg' },
+  { id: 6, name: 'Travel', icon: '/industries-we-serve/travel.svg' },
+  { id: 7, name: 'Social Media', icon: '/industries-we-serve/socialMedia.svg' },
+  { id: 8, name: 'Agriculture', icon: '/industries-we-serve/agriculture.svg' },
+  { id: 9, name: 'Education', icon: '/industries-we-serve/education.svg' },
+  { id: 10, name: 'Real Estate', icon: '/industries-we-serve/realEstate.svg' },
+  { id: 11, name: 'Logistics', icon: '/industries-we-serve/logistics.svg' },
+  { id: 12, name: 'Aviation', icon: '/industries-we-serve/aviation.svg' },
+  { id: 13, name: 'Finance', icon: '/industries-we-serve/finance.svg' },
+  { id: 14, name: 'On Demand', icon: '/industries-we-serve/onDemand.svg' },
+  { id: 15, name: 'Cyber Security', icon: '/industries-we-serve/cyberSecurity.svg' },
+  { id: 16, name: 'Energy & Utilities', icon: '/industries-we-serve/energyUtilities.svg' },
+  { id: 17, name: 'Retail', icon: '/industries-we-serve/retail.svg' },
+  { id: 18, name: 'Sports & Fitness', icon: '/industries-we-serve/sportsFitness.svg' },
+];
+
 
     return (
         <div className='w-full'>

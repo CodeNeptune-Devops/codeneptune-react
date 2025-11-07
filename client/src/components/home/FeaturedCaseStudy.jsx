@@ -90,23 +90,7 @@ function FeaturedCaseStudy() {
       bgImage: '/featured-case-study/bg-3.webp',
       phoneScreen: 'https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=400&q=80'
     },
-    {
-      title: 'FinanceFlow',
-      subtitle: 'Smart Banking',
-      description: 'Next-generation banking solution with automated wealth management and investment insights.',
-      tech: ['Vue.js', 'Go', 'PostgreSQL', 'Kubernetes'],
-      location: 'Singapore',
-      duration: '18 Months+',
-      industry: 'FinTech',
-      features: [
-        'Automated Portfolio Management',
-        'Real-time Market Analytics',
-        'Multi-currency Support',
-        'Blockchain Integration'
-      ],
-     bgImage: '/featured-case-study/bg-4.webp',
-      phoneScreen: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&q=80'
-    }
+
   ];
 
   const maxScroll = (caseStudies.length - 1) * 100;

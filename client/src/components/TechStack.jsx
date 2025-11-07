@@ -6,10 +6,9 @@ import SectionTitle from './titles/SectionTitle';
 
 function TechStack() {
 
-    const [activeTab, setActiveTab] = useState('all');
+    const [activeTab, setActiveTab] = useState('frontend');
 
     const tabs = [
-        { label: 'All', value: 'all' },
         { label: 'Frontend', value: 'frontend' },
         { label: 'Backend', value: 'backend' },
         { label: 'CMS & Platforms', value: 'cms-and-platform' },
@@ -19,23 +18,54 @@ function TechStack() {
     ];
 
     const techStackData = [
-        { id: 1, name: 'React', category: 'frontend', logo: '/tech-stack/html.svg' },
-        { id: 2, name: 'Vue.js', category: 'frontend', logo: '/tech-stack/html.svg' },
-        { id: 3, name: 'Angular', category: 'frontend', logo: '/tech-stack/html.svg' },
-        { id: 4, name: 'HTML', category: 'frontend', logo: '/tech-stack/html.svg' },
-        { id: 5, name: 'Node.js', category: 'backend', logo: '/tech-stack/html.svg' },
-        { id: 6, name: 'Django', category: 'backend', logo: '/tech-stack/html.svg' },
-        { id: 7, name: 'Ruby on Rails', category: 'backend', logo: '/tech-stack/html.svg' },
-        { id: 8, name: 'Flutter', category: 'mobile', logo: '/tech-stack/html.svg' },
-        { id: 9, name: 'React Native', category: 'mobile', logo: '/tech-stack/html.svg' },
-        { id: 10, name: 'Swift', category: 'mobile', logo: '/tech-stack/html.svg' },
-        { id: 11, name: 'PostgreSQL', category: 'database', logo: '/tech-stack/html.svg' },
-        { id: 12, name: 'MongoDB', category: 'database', logo: '/tech-stack/html.svg' },
-        { id: 13, name: 'MySQL', category: 'database', logo: '/tech-stack/html.svg' },
-        { id: 14, name: 'AWS', category: 'cloud', logo: '/tech-stack/html.svg' },
-        { id: 15, name: 'Azure', category: 'cloud', logo: '/tech-stack/html.svg' },
-        { id: 16, name: 'Google Cloud', category: 'cloud', logo: '/tech-stack/html.svg' },
+        // 🖥️ Frontend
+        { id: 1, name: 'React', category: 'frontend', logo: '/tech-stack/react.webp' },
+        { id: 2, name: 'Next.js', category: 'frontend', logo: '/tech-stack/next-js.webp' },
+        { id: 3, name: 'Angular', category: 'frontend', logo: '/tech-stack/angular.webp' },
+        { id: 4, name: 'TypeScript', category: 'frontend', logo: '/tech-stack/typescript.webp' },
+        { id: 5, name: 'JavaScript', category: 'frontend', logo: '/tech-stack/javascript.webp' },
+        { id: 6, name: 'HTML', category: 'frontend', logo: '/tech-stack/html.webp' },
+        { id: 7, name: 'CSS', category: 'frontend', logo: '/tech-stack/css.webp' },
+        { id: 8, name: 'Bootstrap', category: 'frontend', logo: '/tech-stack/bootstrap.webp' },
+
+        // ⚙️ Backend
+        { id: 9, name: 'Node.js', category: 'backend', logo: '/tech-stack/node-js.webp' },
+        { id: 10, name: 'Express.js', category: 'backend', logo: '/tech-stack/express_js.webp' },
+        { id: 11, name: 'Laravel', category: 'backend', logo: '/tech-stack/laravel.webp' },
+        { id: 12, name: 'PHP', category: 'backend', logo: '/tech-stack/php.webp' },
+        { id: 13, name: 'Firebase', category: 'backend', logo: '/tech-stack/firebase.webp' },
+        { id: 14, name: 'REST API', category: 'backend', logo: '/tech-stack/rest-api.webp' },
+
+        // 🧩 CMS & Platforms
+        { id: 15, name: 'WordPress', category: 'cms-and-platform', logo: '/tech-stack/wordpress.webp' },
+        { id: 16, name: 'WooCommerce', category: 'cms-and-platform', logo: '/tech-stack/woocommerce.webp' },
+
+        // 🗄️ Databases
+        { id: 17, name: 'MongoDB', category: 'databases', logo: '/tech-stack/mongodb.webp' },
+        { id: 18, name: 'MySQL', category: 'databases', logo: '/tech-stack/mysql.webp' },
+        { id: 19, name: 'PostgreSQL', category: 'databases', logo: '/tech-stack/postgresql.webp' },
+        { id: 20, name: 'Firebase', category: 'databases', logo: '/tech-stack/firebase.webp' },
+
+        // 📱 Mobile
+        { id: 21, name: 'Android', category: 'mobile', logo: '/tech-stack/android.webp' },
+        { id: 22, name: 'iOS', category: 'mobile', logo: '/tech-stack/ios.webp' },
+        { id: 23, name: 'Flutter', category: 'mobile', logo: '/tech-stack/flutter.webp' },
+        { id: 24, name: 'React Native', category: 'mobile', logo: '/tech-stack/react-native.webp' },
+
+        // ⚙️ DevOps
+        { id: 25, name: 'AWS', category: 'devops', logo: '/tech-stack/aws.webp' },
+        { id: 26, name: 'Azure', category: 'devops', logo: '/tech-stack/azure.webp' },
+        { id: 27, name: 'CI/CD', category: 'devops', logo: '/tech-stack/ci-cd.webp' },
+        { id: 28, name: 'Docker', category: 'devops', logo: '/tech-stack/docker.webp' },
+        { id: 29, name: 'Elasticsearch', category: 'devops', logo: '/tech-stack/elasticsearch.webp' },
+        { id: 30, name: 'Jenkins', category: 'devops', logo: '/tech-stack/jenkins.webp' },
+        { id: 31, name: 'Kubernetes', category: 'devops', logo: '/tech-stack/kubernetes.webp' },
+        { id: 32, name: 'Nag', category: 'devops', logo: '/tech-stack/nag.svg' },
+        { id: 33, name: 'Puppets', category: 'devops', logo: '/tech-stack/puppets.webp' },
     ];
+
+
+
 
     const filteredTechStack = activeTab === 'all' ? techStackData : techStackData.filter(tech => tech.category === activeTab);
 
@@ -62,7 +92,7 @@ function TechStack() {
                         </button>
                     ))}
                 </div>
-                <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 sm:gap-y-8 justify-center justify-items-center items-stretch mt-5'>
+                <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5 sm:gap-y-8 justify-center justify-items-center items-stretch mt-5'>
                     {filteredTechStack.map((tech) => (
                         <div
                             key={tech.id}
@@ -73,7 +103,7 @@ function TechStack() {
                                 alt={tech.name}
                                 height={200}
                                 width={200}
-                                className='w-8 h-8 mb-2'
+                                className='w-12 h-12 mb-2'
                             />
                             <h3 className='text-xs font-semibold text-center'>{tech.name}</h3>
                         </div>
