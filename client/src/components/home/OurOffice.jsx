@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import BlurText from '@/animatedTexts/blurText/BlurText';
 
 const plus_jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'], weight: '500' });
 
@@ -22,39 +23,24 @@ function OurOffice() {
     setAnimationStarted(true);
   };
 
-  // Simple BlurText component inline
-  const BlurText = ({ text, className }) => {
-    React.useEffect(() => {
-      const timer = setTimeout(() => {
-        handleAnimationComplete();
-      }, 800);
-      return () => clearTimeout(timer);
-    }, []);
-
-    return (
-      <div className={`animate-[fadeIn_0.8s_ease-in] ${className}`}>
-        {text}
-      </div>
-    );
-  };
 
   return (
     <div className='w-full'>
-      <div className="bg-black py-16 px-4 sm:px-6 lg:px-8">
+      <div className="bg-black pb-5 pt-5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
             <h3 className="text-4xl sm:text-5xl lg:text-8xl font-bold text-white leading-tight">
 
               <div className='flex w-full justify-center items-center pb-0'>
-                <div className='flex w-full justify-center items-center pb-2'>
+                <div className='flex w-full justify-center items-center -mb-3'>
                   <BlurText
                     text="Our Office is a"
                     delay={150}
                     animateBy="words"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className={`text-2xl md:text-4xl lg:text-8xl text-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
+                    className={`text-2xl md:text-4xl lg:text-8xl text-center leading-relaxed text-white font-extrabold `}
                   />
                 </div>
               </div>
@@ -98,7 +84,7 @@ function OurOffice() {
                   <img
                     src={images[0].url}
                     alt="Office"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
               </div>
@@ -116,7 +102,7 @@ function OurOffice() {
                     <img
                       src={images[1].url}
                       alt="Office"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -133,7 +119,7 @@ function OurOffice() {
                     <img
                       src={images[2].url}
                       alt="Office"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -166,7 +152,7 @@ function OurOffice() {
                     <img
                       src={images[3].url}
                       alt="Office"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -183,7 +169,7 @@ function OurOffice() {
                     <img
                       src={images[4].url}
                       alt="Office"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                     />
                   </div>
                 </div>

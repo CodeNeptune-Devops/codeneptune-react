@@ -74,8 +74,8 @@ function YourAppDevelopmentJourneyBeginsHere() {
                                 <Image
                                     src={service.imageUrl}
                                     alt={service.title}
-                                    height={100}
-                                    width={100}
+                                    height={500}
+                                    width={500}
                                     className="w-full h-full object-cover"
                                 />
                             </div>

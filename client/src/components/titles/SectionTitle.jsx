@@ -9,7 +9,7 @@ function SectionTitle({
 ) {
     return (
         <div className="flex flex-col justify-start items-center gap-5  mb-10">
-            <h3 className={`text-2xl md:text-4xl lg:text-4xl font-medium leading-tight ${textColor}`}>
+            <h3 className={`text-2xl md:text-4xl lg:text-4xl font-medium leading-tight ${align} ${textColor} w-full`}>
                {title}
             </h3>
             <div className={`flex items-center`}>

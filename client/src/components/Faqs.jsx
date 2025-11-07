@@ -91,7 +91,7 @@ function Faqs({ faqs: fq }) {
           </h2> */}
          <SectionTitle 
          title='Frequently Asked Questions'
-         description=''
+         description='Got questions? We have the answers. Explore everything you need to know about Code Neptune’s services, process, and technology.'
          />
         </div>  
 

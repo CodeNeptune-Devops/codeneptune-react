@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react'
 import SectionTitle from '../titles/SectionTitle'
+import img1 from '../../assets/roi/img-1.webp'
+import img2 from '../../assets/roi/img-2.webp'
+import img3 from '../../assets/roi/img-3.webp'
+import Image from 'next/image'
 
 function ROIOfIntelligence() {
   const [activeStep, setActiveStep] = useState(1)
@@ -10,28 +14,28 @@ function ROIOfIntelligence() {
     {
       id: 1,
       label: 'Efficiency',
-      title: 'Seamless Integration',
+      title: 'Streamline Operations and Drive Cost-Effective Performance',
       description: 'Automate complex workflows and reduce manual efforts. Our AI Agents streamline operations and help businesses cut costs by up to 30 percent.',
       images: [
-        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop'
+       img1
       ]
     },
     {
       id: 2,
       label: 'Growth',
-      title: 'Intelligent Automation',
+      title: 'Empower Data-Driven Decisions for Sustainable Expansion',
       description: 'Automate repetitive tasks with AI-powered workflows. Save time and reduce errors across your entire organization.',
       images: [
-        'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop'
+        img2
       ]
     },
     {
       id: 3,
       label: 'Innovation',
-      title: 'Real-time Analytics',
+      title: 'Accelerate Ideas into Impact with Generative Intelligence',
       description: 'Accelerate product development with Generative AI and adaptive automation that shortens R&D cycles and delivers faster time to market.',
       images: [
-        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop'
+        img3
       ]
     },
   ]
@@ -136,7 +140,7 @@ function ROIOfIntelligence() {
 
                   {/* Title - Slide in from left with delay */}
                   <div className='animate-slide-in-left-delayed'>
-                    <h2 className='text-5xl font-bold text-white mb-6'>
+                    <h2 className='text-4xl font-bold text-white mb-6'>
                       {currentStep.title}
                     </h2>
                   </div>
@@ -158,9 +162,11 @@ function ROIOfIntelligence() {
                       key={idx}
                       className={`rounded-2xl overflow-hidden shadow-2xl ${idx === 0 ? 'animate-fade-in-up-1' : 'animate-fade-in-up-2'}`}
                     >
-                      <img
+                      <Image
                         src={img}
                         alt={`${currentStep.title} ${idx + 1}`}
+                        height={600}
+                        width={600}
                         className='w-full h-80 object-cover'
                       />
                     </div>

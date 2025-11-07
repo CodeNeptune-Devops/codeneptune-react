@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { FileText, Lightbulb, Monitor, Code } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import Image from 'next/image';
 
 function HowWeBuildIntelligentSolutions() {
     const [hoveredCard, setHoveredCard] = useState(null);
@@ -11,24 +12,32 @@ function HowWeBuildIntelligentSolutions() {
         {
             id: 1,
             icon: FileText,
+            frontImg:'/home/how-we-build/front-img-1.svg',
+            backImg:'/home/how-we-build/back-img-1.svg',
             title: 'Project Discovery',
             description: 'We start by exploring your concept, gathering every key detail to ensure clarity and precision before development begins.'
         },
         {
             id: 2,
             icon: Lightbulb,
+            frontImg:'/home/how-we-build/front-img-2.svg',
+            backImg:'/home/how-we-build/back-img-2.svg',
             title: 'Expert Evaluation',
             description: 'Our team analyzes your idea’s potential, identifying opportunities for innovation and performance enhancement.'
         },
         {
             id: 3,
             icon: Monitor,
+            frontImg:'/home/how-we-build/front-img-3.svg',
+            backImg:'/home/how-we-build/back-img-3.svg',
             title: 'Accurate Estimation',
             description: 'We assess the project’s scope, timeline, and complexity to provide a transparent estimate tailored to your needs.'
         },
         {
             id: 4,
             icon: Code,
+            frontImg:'/home/how-we-build/front-img-4.svg',
+            backImg:'/home/how-we-build/back-img-4.svg',
             title: 'Project Blueprint in 72 Hours',
             description: 'Within 72 hours, you receive a detailed project roadmap outlining cost, milestones, and timelines. Helping you move forward with confidence.'
         }
@@ -72,7 +81,12 @@ function HowWeBuildIntelligentSolutions() {
 
                                     >
                                         <div className="mb-6">
-                                            <Icon className="w-16 h-16 text-black" strokeWidth={1.5} />
+                                            <Image 
+                                            src={card.frontImg}
+                                            alt={card.title}
+                                            height={50}
+                                            width={50}
+                                            />
                                         </div>
                                         <h3 className="text-black text-xl font-semibold leading-tight">
                                             {card.title}
@@ -81,14 +95,19 @@ function HowWeBuildIntelligentSolutions() {
 
                                     {/* Back Side - Blue Card */}
                                     <div
-                                        className="absolute w-full h-full backface-hidden rounded-2xl bg-blue-600 p-8 flex flex-col items-center justify-center text-center"
+                                        className="absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-[#4A3AFF] to-[#744EDF] text-white p-8 flex flex-col items-center justify-center text-center"
                                         style={{
                                             backfaceVisibility: 'hidden',
                                             transform: 'rotateY(180deg)'
                                         }}
                                     >
                                         <div className="mb-6">
-                                            <Icon className="w-12 h-12 text-white" strokeWidth={1.5} />
+                                           <Image 
+                                            src={card.backImg}
+                                            alt={card.title}
+                                            height={50}
+                                            width={50}
+                                            />
                                         </div>
                                         <h3 className="text-white text-xl font-bold mb-4">
                                             {card.title}

@@ -26,8 +26,8 @@ function IndustriesWeServe() {
     ];
 
     return (
-        <div className='w-full pt-16'>
-            <div className='w-full bg-black py-16'>
+        <div className='w-full'>
+            <div className='w-full bg-black pt-16'>
                 <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-8'>
 
                     <div className='flex flex-col justify-start items-center gap-4'>

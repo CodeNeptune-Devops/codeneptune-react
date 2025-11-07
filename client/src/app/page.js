@@ -12,7 +12,10 @@ import ROIOfIntelligence from "@/components/home/ROIOfIntelligence";
 import TransformingBusinesses from "@/components/home/TransformingBusinesses";
 import WorkWithUs from "@/components/home/WorkWithUs";
 import YourAppDevelopmentJourneyBeginsHere from "@/components/home/YourAppDevelopmentJourneyBeginsHere";
+import Location from "@/components/Location";
 import OurTrustedPartners from "@/components/OutTrustedPartners";
+import TechStack from "@/components/TechStack";
+import Testimonials from "@/components/Testimonials";
 import Image from "next/image";
 
 export default function Home() {
@@ -30,9 +33,12 @@ export default function Home() {
     <OurTrustedPartners infiniteScroll={true}/>
     <WorkWithUs />
     <IndustriesWeServe />
+    <Testimonials />
+    <TechStack />
      <OurOffice />
     <Faqs />
     <ContactForm />
+    <Location />
    </div>
   );
 }

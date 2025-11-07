@@ -3,6 +3,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import SectionTitle from '../titles/SectionTitle';
+import bg1 from '../../assets/featured-case-study/bg-1.webp';
 
 function FeaturedCaseStudy() {
   const sectionRef = useRef(null);
@@ -40,20 +41,20 @@ function FeaturedCaseStudy() {
 
   const caseStudies = [
     {
-      title: 'Cashipe',
+      title: 'Entrex',
       subtitle: 'CashiPe',
-      description: 'Cashipe is a platform to sell used mobiles and gadgets with instant pricing, free pickup, and quick payment.',
-      tech: ['Flutter', 'Angular', 'AWS', 'Node.js'],
+      description: 'A unified enterprise management platform that simplifies workflow automation, analytics, and communication for growing businesses.',
+      tech: ['React','Node.js',' AWS','MongoDB'],
       location: 'India',
-      duration: '1 Year+',
-      industry: 'Re-Commerce',
+      duration: '2 Years+',
+      industry: ' SaaS / Enterprise Solutions',
       features: [
-        'Instant Device Valuation',
-        'Multi-Device Selling Support',
-        'Free Doorstep Pickup',
-        'Scalable for Bulk Selling'
+        'Centralized Dashboard for Operations',
+        'Role-Based Access Management',
+        'Real-Time Analytics and Reporting',
+        'Seamless Team Collaboration'
       ],
-      bgImage: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=800&q=80',
+      bgImage: '/featured-case-study/bg-1.webp',
       phoneScreen: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80'
     },
     {
@@ -69,7 +70,7 @@ function FeaturedCaseStudy() {
         'Full vehicle access through EV Mobility mobile app',
         'EV Mobility Valet - Service for hassle-free vehicle pickup'
       ],
-      bgImage: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80',
+      bgImage: '/featured-case-study/bg-2.webp',
       phoneScreen: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&q=80'
     },
     {
@@ -86,7 +87,7 @@ function FeaturedCaseStudy() {
         'Subscription-based Delivery',
         'Farm Partnership Integration'
       ],
-      bgImage: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80',
+      bgImage: '/featured-case-study/bg-3.webp',
       phoneScreen: 'https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=400&q=80'
     },
     {
@@ -103,7 +104,7 @@ function FeaturedCaseStudy() {
         'Multi-currency Support',
         'Blockchain Integration'
       ],
-      bgImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80',
+     bgImage: '/featured-case-study/bg-4.webp',
       phoneScreen: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&q=80'
     }
   ];
@@ -146,7 +147,7 @@ function FeaturedCaseStudy() {
                     <div
                       className="relative h-full rounded-2xl overflow-hidden bg-cover bg-center"
                       style={{
-                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%), url(${study.bgImage})`
+                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%), url('${study.bgImage}')`
                       }}
                     >
                       {/* Content Container */}
@@ -203,28 +204,7 @@ function FeaturedCaseStudy() {
                           </div>
                         </div>
 
-                        {/* Right side - Phone mockup */}
-                        <div className="w-[45%] flex items-center justify-center p-8">
-                          <div className="relative">
-                            {/* Phone frame */}
-                            <div className="relative w-64 h-[500px] bg-slate-900 rounded-[3rem] p-3 shadow-2xl border-8 border-slate-800">
-                              {/* Notch */}
-                              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-b-3xl z-10"></div>
-
-                              {/* Screen */}
-                              <div className="w-full h-full rounded-[2.5rem] overflow-hidden bg-white">
-                                <img
-                                  src={study.phoneScreen}
-                                  alt={`${study.title} app`}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            </div>
-
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-emerald-400/20 blur-3xl -z-10 scale-90"></div>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>

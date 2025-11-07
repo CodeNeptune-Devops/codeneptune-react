@@ -29,11 +29,13 @@ function OurTrustedPartners({ infiniteScroll = true }) {
   ];
 
   return (
-    <section className="px-4 pt-16">
-      <div className="max-w-7xl w-full mx-auto text-center">
+
+     <section className='w-full pt-16 bg-black'>
+       <div className="max-w-7xl w-full mx-auto text-center">
         {/* Header */}
         <div className="mb-16">
           <SectionTitle 
+          textColor='text-white'
           title='Trusted by Global Businesses and Emerging Startups Alike'
           description='At Code Neptune, our success grows with the trust of our clients. We work closely with leading enterprises and fast-growing startups to create solutions that inspire progress and innovation. Each partnership is built on collaboration, creativity, and measurable impact that lasts.'
           />

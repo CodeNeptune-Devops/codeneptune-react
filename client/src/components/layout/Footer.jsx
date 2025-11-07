@@ -1,14 +1,33 @@
+import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import Link from 'next/link';
 import React from 'react'
 import { FaInstagram, FaFacebookF, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 
 function Footer() {
+
   const socialLinks = [
-    { icon: <FaInstagram />, url: "https://www.instagram.com" },
-    { icon: <FaFacebookF />, url: "https://www.facebook.com" },
-    { icon: <FaXTwitter />, url: "https://www.twitter.com" },
-    { icon: <FaYoutube />, url: "https://www.youtube.com" },
+    { icon: <FaInstagram />, label: "Instagram", url: "https://www.instagram.com" },
+    { icon: <FaFacebookF />, label: "Instagram", url: "https://www.facebook.com" },
+    { icon: <FaXTwitter />, label: "Instagram", url: "https://www.twitter.com" },
+    { icon: <FaYoutube />, label: "Instagram", url: "https://www.youtube.com" },
   ];
 
+  const quickLinks = [
+    { label: 'About Us', href: '/about' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Privacy Policy', href: '/privacy' },
+  ];
+
+  const services = [
+    { label: 'Mobile App Development', href: '/services/mobile-app' },
+    { label: 'Android App Development', href: '/services/android-app' },
+    { label: 'Flutter App Development', href: '/services/flutter-app' },
+    { label: 'Web Development', href: '/services/web-development' },
+    { label: 'UI UX', href: '/services/ui-ux' },
+    { label: 'Ecommerce Web Development', href: '/services/ecommerce' },
+    { label: 'Devops', href: '/services/devops' },
+    
+  ];
   const educationData = [
     { name: "Email Marketing", href: "#" },
     { name: "Social Media Marketing", href: "#" },
@@ -17,7 +36,7 @@ function Footer() {
     { name: "Web Development", href: "#" },
   ];
 
-  const businessData= [
+  const businessData = [
     { name: "Digital Marketing Agency", href: "#" },
     { name: "SEO Agency", href: "#" },
     { name: "PPC Agency", href: "#" },
@@ -48,38 +67,31 @@ function Footer() {
 
   return (
     <footer className="w-full flex flex-col justify-center items-center z-[52] ">
-      <div className="w-full hidden lg:block bg-[#171717] text-white">
-        <div className="max-w-7xl mx-auto w-full pt-20 py-5">
-          <div className="flex justify-around items-start">
-            <div className="flex flex-col justify-start items-start gap-8">
+
+
+      <div className="w-full bg-[#171717] text-white">
+        <div className="max-w-7xl mx-auto w-full px-4 pt-20 py-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-center items-start justify-items-center gap-0">
+
+            <div className="flex col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1 flex-col justify-start items-start gap-8">
               <img src="/cn-footer-logo.svg" alt="Logo" className="w-48 h-full" />
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-5">
-                <a
-                  className="text-xs"
-                  href="https://maps.app.goo.gl/Qy1xyxWiNiYJBj4A8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  No. 624, 3rd Floor – S2, Khivraj Building, 
-                  <br />Anna Salai, Chennai – 600 006
-                </a>
-                <div className="flex justify-start items-center gap-1">
-                  <span className="text-xs">Phone: </span>
-                  <a className="text-xs" href="tel:+916382958105">
-                    +91 63829 58105,
-                  </a>
-                  <a className="text-xs" href="tel:+919363640633">
-                    +91 93636 40633
-                  </a>
-                </div>
-                <div className="text-xs flex justify-start items-center gap-1">
-                  <span>Email:</span>
-                  <a href="mailto:info@codeneptune.com" className="cursor-pointer">
-                    info@codeneptune.com
-                  </a>
-                </div>
+
+                <p className='text-sm'>
+                  Code Neptune is a leading web and mobile app development company in Chennai offering UI/UX design, DevOps, eCommerce, and digital transformation services.
+                </p>
+
+                <button className="flex flex-col sm:flex-row items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+                  <ShinyText
+                    text="Get Free Consultation"
+                    disabled={false}
+                    speed={3}
+                    className='custom-class'
+                  />
+                </button>
+
               </div>
-              <div className="flex justify-start items-center gap-1">
+              {/* <div className="flex justify-start items-center gap-1">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
@@ -92,178 +104,71 @@ function Footer() {
                     {link.icon}
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
 
-            <div className="flex flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Education</h5>
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+              <h5 className="text-lg">Quick Links</h5>
               <div className="flex flex-col justify-start text-[#CCCCCC] items-start gap-3">
-                {educationData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
+                {quickLinks.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
                   >
-                    {item.name}
+                    {item.label}
                   </a>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Business</h5>
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+              <h5 className="text-lg">Services</h5>
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
-                {businessData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
+                {services.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
                   >
-                    {item.name}
+                    {item.label}
                   </a>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Developer & IT</h5>
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+              <h5 className="text-lg">Reach Us</h5>
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
-                {developerAndItData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Company</h5>
-              <div className="flex flex-col justify-start items-start gap-3 text-[#CCCCCC]">
-                {companyData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-full lg:hidden bg-[#171717] text-white">
-        <div className="max-w-7xl mx-auto w-full px-4 pt-20 py-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-around items-start gap-8">
-            <div className="flex col-span-1 sm:col-span-2 md:col-span-4 flex-col justify-start items-start gap-8">
-              <img src="/cn-footer-logo.svg" alt="Logo" className="w-48 h-full" />
-              <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-5">
-                <a
-                  className="text-xs"
+                <Link
+                  className="text-sm"
                   href="https://maps.app.goo.gl/Qy1xyxWiNiYJBj4A8"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   No. 57/25, P.V. Kovil Street, Mylapore
                   <br /> Chennai, Tamil Nadu – 600004
-                </a>
-                <div className="flex justify-start items-center gap-1">
-                  <span className="text-xs">Phone: </span>
-                  <a className="text-xs" href="tel:+918000185888">
-                    +91 80001 85888,
-                  </a>
-                  <a className="text-xs" href="tel:+916060087454">
-                    +91 60600 87454
-                  </a>
+                </Link>
+
+                <div className="flex flex-col justify-start items-start gap-3">
+
+                  <Link
+                    href="mailto:info@codeneptune.com"
+                    className="cursor-pointer hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
+                  >
+                    info@codeneptune.com
+                  </Link>
+
+                  <Link className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent" href="tel:+916382958105">
+                    +91 63829 58105
+                  </Link>
+                  <Link className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent" href="tel:+919841600980">
+                    +91 98416 00980
+                  </Link>
                 </div>
-                <div className="text-xs flex justify-start items-center gap-1">
-                  <span>Email:</span>
-                  <a href="mailto:info@cashzone.com" className="cursor-pointer">
-                    info@cashzone.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex justify-start items-center gap-1">
-                {socialLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white p-2 rounded-full hover:bg-white hover:text-black text-xl transition-colors duration-300"
-                    aria-label={`Open ${link.url}`}
-                  >
-                    {link.icon}
-                  </a>
-                ))}
               </div>
             </div>
 
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Education</h5>
-              <div className="flex flex-col justify-start text-[#CCCCCC] items-start gap-3">
-                {educationData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Business</h5>
-              <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
-                {businessData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Developer & IT</h5>
-              <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
-                {developerAndItData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 flex-col justify-start items-start gap-5">
-              <h5 className="text-md">Company</h5>
-              <div className="flex flex-col justify-start items-start gap-3 text-[#CCCCCC]">
-                {companyData.map((item, index) => (
-                  <a 
-                    key={index} 
-                    href={item.href} 
-                    className="text-xs hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
