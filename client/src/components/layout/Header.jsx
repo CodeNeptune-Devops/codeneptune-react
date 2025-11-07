@@ -22,7 +22,7 @@ function Header() {
     ];
 
     const servicesDropdown = [
-        { name: 'Mobile App Development', href: '/services/mobile-app' },
+        { name: 'Mobile App Development', href: '/mobile-app-development-company' },
         { name: 'Android App Development', href: '/services/android-app' },
         { name: 'Flutter App', href: '/services/flutter-app' },
         { name: 'Web Development', href: '/services/web-development' },

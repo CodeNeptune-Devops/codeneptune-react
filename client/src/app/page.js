@@ -4,7 +4,7 @@ import BuildIntelligentValue from "@/components/home/BuildIntelligentValue";
 import FeaturedCaseStudy from "@/components/home/FeaturedCaseStudy";
 import Hero from "@/components/home/Hero";
 import HowWeBuildIntelligentSolutions from "@/components/home/HowWeBuildIntelligentSolutions";
-import IndustriesWeServe from "@/components/home/IndustriesWeServe";
+import IndustriesWeServe from "@/components/IndustriesWeServe";
 import OurImpactInNumbers from "@/components/home/OurImpactInNumbers";
 import OurOffice from "@/components/home/OurOffice";
 import OurServices from "@/components/home/OurServices";
