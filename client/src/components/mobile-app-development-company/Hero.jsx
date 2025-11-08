@@ -179,37 +179,48 @@ export default function Hero() {
         </div>
 
         {/* Labels - Animation delay 450ms */}
-        <div
-          className={`w-full flex justify-around items-center gap-5 mt-12 transition-all duration-700 ease-out ${isLoaded
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-12'
-            }`}
-          style={{ transitionDelay: '450ms' }}
-        >
-          {labels.map((item, index) => (
-            <div
-              key={index}
-              className={`flex flex-col justify-start items-start gap-2 transition-all duration-700 ease-out ${isLoaded
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
-                }`}
-              style={{ transitionDelay: `${450 + (index * 100)}ms` }}
-            >
-              <div className="text-4xl">
-                <Image
-                  src={item.icon}
-                  alt={item.text1}
-                  height={50}
-                  width={50}
-                />
-              </div>
-              <div className="text-white/90">
-                <p className="font-semibold">{item.text1}</p>
-                <p className="text-sm">{item.text2}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+         {/* Labels */}
+                <div
+                  className={`w-full flex justify-center items-center gap-4 mt-12 transition-all duration-700 ease-out ${
+                    isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                  }`}
+                  style={{ transitionDelay: "450ms", willChange: "transform, opacity" }}
+                >
+                  {[
+                    {
+                      icon: "/home/label-1.svg",
+                      text1: "Custom",
+                      text2: "Web Development",
+                    },
+                    {
+                      icon: "/home/label-2.svg",
+                      text1: "Scalable",
+                      text2: "Mobile Apps",
+                    },
+                    { 
+                      icon: "/home/label-3.svg", 
+                      text1: "UI/UX", 
+                      text2: "Design & Branding" 
+                    },
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 px-6 py-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                      style={{
+                        transitionDelay: `${250 + index * 100}ms`,
+                        willChange: "transform, opacity",
+                      }}
+                    >
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <Image src={item.icon} alt={item.text1} height={24} width={24} />
+                      </div>
+                      <div className="text-white/90">
+                        <p className="font-semibold text-sm leading-tight">{item.text1}</p>
+                        <p className="text-xs text-white/70 leading-tight">{item.text2}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
       </div>
     </section>

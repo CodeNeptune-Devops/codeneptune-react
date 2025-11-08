@@ -28,7 +28,6 @@ const ContactButton = ({isScrolled}) => {
         <div className="flex justify-center">
             <Link
                 href="tel:+916382958105"
-                target="_blank"
                 className={`relative inline-block    mx-auto group  bg-white   rounded-full ${
                     isScrolled ? 'h-[3em] sm:w-52 w-14' : 'h-[3.5em] sm:w-52 w-14'
                 }`}>
