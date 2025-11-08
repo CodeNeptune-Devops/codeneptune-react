@@ -25,7 +25,7 @@ function Header() {
         { name: 'Mobile App Development', href: '/mobile-app-development-company' },
         { name: 'Android App Development', href: '/mobile-app-development-company' },
         { name: 'Flutter App', href: '/mobile-app-development-company' },
-        { name: 'Web Development', href: '/mobile-app-development-company' },
+        { name: 'Web Development', href: '/website-development-company' },
         { name: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
         { name: 'Devops', href: '/mobile-app-development-company' },
         { name: 'UI UX', href: '/mobile-app-development-company' },

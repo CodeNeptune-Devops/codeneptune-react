@@ -10,7 +10,7 @@ import OurOffice from "@/components/home/OurOffice";
 import OurServices from "@/components/home/OurServices";
 import ROIOfIntelligence from "@/components/home/ROIOfIntelligence";
 import TransformingBusinesses from "@/components/home/TransformingBusinesses";
-import WorkWithUs from "@/components/home/WorkWithUs";
+import WorkWithUs from "@/components/WorkWithUs";
 import YourAppDevelopmentJourneyBeginsHere from "@/components/home/YourAppDevelopmentJourneyBeginsHere";
 import Location from "@/components/Location";
 import OurTrustedPartners from "@/components/OutTrustedPartners";

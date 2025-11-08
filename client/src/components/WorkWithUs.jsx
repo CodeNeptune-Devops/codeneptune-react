@@ -1,5 +1,4 @@
 import React from 'react'
-import founder from '../../assets/founder_1.webp'
 import Image from 'next/image'
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText'
 

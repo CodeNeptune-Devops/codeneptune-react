@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Search, Target, Package, TestTube, Rocket, Headphones, ChevronLeft, ChevronRight } from 'lucide-react';
-import SectionTitle from '../titles/SectionTitle';
+import SectionTitle from './titles/SectionTitle';
 
 function HowWeWorkOurEcommerceDevelopment() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -101,7 +101,7 @@ function HowWeWorkOurEcommerceDevelopment() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <SectionTitle 
+          <SectionTitle
           textColor='text-white'
           title='How We Work: Our Ecommerce Development Process'
           description='From Idea to Execution – AStreamlined Approach for Success'
