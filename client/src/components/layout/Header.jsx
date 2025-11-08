@@ -17,18 +17,18 @@ function Header() {
     const navLinks = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
-        { name: 'Solutions', href: '/solutions' },
-        { name: 'Blog', href: '/blog' },
+        { name: 'Solutions', href: '/about' },
+        { name: 'Blog', href: '/about' },
     ];
 
     const servicesDropdown = [
         { name: 'Mobile App Development', href: '/mobile-app-development-company' },
-        { name: 'Android App Development', href: '/services/android-app' },
-        { name: 'Flutter App', href: '/services/flutter-app' },
-        { name: 'Web Development', href: '/services/web-development' },
-        { name: 'Ecommerce Web Development', href: '/services/ecommerce' },
-        { name: 'Devops', href: '/services/devops' },
-        { name: 'UI UX', href: '/services/ui-ux' },
+        { name: 'Android App Development', href: '/mobile-app-development-company' },
+        { name: 'Flutter App', href: '/mobile-app-development-company' },
+        { name: 'Web Development', href: '/mobile-app-development-company' },
+        { name: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
+        { name: 'Devops', href: '/mobile-app-development-company' },
+        { name: 'UI UX', href: '/mobile-app-development-company' },
     ];
 
     const appDevelopment = servicesDropdown.slice(0, 3);
@@ -178,8 +178,8 @@ function Header() {
                         </div>
                     </div>
 
-                    <Link href='/solutions' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link>
-                    <Link href='/blog' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
+                    <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link>
+                    <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
                 </nav>
 {/* 
                 <a

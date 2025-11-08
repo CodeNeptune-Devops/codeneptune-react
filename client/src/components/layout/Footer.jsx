@@ -14,18 +14,18 @@ function Footer() {
 
   const quickLinks = [
     { label: 'About Us', href: '/about' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Blog', href: '/about' },
+    { label: 'Privacy Policy', href: '/about' },
   ];
 
   const services = [
-    { label: 'Mobile App Development', href: '/services/mobile-app' },
-    { label: 'Android App Development', href: '/services/android-app' },
-    { label: 'Flutter App Development', href: '/services/flutter-app' },
-    { label: 'Web Development', href: '/services/web-development' },
-    { label: 'UI UX', href: '/services/ui-ux' },
-    { label: 'Ecommerce Web Development', href: '/services/ecommerce' },
-    { label: 'Devops', href: '/services/devops' },
+    { label: 'Mobile App Development', href: '/mobile-app-development-company' },
+    { label: 'Android App Development', href: '/mobile-app-development-company' },
+    { label: 'Flutter App Development', href: '/mobile-app-development-company' },
+    { label: 'Web Development', href: '/mobile-app-development-company' },
+    { label: 'UI UX', href: '/mobile-app-development-company' },
+    { label: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
+    { label: 'Devops', href: '/mobile-app-development-company' },
     
   ];
   const educationData = [
