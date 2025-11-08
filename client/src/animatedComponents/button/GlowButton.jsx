@@ -25,7 +25,7 @@ const COLORS = {
 const ContactButton = ({isScrolled}) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
-        <div className="flex justify-center">
+        <div className="hidden md:flex justify-center ">
             <Link
                 href="tel:+916382958105"
                 className={`relative inline-block    mx-auto group  bg-white   rounded-full ${

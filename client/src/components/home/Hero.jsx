@@ -81,7 +81,7 @@ export default function Hero() {
         <div className="flex flex-col items-center justify-center w-full gap-4 mt-2 min-h-[200px]">
           <div className="flex flex-col w-full justify-center items-center gap-2">
             <h2
-              className={`text-2xl md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
+              className={`text-xl md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
                 !headingFadeComplete
                   ? "scale-150 opacity-0"
                   : "scale-150 opacity-100"
@@ -97,7 +97,7 @@ export default function Hero() {
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className={`text-2xl md:text-4xl lg:text-5xl text-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
+                  className={`text-xl md:text-4xl lg:text-5xl text-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
                 />
               </div>
             </h2>

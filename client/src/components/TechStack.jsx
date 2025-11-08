@@ -81,11 +81,11 @@ function TechStack() {
                         description='Leveraging technology to accelerate growth, efficiency, and innovation for businesses worldwide.'
                     />
                 </div>
-                <div className='flex justify-center items-center gap-2 w-full'>
+                <div className='flex justify-start sm:justify-center items-center gap-2 w-full overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 px-2'>
                     {tabs.map((tab, index) => (
                         <button
                             key={index}
-                            className={`flex flex-col justify-center items-center px-1 py-4 border border-[#0072FF] text-[#0072FF] rounded-lg  w-[8rem] hover:bg-[#0072FF] hover:text-white transition-all duration-300 cursor-pointer ${activeTab === tab.value ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-[#0072FF]'}`}
+                            className={`flex flex-col justify-center items-center px-4 py-4 border border-[#0072FF] text-[#0072FF] rounded-lg w-fit whitespace-nowrap hover:bg-[#0072FF] hover:text-white transition-all duration-300 cursor-pointer flex-shrink-0 ${activeTab === tab.value ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-[#0072FF]'}`}
                             onClick={() => setActiveTab(tab.value)}
                         >
                             <h3 className='text-xs font-semibold text-center'>{tab.label}</h3>

@@ -75,7 +75,7 @@ function Header() {
     }, []);
 
     return (
-        <header className={`fixed top-0 left-0 right-0 w-full z-[999999] bg-transparent  transition-all duration-300 py-2`}>
+        <header className={`fixed top-0  w-full z-[999999] bg-transparent  transition-all duration-300 py-2`}>
             <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${isScrolled
                     ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
                     : 'py-3 px-3 border-[#D8D8D8] text-white'

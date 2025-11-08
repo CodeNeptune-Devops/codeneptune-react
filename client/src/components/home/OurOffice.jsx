@@ -1,31 +1,33 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { MessageCircle } from "lucide-react";
-import dynamic from "next/dynamic";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import img1 from '../../assets/roi/img-1.webp';
+import img1 from '../../assets/roi/img-1.webp'
+import Image from "next/image";
 
-const plus_jakarta_sans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: "500",
-});
-
-// ✅ Lazy-load BlurText to avoid heavy animation code in main bundle
-const BlurText = dynamic(() => import("@/animatedTexts/blurText/BlurText"), {
-  ssr: false,
-});
-
-// ✅ Static image data outside component
 const images = [
   { id: 1, url: img1 },
   { id: 2, url: img1 },
   { id: 3, url: img1 },
-  { id: 4, url: img1 },
+  { id: 4,url: img1 },
   { id: 5, url: img1 },
 ];
+
+// Simple blur text animation component
+function BlurText({ text, delay, onAnimationComplete, className }) {
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (onAnimationComplete) onAnimationComplete();
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [delay, onAnimationComplete]);
+
+  return (
+    <span className={`inline-block animate-fade-in ${className}`}>
+      {text}
+    </span>
+  );
+}
 
 function OurOffice() {
   const [animationStarted, setAnimationStarted] = useState(false);
@@ -36,25 +38,23 @@ function OurOffice() {
 
   return (
     <div className="w-full">
-      <div className="bg-black pb-5 pt-5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="bg-black pb-8 pt-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h3 className="text-4xl sm:text-5xl lg:text-8xl font-bold text-white leading-tight">
-              <div className="flex w-full justify-center items-center pb-0">
-                <div className="flex w-full justify-center items-center -mb-3">
+          <div className="text-center mb-12 sm:mb-16">
+            <h3 className="font-bold text-white leading-tight">
+              <div className="flex w-full justify-center items-center pb-2 sm:pb-4">
+                <div className="flex w-full justify-center items-center">
                   <BlurText
                     text="Our Office is a"
                     delay={150}
-                    animateBy="words"
-                    direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-2xl md:text-4xl lg:text-8xl text-center leading-relaxed text-white font-extrabold"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl text-center text-white font-extrabold"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 sm:space-y-3 text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl">
                 <div
                   className={`transition-all duration-700 ${
                     animationStarted
@@ -67,7 +67,7 @@ function OurOffice() {
                   }}
                 >
                   hub of{" "}
-                  <span className="bg-green-400 text-black px-3 py-1 inline-block rounded">
+                  <span className="bg-green-400 text-black px-2 sm:px-3 py-1 inline-block rounded text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl">
                     talent
                   </span>{" "}
                   and
@@ -83,7 +83,7 @@ function OurOffice() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <span className="bg-blue-600 text-white px-3 py-1 inline-block rounded">
+                  <span className="bg-blue-600 text-white px-2 sm:px-3 py-1 inline-block rounded text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl">
                     client success.
                   </span>
                 </div>
@@ -92,12 +92,12 @@ function OurOffice() {
           </div>
 
           {/* Bento Grid Layout */}
-          <div className="mb-16 max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5">
+          <div className="mb-12 sm:mb-16 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5">
               {/* Large left box */}
-              <div className="md:col-span-4 md:row-span-2">
+              <div className="sm:col-span-2 lg:col-span-4 lg:row-span-2">
                 <div
-                  className={`relative w-full h-80 md:h-[620px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
+                  className={`relative w-full h-64 sm:h-80 lg:h-[620px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
                     animationStarted
                       ? "translate-x-0 opacity-100"
                       : "-translate-x-20 opacity-0"
@@ -109,19 +109,19 @@ function OurOffice() {
                 >
                   <Image
                     src={images[0].url}
-                    alt="Office"
-                    width={400}
-                    height={400}
+                    alt="Office space"
                     loading="lazy"
+                    height={200}
+                    width={200}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
               </div>
 
               {/* Middle column */}
-              <div className="md:col-span-4 space-y-4">
+              <div className="sm:col-span-2 lg:col-span-4 space-y-3 sm:space-y-4">
                 <div
-                  className={`relative w-full h-56 md:h-[250px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
+                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
                     animationStarted
                       ? "translate-y-0 opacity-100"
                       : "-translate-y-20 opacity-0"
@@ -131,18 +131,18 @@ function OurOffice() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <Image
-                    src={images[1].url}
-                    alt="Office"
-                    width={400}
-                    height={250}
+                   <Image
+                    src={images[0].url}
+                    alt="Office space"
                     loading="lazy"
+                    height={200}
+                    width={200}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
 
                 <div
-                  className={`relative w-full h-56 md:h-[250px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
+                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
                     animationStarted
                       ? "translate-y-0 opacity-100"
                       : "translate-y-20 opacity-0"
@@ -153,17 +153,17 @@ function OurOffice() {
                   }}
                 >
                   <Image
-                    src={images[2].url}
-                    alt="Office"
-                    width={400}
-                    height={250}
+                    src={images[0].url}
+                    alt="Office space"
                     loading="lazy"
+                    height={200}
+                    width={200}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
 
                 <div
-                  className={`flex justify-center pt-3 transition-all duration-700 ${
+                  className={`flex justify-center pt-2 sm:pt-3 transition-all duration-700 ${
                     animationStarted
                       ? "scale-100 opacity-100"
                       : "scale-90 opacity-0"
@@ -173,17 +173,17 @@ function OurOffice() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <button className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
-                    <MessageCircle size={22} />
+                  <button className="hidden lg:flex items-center gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
+                    <MessageCircle size={18} className="sm:w-[22px] sm:h-[22px]" />
                     <span>Reach Out, We're Ready</span>
                   </button>
                 </div>
               </div>
 
               {/* Right column */}
-              <div className="md:col-span-4 space-y-4">
+              <div className="sm:col-span-2 lg:col-span-4 space-y-3 sm:space-y-4">
                 <div
-                  className={`relative w-full h-56 md:h-[300px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
+                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
                     animationStarted
                       ? "translate-x-0 opacity-100"
                       : "translate-x-20 opacity-0"
@@ -193,18 +193,18 @@ function OurOffice() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <Image
-                    src={images[3].url}
-                    alt="Office"
-                    width={400}
-                    height={300}
+                   <Image
+                    src={images[0].url}
+                    alt="Office space"
                     loading="lazy"
+                    height={200}
+                    width={200}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
 
                 <div
-                  className={`relative w-full h-56 md:h-[300px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
+                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
                     animationStarted
                       ? "translate-x-0 opacity-100"
                       : "translate-x-20 opacity-0"
@@ -214,23 +214,27 @@ function OurOffice() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <Image
-                    src={images[4].url}
-                    alt="Office"
-                    width={400}
-                    height={300}
+                   <Image
+                    src={images[0].url}
+                    alt="Office space"
                     loading="lazy"
+                    height={200}
+                    width={200}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
                   />
                 </div>
               </div>
             </div>
           </div>
+
+           <button className="flex lg:hidden items-center justify-center w-full gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
+                    <MessageCircle size={18} className="sm:w-[22px] sm:h-[22px]" />
+                    <span>Reach Out, We're Ready</span>
+                  </button>
         </div>
       </div>
     </div>
   );
 }
 
-// ✅ Prevent unnecessary re-renders
-export default React.memo(OurOffice);
+export default OurOffice;

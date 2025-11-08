@@ -20,25 +20,25 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-   <div>
-    <Hero />
-    <BuildIntelligentValue />
-    <OurImpactInNumbers />
-    <TransformingBusinesses />
-    <OurServices />
-    <HowWeBuildIntelligentSolutions />
-    <YourAppDevelopmentJourneyBeginsHere />
-    <ROIOfIntelligence />
-    <FeaturedCaseStudy />
-    <OurTrustedPartners infiniteScroll={true}/>
-    <WorkWithUs />
-    <IndustriesWeServe />
-    <Testimonials />
-    <TechStack />
-     <OurOffice />
-    <Faqs />
-    <ContactForm />
-    <Location />
-   </div>
+    <div>
+      <Hero />
+      <BuildIntelligentValue />
+      <OurImpactInNumbers />
+      <OurServices />
+      <TransformingBusinesses />
+      <HowWeBuildIntelligentSolutions />
+      <YourAppDevelopmentJourneyBeginsHere />
+      <ROIOfIntelligence />
+      <FeaturedCaseStudy />
+      <OurTrustedPartners infiniteScroll={true} />
+      <WorkWithUs />
+      <IndustriesWeServe />
+      <Testimonials />
+      <TechStack /> 
+      <OurOffice /> 
+      <Faqs />
+      <ContactForm /> 
+      <Location /> 
+    </div>
   );
 }
