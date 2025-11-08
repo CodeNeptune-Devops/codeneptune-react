@@ -116,7 +116,30 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  /* Fix for html and body positioning */
+  html {
+    position: relative;
+    overflow-x: hidden;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Fix for mobile browsers address bar issues */
+  html, body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  
+  /* Ensure fixed elements stay fixed on mobile and production */
+  header[class*="fixed"] {
+    position: fixed !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
   }
 }
