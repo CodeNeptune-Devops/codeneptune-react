@@ -137,7 +137,7 @@ function Header() {
                                     </div>
 
                                     <div className="flex flex-col justify-start items-start gap-3">
-                                        <h3 className='font-semibold text-lg text-blue-500'>Creative $ Cloud</h3>
+                                        <h3 className='font-semibold text-lg text-blue-500'>Creative & Cloud</h3>
                                         <div className="flex flex-col gap-3">
                                             {creativeCloud.map((service) => (
                                                 <Link key={service.name} href={service.href} className="hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent text-sm">
@@ -282,8 +282,8 @@ function Header() {
                         </div>
                     </div>
 
-                    <Link href='/solutions' className='hover:text-blue-500 py-2'>Solutions</Link>
-                    <Link href='/blog' className='hover:text-blue-500 py-2'>Blog</Link>
+                    <Link href='/about' className='hover:text-blue-500 py-2'>Solutions</Link>
+                    <Link href='/about' className='hover:text-blue-500 py-2'>Blog</Link>
 
                     {/* Mobile Contact Button */}
                     <button
