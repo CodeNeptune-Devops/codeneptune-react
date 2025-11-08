@@ -71,9 +71,9 @@ function Footer() {
 
       <div className="w-full bg-[#171717] text-white">
         <div className="max-w-7xl mx-auto w-full px-4 pt-20 py-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-center items-start justify-items-center gap-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-center items-start justify-items-center gap-5">
 
-            <div className="flex col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1 flex-col justify-start items-start gap-8">
+            <div className="flex col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1 flex-col justify-start items-start gap-8 w-full">
               <img src="/cn-footer-logo.svg" alt="Logo" className="w-48 h-full" />
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-5">
 
@@ -107,7 +107,7 @@ function Footer() {
               </div> */}
             </div>
 
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5 w-full lg:w-fit">
               <h5 className="text-lg">Quick Links</h5>
               <div className="flex flex-col justify-start text-[#CCCCCC] items-start gap-3">
                 {quickLinks.map((item, index) => (
@@ -122,7 +122,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5 w-full">
               <h5 className="text-lg">Services</h5>
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
                 {services.map((item, index) => (
@@ -137,7 +137,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5">
+            <div className="flex col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1 flex-col justify-start items-start gap-5 w-full">
               <h5 className="text-lg">Reach Us</h5>
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
                 <Link

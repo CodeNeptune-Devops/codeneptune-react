@@ -1,9 +1,7 @@
 'use client'
 
-
 import React, { useEffect, useRef, useState } from 'react';
 import SectionTitle from '../titles/SectionTitle';
-import bg1 from '../../assets/featured-case-study/bg-1.webp';
 
 function FeaturedCaseStudy() {
   const sectionRef = useRef(null);
@@ -55,7 +53,6 @@ function FeaturedCaseStudy() {
         'Seamless Team Collaboration'
       ],
       bgImage: '/featured-case-study/bg-1.webp',
-      phoneScreen: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80'
     },
     {
       title: 'EV Mobility',
@@ -71,7 +68,6 @@ function FeaturedCaseStudy() {
         'EV Mobility Valet - Service for hassle-free vehicle pickup'
       ],
       bgImage: '/featured-case-study/bg-2.webp',
-      phoneScreen: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&q=80'
     },
     {
       title: 'FreshCart',
@@ -88,118 +84,126 @@ function FeaturedCaseStudy() {
         'Farm Partnership Integration'
       ],
       bgImage: '/featured-case-study/bg-3.webp',
-      phoneScreen: 'https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=400&q=80'
     },
-
   ];
 
   const maxScroll = (caseStudies.length - 1) * 100;
   const horizontalOffset = scrollProgress * maxScroll;
 
   return (
-    <div className="w-full bg-slate-950 pt-16">
+    <div className="w-full bg-slate-950 pt-8 sm:pt-12 md:pt-10">
       <div
         ref={sectionRef}
         className="relative"
         style={{ height: `${300 + caseStudies.length * 100}vh` }}
       >
-
-
-        <div className="sticky top-0 h-screen overflow-hidden">
-
-          <div className='max-w-7xl mx-auto w-full '>
-            <SectionTitle textColor='text-white' />
-
+        <div className="sticky top-0 h-screen overflow-hidden pb-16">
+          
+          {/* Section Title */}
+          <div className='max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6'>
+            <SectionTitle 
+            textColor='text-white'
+            title='How We Build Intelligent Solutions'
+            description='Every successful product begins with a clear vision. Our process is designed to understand your goals, refine your ideas, and deliver intelligent, scalable outcomes that align with your business objectives.'
+            />
           </div>
-          <div className="max-w-7xl mx-auto w-full h-full flex items-start pb-6  ">
 
-
-            {/* Horizontal scrolling cards - Centered */}
-            <div className="w-full max-w-7xl overflow-hidden h-[80%]">
-              <div
-                ref={cardsRef}
-                className="flex gap-6 transition-transform duration-100 ease-out h-full"
-                style={{
-                  transform: `translateX(-${horizontalOffset}%)`,
-                }}
-              >
-                {caseStudies.map((study, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 w-full h-full"
-                  >
+          <div className="w-full h-full flex items-start pb-6">
+            {/* Horizontal scrolling cards */}
+            <div className="w-full overflow-hidden h-[80%] px-4 sm:px-6 lg:px-8 pb-5">
+              <div className="max-w-7xl mx-auto h-full">
+                <div
+                  ref={cardsRef}
+                  className="flex gap-4 sm:gap-6 transition-transform duration-100 ease-out h-full"
+                  style={{
+                    transform: `translateX(-${horizontalOffset}%)`,
+                  }}
+                >
+                  {caseStudies.map((study, index) => (
                     <div
-                      className="relative h-full rounded-2xl overflow-hidden bg-cover bg-center"
-                      style={{
-                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%), url('${study.bgImage}')`
-                      }}
+                      key={index}
+                      className="flex-shrink-0 w-full h-full"
                     >
-                      {/* Content Container */}
-                      <div className="flex h-full">
-                        {/* Left side - Text content */}
-                        <div className="w-[55%] p-8 flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-3xl font-bold text-white mb-2">{study.title}</h3>
-                            <p className="text-emerald-300 text-lg mb-4">{study.subtitle}</p>
+                      <div
+                        className="relative h-full rounded-xl sm:rounded-2xl overflow-hidden bg-cover bg-center"
+                        style={{
+                          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('${study.bgImage}')`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      >
+                        {/* Content Container */}
+                        <div className="flex flex-col md:flex-row h-full">
+                          {/* Left side - Text content */}
+                          <div className="w-full md:w-[55%] lg:w-[50%] p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+                            <div>
+                              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">{study.title}</h3>
+                              <p className="text-emerald-300 text-base sm:text-lg mb-3 sm:mb-4">{study.subtitle}</p>
 
-                            <p className="text-white/90 text-sm mb-6 leading-relaxed">
-                              {study.description}
-                            </p>
+                              <p className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed">
+                                {study.description}
+                              </p>
 
-                            {/* Tech stack */}
-                            <div className="flex flex-wrap gap-2 mb-6">
-                              {study.tech.map((tech, i) => (
-                                <span
+                              {/* Tech stack */}
+                             
+
+                              {/* Project info */}
+                              <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
+                                <div>
+                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Location</p>
+                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.location}</p>
+                                </div>
+                                <div>
+                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Duration</p>
+                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.duration}</p>
+                                </div>
+                                <div>
+                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Industry</p>
+                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.industry}</p>
+                                </div>
+                              </div>
+
+                               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
+                                {study.tech.map((tech, i) => (
+                                  <span
+                                    key={i}
+                                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/30 text-white text-[10px] sm:text-xs font-medium backdrop-blur-sm bg-white/5"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            
+
+                            {/* Features */}
+                            {/* <div className="space-y-1.5 sm:space-y-2">
+                              {study.features.map((feature, i) => (
+                                <div
                                   key={i}
-                                  className="px-3 py-1.5 rounded-full border border-white/30 text-white text-xs font-medium backdrop-blur-sm bg-white/5"
+                                  className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
                                 >
-                                  {tech}
-                                </span>
+                                  <p className="text-white text-[10px] sm:text-xs">{feature}</p>
+                                </div>
                               ))}
-                            </div>
-
-                            {/* Project info */}
-                            <div className="grid grid-cols-3 gap-3 mb-6">
-                              <div>
-                                <p className="text-white/60 text-xs mb-1">Location</p>
-                                <p className="text-white font-semibold text-sm">{study.location}</p>
-                              </div>
-                              <div>
-                                <p className="text-white/60 text-xs mb-1">Duration</p>
-                                <p className="text-white font-semibold text-sm">{study.duration}</p>
-                              </div>
-                              <div>
-                                <p className="text-white/60 text-xs mb-1">Industry</p>
-                                <p className="text-white font-semibold text-sm">{study.industry}</p>
-                              </div>
-                            </div>
+                            </div> */}
                           </div>
 
-                          {/* Features */}
-                          <div className="space-y-2">
-                            {study.features.map((feature, i) => (
-                              <div
-                                key={i}
-                                className="px-4 py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
-                              >
-                                <p className="text-white text-xs">{feature}</p>
-                              </div>
-                            ))}
+                          {/* Right side - Image area (visible on larger screens) */}
+                          <div className="hidden md:block md:w-[45%] lg:w-[50%]">
+                            {/* Background image shows through here */}
                           </div>
                         </div>
-
-                        
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }

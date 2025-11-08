@@ -102,9 +102,9 @@ function HowWeWorkOurEcommerceDevelopment() {
         {/* Header */}
         <div className="text-center mb-12">
           <SectionTitle
-          textColor='text-white'
-          title='How We Work: Our Ecommerce Development Process'
-          description='From Idea to Execution – AStreamlined Approach for Success'
+            textColor='text-white'
+            title='How We Work: Our Ecommerce Development Process'
+            description='From Idea to Execution – AStreamlined Approach for Success'
           />
         </div>
 
@@ -143,12 +143,14 @@ function HowWeWorkOurEcommerceDevelopment() {
                   <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105 flex flex-col h-full">
                     {/* Header */}
                     <div className="mb-6">
-                      <div className="bg-gradient-to-br from-blue-600 to-blue-700 w-16 h-16 rounded-2xl flex items-center justify-center mb-4 text-white shadow-lg">
-                        {process.icon}
+                      <div className='flex w-full items-center gap-3'>
+                        <div className="bg-gradient-to-br from-blue-600 to-blue-700 w-16 h-14 rounded-2xl flex items-center justify-center mb-4 text-white shadow-lg">
+                          {process.icon}
+                        </div>
+                        <h3 className="text-xl w-full font-bold text-white mb-3">
+                          {process.number}. {process.title}
+                        </h3>
                       </div>
-                      <h3 className="text-2xl font-bold text-white mb-3">
-                        {process.number}. {process.title}
-                      </h3>
                       <p className="text-gray-300 leading-relaxed">
                         {process.description}
                       </p>
@@ -159,7 +161,7 @@ function HowWeWorkOurEcommerceDevelopment() {
                       {process.points.map((point, idx) => (
                         <li key={idx} className="flex items-start text-gray-300">
                           <span className="text-blue-400 mr-3 mt-1 flex-shrink-0">◆</span>
-                          <span className="leading-relaxed">{point}</span>
+                          <span className="leading-relaxed text-sm">{point}</span>
                         </li>
                       ))}
                     </ul>
@@ -183,11 +185,10 @@ function HowWeWorkOurEcommerceDevelopment() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === index
+                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === index
                     ? 'bg-blue-600 w-8'
                     : 'bg-gray-600 hover:bg-gray-500'
-                }`}
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}

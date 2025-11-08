@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
+import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
 
 function CustomMobileAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
@@ -114,7 +115,7 @@ function CustomMobileAppDevelopmentServices() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+                <div className="  overflow-hidden">
                     <div className="flex flex-col lg:flex-row">
                         {/* Sidebar Navigation */}
                         <div className="lg:w-2/5 p-6 md:p-8 lg:p-10 space-y-3">
@@ -164,8 +165,13 @@ function CustomMobileAppDevelopmentServices() {
                                     {services[activeService].additionalText}
                                 </p>
 
-                                <button className="mt-8 bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-base md:text-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer">
-                                    LET'S BUILD TOGETHER
+                                <button className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+                                    <ShinyText
+                                        text="Lets Build Together"
+                                        disabled={false}
+                                        speed={3}
+                                        className='custom-class'
+                                    />
                                 </button>
                             </div>
                         </div>
