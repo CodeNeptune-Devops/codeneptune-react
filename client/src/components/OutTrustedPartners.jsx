@@ -87,7 +87,7 @@ function OurTrustedPartners({ infiniteScroll = true }) {
                 className="flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-300"
               >
                 <div className="w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-3">
-                  <img
+                  <Image
                     src={company.logo}
                     alt={`${company.name} logo`}
                     className="object-contain w-full h-full grayscale hover:grayscale-0 transition-all duration-300 hover:scale-105"

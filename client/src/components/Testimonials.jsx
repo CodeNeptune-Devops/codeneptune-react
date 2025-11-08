@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionTitle from './titles/SectionTitle';
+import Image from 'next/image';
+import img1 from '../assets/trusted-partners/partner-1.webp'
 
 function Testimonials() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,8 +17,8 @@ function Testimonials() {
             name: " Ravi T",
             position: "Operations Head",
             company: "Entrex Mobility",
-            logo: "../assets/trusted-partners/partner-1.webp",
-            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
+            logo: img1,
+            image: img1
         },
         {
             id: 2,
@@ -24,8 +26,8 @@ function Testimonials() {
             name: " Pooja G",
             position: " Pooja G",
             company: " Pooja G",
-            logo: "https://via.placeholder.com/150x50/1a1a1a/ffffff?text=edufundo",
-            image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
+            logo: img1,
+            image: img1
         },
         {
             id: 3,
@@ -33,8 +35,8 @@ function Testimonials() {
             name: "Ananya M",
             position: "Founder",
             company: "The UX School",
-            logo: "https://via.placeholder.com/150x50/1a1a1a/ffffff?text=TechVenture",
-            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
+            logo: img1,
+            image: img1
         }
     ];
 
@@ -112,9 +114,11 @@ function Testimonials() {
                                 <div className="mt-8 pt-6 border-t border-zinc-800">
                                     <div className="flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-4">
-                                            <img
+                                            <Image
                                                 src={testimonials[getPrevIndex()].image}
                                                 alt={testimonials[getPrevIndex()].name}
+                                                height={200}
+                                                width={200}
                                                 className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                                             />
                                             <div>
@@ -131,10 +135,12 @@ function Testimonials() {
                                         </div>
 
                                         <div className="hidden sm:flex items-center justify-center bg-white rounded-lg px-6 py-3 flex-shrink-0">
-                                            <img
+                                            <Image
                                                 src={testimonials[getPrevIndex()].image}
-                                                alt={`${testimonials[getPrevIndex()].company} logo`}
-                                                className="h-10 w-auto object-contain max-w-[120px]"
+                                                alt={testimonials[getPrevIndex()].name}
+                                                height={200}
+                                                width={200}
+                                                className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                                             />
                                         </div>
                                     </div>
@@ -153,9 +159,11 @@ function Testimonials() {
                                     {/* Author Info and Logo */}
                                     <div className="flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-4">
-                                            <img
-                                                src={testimonials[currentIndex].image}
-                                                alt={testimonials[currentIndex].name}
+                                            <Image
+                                                src={testimonials[getPrevIndex()].image}
+                                                alt={testimonials[getPrevIndex()].name}
+                                                height={200}
+                                                width={200}
                                                 className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                                             />
                                             <div>
@@ -173,10 +181,12 @@ function Testimonials() {
 
                                         {/* Company Logo */}
                                         <div className="hidden sm:flex items-center justify-center bg-white rounded-lg px-6 py-3 flex-shrink-0">
-                                            <img
-                                                src={testimonials[currentIndex].image}
-                                                alt={`${testimonials[currentIndex].company} logo`}
-                                                className="h-10 w-auto object-contain max-w-[120px]"
+                                            <Image
+                                                src={testimonials[getPrevIndex()].image}
+                                                alt={testimonials[getPrevIndex()].name}
+                                                height={200}
+                                                width={200}
+                                                className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                                             />
                                         </div>
                                     </div>
@@ -184,10 +194,12 @@ function Testimonials() {
                                     {/* Mobile Logo */}
                                     <div className="sm:hidden flex justify-center mt-6 pt-6 border-t border-zinc-800">
                                         <div className="bg-white rounded-lg px-6 py-3">
-                                            <img
-                                                src={testimonials[currentIndex].logo}
-                                                alt={`${testimonials[currentIndex].company} logo`}
-                                                className="h-8 w-auto object-contain"
+                                            <Image
+                                                src={testimonials[getPrevIndex()].image}
+                                                alt={testimonials[getPrevIndex()].name}
+                                                height={200}
+                                                width={200}
+                                                className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                                             />
                                         </div>
                                     </div>
