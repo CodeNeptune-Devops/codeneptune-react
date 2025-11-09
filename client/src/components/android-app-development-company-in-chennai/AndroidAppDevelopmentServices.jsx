@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
 
-function CustomMobileAppDevelopmentServices() {
+function AndroidAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
 
     const services = [
@@ -182,4 +182,4 @@ function CustomMobileAppDevelopmentServices() {
     );
 }
 
-export default CustomMobileAppDevelopmentServices;
+export default AndroidAppDevelopmentServices;
