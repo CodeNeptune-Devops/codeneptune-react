@@ -2,7 +2,7 @@ import React from 'react';
 
 function Hero() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden px-4">
+    <div className="min-h-screen  flex items-center justify-center overflow-hidden px-4">
       <style>
         {`
           /* Smooth animations from corners to center, then to final position */
