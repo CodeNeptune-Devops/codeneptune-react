@@ -4,8 +4,12 @@ import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
 import { GrLinkUp } from "react-icons/gr"
 import { IoIosArrowDown } from "react-icons/io"
+import { usePathname } from 'next/navigation';
 
 function Header() {
+    const pathname = usePathname();
+    const isUIUXPage = pathname === '/ui-ux-design-services';
+    
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,7 +32,7 @@ function Header() {
         { name: 'Web Development', href: '/website-development-company' },
         { name: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
         { name: 'Devops', href: '/mobile-app-development-company' },
-        { name: 'UI UX', href: '/mobile-app-development-company' },
+        { name: 'UI UX', href: '/ui-ux-design-services' },
     ];
 
     const appDevelopment = servicesDropdown.slice(0, 3);
@@ -74,19 +78,24 @@ function Header() {
         };
     }, []);
 
+    // Determine if we should use "scrolled" color styles (white bg, black text)
+    const shouldUseScrolledColors = isUIUXPage || isScrolled;
+
     return (
-        <header className={`fixed top-0  w-full z-[999999] bg-transparent  transition-all duration-300 py-2`}>
-            <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${isScrolled
-                    ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
-                    : 'py-3 px-3 border-[#D8D8D8] text-white'
-                }`}>
+        <header className={`fixed top-0 w-full z-[999999] bg-transparent transition-all duration-300 py-2`}>
+            <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${
+                    isScrolled
+                        ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
+                        : 'py-3 px-3 border-[#D8D8D8]'
+                } ${shouldUseScrolledColors ? 'text-black bg-white/80 backdrop-blur-md border-white/20' : 'text-white'}`}>
                 <Link href='/'>
                     <Image
-                        className={`h-auto transition-all duration-300 ${isScrolled
-                                ? 'w-20 lg:w-28'
-                                : 'w-24 lg:w-40'
+                        className={`h-auto transition-all duration-300 ${
+                                isScrolled
+                                    ? 'w-20 lg:w-28'
+                                    : 'w-24 lg:w-40'
                             }`}
-                        src={`${isScrolled ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
+                        src={`${shouldUseScrolledColors ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
                         alt="Code Neptune Logo"
                         height={200}
                         width={200}
@@ -115,14 +124,14 @@ function Header() {
                             }}
                         >
                             Services
-                            <IoIosArrowDown className={`w-4 h-4 transition-transform duration-200 ${isScrolled ? 'text-black' : 'text-white'} ${isServicesOpen ? 'rotate-180' : ''}`} />
+                            <IoIosArrowDown className={`w-4 h-4 transition-transform duration-200 ${shouldUseScrolledColors ? 'text-black' : 'text-white'} ${isServicesOpen ? 'rotate-180' : ''}`} />
                         </button>
 
                         {/* Dropdown Menu - Centered */}
-                        <div className={`fixed top-[70px] left-1/2 transform -translate-x-1/2 max-w-3xl mx-auto w-full  border border-gray-200 rounded-lg shadow-lg z-50 transition-all duration-200 ${isServicesOpen
+                        <div className={`fixed top-[70px] left-1/2 transform -translate-x-1/2 max-w-3xl mx-auto w-full border border-gray-200 rounded-lg shadow-lg z-50 transition-all duration-200 ${isServicesOpen
                             ? 'opacity-100 visible translate-y-0'
                             : 'opacity-0 invisible -translate-y-2'
-                            } ${isScrolled ? 'bg-white text-black' : 'bg-black text-white'} `}>
+                            } ${shouldUseScrolledColors ? 'bg-white text-black' : 'bg-black text-white'}`}>
                             <div className="flex flex-col md:flex-row md:items-stretch w-full gap-4">
                                 <div className="flex-1 flex flex-col justify-start items-start gap-6 p-4">
                                     <div className="flex flex-col justify-start items-start gap-3">
@@ -181,23 +190,8 @@ function Header() {
                     <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link>
                     <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
                 </nav>
-{/* 
-                <a
-                    href='tel:+1(408) 909-7848'
-                    className={`hidden md:block text-white rounded-full font-bold transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer ${isScrolled
-                            ? 'px-4 lg:px-6 py-2 text-sm'
-                            : 'px-3 lg:px-5 xl:px-8 py-2 lg:py-3 text-lg'
-                        }`}
-                    style={{
-                        background: 'linear-gradient(to right,#4A3AFF 0%, #744EDF 100%)',
-                        border: '0.67px solid #897FFF',
-                        boxShadow: '0px 4px 5.33px rgba(223, 229, 255, 0.3), 0px 1.33px 1.33px rgba(255, 255, 255, 0.35%)'
-                    }}
-                >
-                    Contact Us
-                </a> */}
 
-                <ContactButton isScrolled={isScrolled}/>
+                <ContactButton isScrolled={shouldUseScrolledColors}/>
 
                 {/* Mobile Hamburger Menu */}
                 <button
@@ -210,16 +204,16 @@ function Header() {
                         }
                     }}
                 >
-                    <span className={`w-6 h-0.5  transition-all duration-300 ${isScrolled ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                    <span className={`w-6 h-0.5  transition-all duration-300 ${isScrolled ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-                    <span className={`w-6 h-0.5  transition-all duration-300 ${isScrolled ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                    <span className={`w-6 h-0.5 transition-all duration-300 ${shouldUseScrolledColors ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                    <span className={`w-6 h-0.5 transition-all duration-300 ${shouldUseScrolledColors ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                    <span className={`w-6 h-0.5 transition-all duration-300 ${shouldUseScrolledColors ? 'bg-black' : 'bg-white'} ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
                 </button>
             </div>
 
             {/* Mobile Menu */}
             <div
                 ref={mobileMenuRef}
-                className={`md:hidden fixed left-0 w-full  border-t border-gray-200 shadow-lg  rounded-b-lg transition-all duration-300  ${isScrolled ? 'top-[60px] bg-white text-black' : 'top-[80px] bg-black text-white shadow-gray-900'
+                className={`md:hidden fixed left-0 w-full border-t border-gray-200 shadow-lg rounded-b-lg transition-all duration-300 ${shouldUseScrolledColors ? 'top-[60px] bg-white text-black' : 'top-[80px] bg-black text-white shadow-gray-900'
                     } ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                     }`}
                 style={{
@@ -251,7 +245,7 @@ function Header() {
                         <div className={`pl-4 space-y-2 transition-all duration-200 ${isMobileServicesOpen
                                 ? 'max-h-screen opacity-100 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'
                                 : 'max-h-0 opacity-0 overflow-hidden'
-                            } `}
+                            }`}
                             style={{
                                 maxHeight: isMobileServicesOpen ? 'calc(100vh - 200px)' : '0'
                             }}>
