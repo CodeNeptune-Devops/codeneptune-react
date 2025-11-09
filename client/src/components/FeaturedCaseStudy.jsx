@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
-import SectionTitle from '../titles/SectionTitle';
+import SectionTitle from './titles/SectionTitle';
 
 function FeaturedCaseStudy() {
   const sectionRef = useRef(null);

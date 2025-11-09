@@ -1,8 +1,14 @@
 import React from 'react';
 import SectionTitle from './titles/SectionTitle';
 
-function OurProvenDevelopmentProcess() {
-  const steps = [
+function OurProvenDevelopmentProcess({
+  title="Add A Title",
+  description="Add A Description ",
+  data,
+  padding=""
+}) {
+
+  const stepsList = [
     {
       number: "01",
       title: "Discovery & Planning",
@@ -35,14 +41,16 @@ function OurProvenDevelopmentProcess() {
     }
   ];
 
+  const steps = data || stepsList;
+
   return (
-    <div className="min-h-screen pt-16 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen pt-16 px-4 sm:px-6 lg:px-8 ${padding}`}>
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-10">
           <SectionTitle 
-          title=' Our Proven 5-Step Development Process'
-          description=' Building your dream website is faster and easier than you might think. Our proven 5-step process takes your site from concept to launch seamlessly, without the stress.'
+          title={title}
+          description={description}
           />
         </div>
 
@@ -51,7 +59,7 @@ function OurProvenDevelopmentProcess() {
           {steps.map((step, index) => (
             <div 
               key={index}
-              className={`${step.bgColor} text-white rounded-2xl p-6 sm:p-8 transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl`}
+              className={`${step.bgColor} text-white rounded-2xl p-6 sm:p-5 transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl`}
             >
               {/* Number */}
               <div className="text-5xl sm:text-6xl font-bold mb-4 opacity-90">
@@ -59,7 +67,7 @@ function OurProvenDevelopmentProcess() {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl sm:text-2xl font-bold mb-4 leading-tight">
+              <h3 className="text-xl sm:text-xl font-bold mb-4 leading-tight">
                 {step.title}
               </h3>
 

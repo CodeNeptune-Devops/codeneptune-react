@@ -4,7 +4,8 @@ function SectionTitle({
     title=" How We Build Intelligent Solutions",
     description="Every successful product begins with a clear vision. Our process is designed to understand your goals, refine your ideas, and deliver intelligent, scalable outcomes that align with your business objectives.",
     textColor="text-black",
-    align="text-center"
+    align="text-center",
+    descriptionColor="text-gray-500"
 }
 ) {
     return (
@@ -13,7 +14,7 @@ function SectionTitle({
                {title}
             </h3>
             <div className={`flex items-center`}>
-                <p className={`text-base md:text-lg text-gray-500 leading-relaxed  ${align}`}>
+                <p className={`text-base md:text-lg  leading-relaxed ${descriptionColor}  ${align}`}>
                    {description}
                 </p>
             </div>

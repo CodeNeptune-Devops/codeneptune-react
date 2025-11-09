@@ -19,7 +19,11 @@ const ShinyText = dynamic(() => import("@/animatedTexts/ShinyText/ShinyText"), {
   ssr: false,
 });
 
-export default function Hero({text1,text2,description}) {
+export default function Hero({
+  text1='Add Text 1', 
+  text2 = "Add Text 2",
+  description = "Description"
+}) {
   const scrollRef = useRef(null);
   const [translateY, setTranslateY] = useState(0);
   const [headingFadeComplete, setHeadingFadeComplete] = useState(false);
@@ -58,9 +62,8 @@ export default function Hero({text1,text2,description}) {
       <div className="relative z-20 max-w-7xl mx-auto flex flex-col items-center gap-3 px-4 py-12">
         {/* Badge */}
         <div
-          className={`transition-all duration-700 ease-out ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
           style={{ willChange: "transform, opacity" }}
         >
           <button className="flex flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
@@ -81,11 +84,10 @@ export default function Hero({text1,text2,description}) {
         <div className="flex flex-col items-center justify-center w-full gap-4 mt-2 min-h-[200px]">
           <div className="flex flex-col w-full justify-center items-center gap-2">
             <h2
-              className={`text-xl md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
-                !headingFadeComplete
+              className={`text-xl md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${!headingFadeComplete
                   ? "scale-150 opacity-0"
                   : "scale-150 opacity-100"
-              } ${headingPositionComplete ? "translate-y-0" : "translate-y-[10vh]"}`}
+                } ${headingPositionComplete ? "translate-y-0" : "translate-y-[10vh]"}`}
               style={{
                 transitionDuration: "800ms",
                 willChange: "transform, opacity",
@@ -103,9 +105,8 @@ export default function Hero({text1,text2,description}) {
             </h2>
 
             <h2
-              className={`text-3xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
-                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-              }`}
+              className={`text-3xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                }`}
               style={{ willChange: "transform, opacity" }}
             >
               <GradientText
@@ -122,9 +123,8 @@ export default function Hero({text1,text2,description}) {
 
         {/* Description */}
         <p
-          className={`text-[18px] font-medium mt-2 text-center max-w-6xl text-white/90 leading-relaxed transition-all duration-700 ease-out ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`text-[18px] font-medium mt-2 text-center max-w-6xl text-white/90 leading-relaxed transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
           style={{ transitionDelay: "150ms", willChange: "transform, opacity" }}
         >
           {description}
@@ -132,9 +132,8 @@ export default function Hero({text1,text2,description}) {
 
         {/* Buttons */}
         <div
-          className={`flex flex-col md:flex-row justify-center items-center gap-5 mt-4 transition-all duration-700 ease-out ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`flex flex-col md:flex-row justify-center items-center gap-5 mt-4 transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
           style={{ transitionDelay: "300ms", willChange: "transform, opacity" }}
         >
           <button className="px-6 py-3 rounded-full text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-52 hover:bg-white transition-colors">
@@ -148,9 +147,8 @@ export default function Hero({text1,text2,description}) {
 
         {/* Labels */}
         <div
-          className={`w-full flex justify-center items-center gap-4 mt-12 transition-all duration-700 ease-out ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`w-full flex justify-center items-center gap-4 mt-12 transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
           style={{ transitionDelay: "450ms", willChange: "transform, opacity" }}
         >
           {[
@@ -164,10 +162,10 @@ export default function Hero({text1,text2,description}) {
               text1: "Scalable",
               text2: "Mobile Apps",
             },
-            { 
-              icon: "/home/label-3.svg", 
-              text1: "UI/UX", 
-              text2: "Design & Branding" 
+            {
+              icon: "/home/label-3.svg",
+              text1: "UI/UX",
+              text2: "Design & Branding"
             },
           ].map((item, index) => (
             <div

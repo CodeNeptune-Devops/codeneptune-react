@@ -10,45 +10,47 @@ import {
   IconTerminal2,
 } from "@tabler/icons-react";
 
-export function FeaturesSectionWithHoverEffects() {
-  const features = [
-  {
-    title: "Expertise in Native & Flutter Development",
-    description:
-      "We specialize in iOS, Android, and Flutter, delivering high-quality native and cross-platform applications tailored to your needs.",
-    icon: <IconTerminal2 />,
-  },
-  {
-    title: "End-to-End App Development",
-    description:
-      "From idea validation to design, development, deployment, and maintenance, we handle everything to bring your vision to life.",
-    icon: <IconEaseInOut />,
-  },
-  {
-    title: "User-Centric UI/UX Design",
-    description:
-      "We create intuitive, visually appealing, and engaging interfaces that enhance user experience and retention.",
-    icon: <IconHeart />,
-  },
-  {
-    title: "Agile & Scalable Solutions",
-    description:
-      "We follow an agile development approach to ensure rapid iterations, scalability, and future-proof solutions.",
-    icon: <IconRouteAltLeft />,
-  },
-  {
-    title: "Security & Performance Optimized",
-    description:
-      "We implement the latest security standards and performance optimizations to ensure your app is fast, secure, and reliable.",
-    icon: <IconAdjustmentsBolt />,
-  },
-  {
-    title: "Continuous Support & Maintenance",
-    description:
-      "We offer post-launch support, regular updates, and performance monitoring to keep your app running smoothly.",
-    icon: <IconHelp />,
-  },
-];
+export function FeaturesSectionWithHoverEffects({ data }) {
+  const intialFeatures = [
+    {
+      title: "Expertise in Native & Flutter Development",
+      description:
+        "We specialize in iOS, Android, and Flutter, delivering high-quality native and cross-platform applications tailored to your needs.",
+      icon: <IconTerminal2 />,
+    },
+    {
+      title: "End-to-End App Development",
+      description:
+        "From idea validation to design, development, deployment, and maintenance, we handle everything to bring your vision to life.",
+      icon: <IconEaseInOut />,
+    },
+    {
+      title: "User-Centric UI/UX Design",
+      description:
+        "We create intuitive, visually appealing, and engaging interfaces that enhance user experience and retention.",
+      icon: <IconHeart />,
+    },
+    {
+      title: "Agile & Scalable Solutions",
+      description:
+        "We follow an agile development approach to ensure rapid iterations, scalability, and future-proof solutions.",
+      icon: <IconRouteAltLeft />,
+    },
+    {
+      title: "Security & Performance Optimized",
+      description:
+        "We implement the latest security standards and performance optimizations to ensure your app is fast, secure, and reliable.",
+      icon: <IconAdjustmentsBolt />,
+    },
+    {
+      title: "Continuous Support & Maintenance",
+      description:
+        "We offer post-launch support, regular updates, and performance monitoring to keep your app running smoothly.",
+      icon: <IconHelp />,
+    },
+  ];
+
+  const features = data || intialFeatures;
 
   return (
     <div

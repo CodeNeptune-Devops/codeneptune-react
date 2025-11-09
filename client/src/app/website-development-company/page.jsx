@@ -33,7 +33,10 @@ function page() {
         />
         <FeaturesSectionWithHoverEffects />
       </div>
-      <OurProvenDevelopmentProcess />
+      <OurProvenDevelopmentProcess 
+      title='Our Proven 5-Step Development Process'
+      description='Building your dream website is faster and easier than you might think. Our proven 5-step process takes your site from concept to launch seamlessly, without the stress.'
+      />
       <YourReliableWebDevelopmentPartner />
       <WebsiteSolutionsForEveryNeed />
       <AffordablePlansForEveryBusiness />
