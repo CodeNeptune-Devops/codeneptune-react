@@ -1,6 +1,7 @@
 import React from 'react'
 import { Paintbrush, Code, Package, Hourglass } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
+import Image from 'next/image'
 
 function WhyChooseCNForFlutterDevelopment() {
   const reasons = [
@@ -33,12 +34,13 @@ function WhyChooseCNForFlutterDevelopment() {
           {/* Left Side - Title and CTA */}
           <div className='flex flex-col justify-start items-start'>
             {/* Flutter Logo */}
-            <div className='bg-white rounded-3xl p-6 mb-8 shadow-lg'>
-              <svg className="w-20 h-20" viewBox="0 0 256 256" fill="none">
-                <path d="M157.665 0L0 157.665l48.535 48.535L206.2 48.535z" fill="#42A5F5"/>
-                <path d="M157.665 48.535L48.535 157.665l48.535 48.535 157.73-157.73z" fill="#0277BD"/>
-                <path d="M206.2 48.535l-48.535 48.535 48.535 48.535L256 97.07z" fill="#42A5F5" opacity="0.8"/>
-              </svg>
+            <div className=' rounded-3xl py-6 mb-8 '>
+              <Image
+              src={'/flutter-app-development/flutter-logo.svg'}
+              alt='Flutter'
+              height={150}
+              width={150}
+              />
             </div>
 
             <SectionTitle 

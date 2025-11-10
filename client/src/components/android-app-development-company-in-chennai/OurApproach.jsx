@@ -1,5 +1,5 @@
 import React from 'react'
-import { Target, Users, Package, Lock, Settings } from 'lucide-react'
+import { Target, Lock, Settings , SplinePointer , CodeXml } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
 
 function OurApproach() {
@@ -14,7 +14,7 @@ function OurApproach() {
       stepColor: 'text-pink-400'
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <SplinePointer className="w-10 h-10" />,
       iconBg: 'bg-purple-100',
       iconColor: 'text-purple-500',
       title: 'Designing for Users',
@@ -23,7 +23,7 @@ function OurApproach() {
       stepColor: 'text-purple-400'
     },
     {
-      icon: <Package className="w-8 h-8" />,
+      icon: <CodeXml className="w-8 h-8" />,
       iconBg: 'bg-green-100',
       iconColor: 'text-green-500',
       title: 'Scalable Development',

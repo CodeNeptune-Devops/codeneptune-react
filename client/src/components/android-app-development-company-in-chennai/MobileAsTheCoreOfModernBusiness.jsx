@@ -1,5 +1,6 @@
 import React from 'react'
 import { Smartphone, Users, TrendingUp } from 'lucide-react'
+import Image from 'next/image'
 
 function MobileAsTheCoreOfModernBusiness() {
   const features = [
@@ -21,10 +22,10 @@ function MobileAsTheCoreOfModernBusiness() {
   ]
 
   const stats = [
-    { label: 'Revenue', value: '+10%', color: 'bg-gradient-to-br from-orange-400 to-orange-500' },
-    { label: 'ROI', value: '+17%', color: 'bg-gradient-to-br from-yellow-400 to-yellow-500' },
-    { label: 'Loyalty', value: '+24%', color: 'bg-gradient-to-br from-purple-400 to-purple-500', icon: '💛' },
-    { label: 'Growth', value: '+31%', color: 'bg-gradient-to-br from-green-300 to-green-400', icon: '📈' }
+    { label: 'Revenue', value: '+10%', color: 'bg-gradient-to-br from-orange-400 to-orange-500',icon: '/android-app-development/revenue.svg' },
+    { label: 'ROI', value: '+17%', color: 'bg-gradient-to-br from-yellow-400 to-yellow-500',icon: '/android-app-development/roi.svg' },
+    { label: 'Loyalty', value: '+24%', color: 'bg-gradient-to-br from-purple-400 to-purple-500', icon: '/android-app-development/support.svg' },
+    { label: 'Growth', value: '+31%', color: 'bg-gradient-to-br from-green-300 to-green-400', icon: '/android-app-development/growth.svg' }
   ]
 
   return (
@@ -74,10 +75,15 @@ function MobileAsTheCoreOfModernBusiness() {
                 key={index}
                 className={`${stat.color} rounded-3xl p-8 shadow-lg transform hover:scale-105 transition-transform duration-300`}
               >
-                <div className="text-center">
+                <div className="text-center flex flex-col justify-start items-center">
                   {stat.icon && (
                     <div className="text-5xl mb-3">
-                      {stat.icon}
+                      <Image 
+                      src={stat.icon}
+                      alt={stat.label}
+                      height={70}
+                      width={70}
+                      />
                     </div>
                   )}
                   <h4 className="text-white text-xl font-semibold mb-2">

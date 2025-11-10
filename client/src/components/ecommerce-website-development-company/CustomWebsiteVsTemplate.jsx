@@ -128,9 +128,9 @@ function CustomWebsiteVsTemplate() {
       <div className='max-w-7xl mx-auto w-full px-6'>
         {/* Header Section */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg">
+          {/* <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg">
             <Check className="w-8 h-8 text-white" />
-          </div>
+          </div> */}
 
           <SectionTitle 
           title='Custom Website vs Template What’s Right for You?'

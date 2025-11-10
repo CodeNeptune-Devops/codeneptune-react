@@ -22,7 +22,8 @@ const ShinyText = dynamic(() => import("@/animatedTexts/ShinyText/ShinyText"), {
 export default function Hero({
   text1='Add Text 1', 
   text2 = "Add Text 2",
-  description = "Description"
+  description = "Description",
+  buttonText="Start Your Project"
 }) {
   const scrollRef = useRef(null);
   const [translateY, setTranslateY] = useState(0);
@@ -137,7 +138,7 @@ export default function Hero({
           style={{ transitionDelay: "300ms", willChange: "transform, opacity" }}
         >
           <button className="px-6 py-3 rounded-full text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-52 hover:bg-white transition-colors cursor-pointer">
-            Start Your Project
+           {buttonText}
           </button>
 
           <button className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">

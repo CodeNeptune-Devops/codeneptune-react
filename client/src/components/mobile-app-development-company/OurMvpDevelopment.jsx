@@ -1,5 +1,7 @@
 import React from 'react';
 import { Globe, DollarSign, Code, Users } from 'lucide-react';
+import img1 from '../../assets/mobile-app-development/mvp.webp';
+import Image from 'next/image';
 
 function OurMvpDevelopment() {
   const processes = [
@@ -55,17 +57,13 @@ function OurMvpDevelopment() {
           <div className="relative">
             <div className="rounded-3xl overflow-hidden   aspect-[4/3] lg:h-[400px]">
               {/* Placeholder for image - Replace with actual image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-700 to-gray-800 flex items-center justify-center">
-                <div className="text-center text-white p-8">
-                  <div className="text-5xl font-bold mb-4">code neptune</div>
-                  <div className="text-xl opacity-80 mb-8">Team Collaboration</div>
-                  <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-sm">IDEA</div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-sm">STRATEGY</div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-sm">FEEDBACK</div>
-                  </div>
-                </div>
-              </div>
+              <Image
+                src={img1}
+                alt='MVP'
+                height={300}
+                width={300}
+                className='h-full w-full object-cover'
+              />
             </div>
           </div>
 

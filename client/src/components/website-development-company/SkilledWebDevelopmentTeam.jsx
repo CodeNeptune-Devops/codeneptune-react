@@ -1,6 +1,8 @@
 import React from 'react';
 import { Award } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import img1 from '../../assets/web-development/team.webp';
+import Image from 'next/image';
 
 function SkilledWebDevelopmentTeam() {
   return (
@@ -10,9 +12,11 @@ function SkilledWebDevelopmentTeam() {
           {/* Left Side - Image */}
           <div className="order-2 lg:order-1">
             <div className="rounded-3xl overflow-hidden shadow-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" 
+              <Image 
+                src={img1} 
                 alt="Team working together"
+                height={400}
+                width={400}
                 className="w-full h-auto object-cover"
               />
             </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Globe, DollarSign, MessageSquare, Users } from 'lucide-react';
+import img1 from '../../assets/mobile-app-development/why-client-choose-us.webp'
+import Image from 'next/image';
 
 function WhyClientChooseUs() {
   const features = [
@@ -88,10 +90,13 @@ function WhyClientChooseUs() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-teal-600 to-teal-800 aspect-square lg:aspect-auto lg:h-[400px]">
                 {/* Placeholder for image - Replace with actual image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
-                  <div className="text-center text-white p-8">
-                    <div className="text-6xl font-bold mb-4">code neptune</div>
-                    <div className="text-2xl opacity-80">Developer Workspace</div>
-                  </div>
+                  <Image 
+                  src={img1}
+                  alt='Why Client Choose Us'
+                  height={300}
+                  width={300}
+                  className='h-full w-full object-cover'
+                  />
                 </div>
 
                 {/* Overlay effect */}

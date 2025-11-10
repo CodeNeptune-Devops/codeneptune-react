@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layers, Code2, TrendingUp } from 'lucide-react'
+import { Layers, Code2, TrendingUp,Boxes } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
 
 function DesignedForGrowthAndConversion() {
@@ -10,7 +10,7 @@ function DesignedForGrowthAndConversion() {
       description: 'Our design approach combines beauty with purpose. Every screen, interaction, and animation is crafted to guide users toward engagement and conversion. From onboarding to checkout, we create intuitive flows that increase retention and drive revenue.'
     },
     {
-      icon: <Code2 className="w-10 h-10" />,
+      icon: <Boxes className="w-10 h-10" />,
       title: 'Agile and Transparent Development Process',
       description: "Speed and flexibility are built into our process. Using Flutter's hot reload and an agile methodology, we deliver frequent iterations, real-time updates, and faster releases. On average, our clients launch 40% quicker compared to traditional development cycles."
     },
