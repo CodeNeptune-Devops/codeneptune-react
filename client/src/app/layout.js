@@ -36,12 +36,12 @@ export async function generateMetadata() {
     category: "Technology",
     icons: {
       icon: [
-        { url: "/cn-favicon.png", sizes: "32x32", type: "image/png" },
-        { url: "/cn-favicon.png", sizes: "16x16", type: "image/png" }
+        { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon.png", sizes: "16x16", type: "image/png" }
       ],
-      shortcut: "/cn-favicon.png",
+      shortcut: "/favicon.png",
       apple: [
-        { url: "/cn-apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
       ],
     },
     manifest: "/manifest.json",
@@ -91,9 +91,9 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Enhanced favicon setup */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/cn-favicon.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/cn-favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/cn-apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
         {/* Additional meta tags for better SEO */}
         <meta name="theme-color" content="#000000" />

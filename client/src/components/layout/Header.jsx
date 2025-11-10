@@ -29,10 +29,10 @@ function Header() {
     const servicesDropdown = [
         { name: 'Mobile App Development', href: '/mobile-app-development-company' },
         { name: 'Android App Development', href: '/android-app-development-company-in-chennai' },
-        { name: 'Flutter App', href: '/flutter-app-development-company-in-india' },
+        { name: 'Flutter App Development', href: '/flutter-app-development-company-in-india' },
         { name: 'Web Development', href: '/website-development-company' },
-        { name: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
-        { name: 'Devops', href: '/mobile-app-development-company' },
+        { name: 'Ecommerce Web Development', href: '/ecommerce-website-development-company' },
+        { name: 'Devops', href: '/devops-consulting-company' },
         { name: 'UI UX', href: '/ui-ux-design-services' },
     ];
 

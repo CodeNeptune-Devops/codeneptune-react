@@ -2,9 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText'
 
-function WorkWithUs() {
+function WorkWithUs({padding}) {
     return (
-        <div className='w-full pt-16 bg-black'>
+        <div className={`w-full pt-16 bg-black ${padding}`}>
             <div className='max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-start items-center lg:justify-center gap-4 bg-black text-white rounded-xl py-14 px-12'
                 style={{
                     backgroundImage: "url('/cta1.webp')", // 🔁 your image path here

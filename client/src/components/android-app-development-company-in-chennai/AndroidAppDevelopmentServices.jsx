@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import { Smartphone, Building2, ShoppingCart, Palette, Headphones, Sparkles } from 'lucide-react';
+import img1 from '../../assets/roi/img-1.webp';
+import Image from 'next/image';
 
 function AndroidAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
@@ -10,8 +13,10 @@ function AndroidAppDevelopmentServices() {
     const services = [
         {
             id: 1,
-            title: 'Android Application Development',
-            description: 'At Code Neptune, we design and develop feature-rich Android applications that cater to businesses of all sizes. Our Android app development services ensure your app is:',
+            icon: <Smartphone className="w-8 h-8" />,
+            title: 'Custom Android Development',
+            description: 'Apps built around your business model for performance, reliability, and growth.',
+            image:img1,
             features: [
                 'Scalable and high-performing, optimized for millions of users.',
                 'Secure and reliable, following best practices in data protection.',
@@ -23,8 +28,10 @@ function AndroidAppDevelopmentServices() {
         },
         {
             id: 2,
-            title: 'iOS Application Development',
-            description: 'We create elegant and powerful iOS applications that deliver exceptional user experiences across all Apple devices. Our iOS development services ensure:',
+            icon: <Building2 className="w-8 h-8" />,
+            title: 'Enterprise Solutions',
+            description: 'Secure, scalable platforms designed to simplify operations and support business expansion.',
+            image:img1,
             features: [
                 'Native performance with Swift and Objective-C for seamless functionality.',
                 'Intuitive interfaces following Apple\'s Human Interface Guidelines.',
@@ -36,8 +43,10 @@ function AndroidAppDevelopmentServices() {
         },
         {
             id: 3,
-            title: 'Flutter Application Development',
-            description: 'Build cross-platform applications with Flutter that work beautifully on both iOS and Android. Our Flutter development services provide:',
+            icon: <ShoppingCart className="w-8 h-8" />,
+            title: 'E-commerce and On-Demand Apps',
+            description: 'Seamless shopping and service booking experiences that boost conversions and customer loyalty.',
+            image:img1,
             features: [
                 'Single codebase for multiple platforms, reducing development time and costs.',
                 'Native-like performance with beautiful, customizable UI components.',
@@ -49,8 +58,10 @@ function AndroidAppDevelopmentServices() {
         },
         {
             id: 4,
-            title: 'React Native Application Development',
-            description: 'Leverage the power of React Native to build efficient cross-platform mobile applications. Our React Native services deliver:',
+            icon: <Palette className="w-8 h-8" />,
+            title: 'Design and Experience Engineering',
+            description: 'Intuitive UI/UX that enhances user journeys and drives long-term retention.',
+            image:img1,
             features: [
                 'JavaScript-based development with native performance capabilities.',
                 'Reusable components that accelerate development across platforms.',
@@ -62,8 +73,10 @@ function AndroidAppDevelopmentServices() {
         },
         {
             id: 5,
-            title: 'Custom Application Development',
-            description: 'Every business is unique, and so are its mobile app requirements. Our custom application development services offer:',
+            icon: <Headphones className="w-8 h-8" />,
+            title: 'Continuous Support and Maintenance',
+            description: 'Ensuring apps stay updated, secure, and aligned with evolving market needs.',
+            image:img1,
             features: [
                 'Tailored solutions designed specifically for your business needs.',
                 'Flexible architecture that scales with your growing requirements.',
@@ -75,8 +88,10 @@ function AndroidAppDevelopmentServices() {
         },
         {
             id: 6,
-            title: 'eCommerce App Development',
-            description: 'Transform your retail business with powerful eCommerce mobile applications. Our eCommerce app development includes:',
+            icon: <Sparkles className="w-8 h-8" />,
+            title: 'Advanced Integrations and Emerging Tech',
+            description: 'Integrating AI, IoT, payments, and future-ready tech for smarter, scalable apps.',
+            image:img1,
             features: [
                 'Secure payment gateway integration with multiple payment options.',
                 'Intuitive product browsing with advanced search and filters.',
@@ -89,12 +104,12 @@ function AndroidAppDevelopmentServices() {
     ];
 
     const menuItems = [
-        'Android Application Development',
-        'iOS Application Development',
-        'Flutter Application Development',
-        'React Native Application Development',
-        'Custom Application Development',
-        'eCommerce App Development'
+        'Custom Android Development',
+        'Enterprise Solutions',
+        'E-commerce and On-Demand Apps',
+        'Design and Experience Engineering',
+        'Continuous Support and Maintenance',
+        'Advanced Integrations and Emerging Tech'
     ];
 
     return (
@@ -138,15 +153,31 @@ function AndroidAppDevelopmentServices() {
                         {/* Content Area */}
                         <div className={`lg:w-3/5 bg-gradient-to-br ${services[activeService].contentGradient} p-6 md:p-10 lg:p-12 text-white transition-all duration-700`}>
                             <div className="space-y-6">
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                                    {services[activeService].title}
-                                </h2>
+                                <div className='flex justify-start items-center gap-3'> 
+
+                                    <span>
+                                        {services[activeService].icon}
+                                    </span>
+
+                                    <h2 className="text-3xl md:text-3xl font-bold leading-tight">
+                                        {services[activeService].title}
+                                    </h2>
+                                </div>
 
                                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                                     {services[activeService].description}
                                 </p>
 
-                                <div className="space-y-4">
+                                <div>
+                                    <Image 
+                                    src={services[activeService].image}
+                                    alt={services[activeService].title}
+                                    height={300}
+                                    width={300}
+                                    />
+                                </div>
+
+                                {/* <div className="space-y-4">
                                     {services[activeService].features.map((feature, index) => (
                                         <div key={index} className="flex items-start space-x-3">
                                             <div className="flex-shrink-0 mt-1">
@@ -163,7 +194,7 @@ function AndroidAppDevelopmentServices() {
 
                                 <p className="text-base md:text-lg text-white/90 leading-relaxed pt-4">
                                     {services[activeService].additionalText}
-                                </p>
+                                </p> */}
 
                                 <button className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
                                     <ShinyText

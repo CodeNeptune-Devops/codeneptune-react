@@ -20,17 +20,19 @@ function MobileAppDevelopmentCompany() {
         <div>
             <Hero />
             <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
-                <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
-                  More Than Apps, We Build Success
-                </p>
-                <SectionTitle 
-                title='Why Code Neptune? Here’s Why!'
-                description='At Code Neptune, we don’t just build apps—we create impactful mobile experiences that drive business growth. With a focus on innovation, performance, and user engagement, we ensure your app stands out in a competitive market.'
-                />
+                <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
+                    <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
+                        More Than Apps, We Build Success
+                    </p>
+                    <SectionTitle
+                        title='Why Code Neptune? Here’s Why!'
+                        description='At Code Neptune, we don’t just build apps—we create impactful mobile experiences that drive business growth. With a focus on innovation, performance, and user engagement, we ensure your app stands out in a competitive market.'
+                    />
+                </div>
                 <FeaturesSectionWithHoverEffects />
             </div>
             <CustomMobileAppDevelopmentServices />
-            <IndustriesWeServe padding={'pb-16'}/>
+            <IndustriesWeServe padding={'pb-16'} />
             <HowWeBuildIntelligentSolutions />
             <TechStack />
             <WhyClientChooseUs />
