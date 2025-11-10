@@ -1,7 +1,15 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
-import SectionTitle from './titles/SectionTitle';
+
+function SectionTitle({ textColor, title, description }) {
+  return (
+    <div className="mb-8">
+      <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${textColor}`}>{title}</h2>
+      <p className={`text-lg ${textColor} opacity-80`}>{description}</p>
+    </div>
+  );
+}
 
 function FeaturedCaseStudy() {
   const sectionRef = useRef(null);
@@ -52,7 +60,7 @@ function FeaturedCaseStudy() {
         'Real-Time Analytics and Reporting',
         'Seamless Team Collaboration'
       ],
-      bgImage: '/featured-case-study/bg-1.webp',
+      bgImage: '/featured-case-study/bg-6.webp',
     },
     {
       title: 'EV Mobility',
@@ -67,7 +75,7 @@ function FeaturedCaseStudy() {
         'Full vehicle access through EV Mobility mobile app',
         'EV Mobility Valet - Service for hassle-free vehicle pickup'
       ],
-      bgImage: '/featured-case-study/bg-2.webp',
+      bgImage: '/featured-case-study/bg-7.webp',
     },
     {
       title: 'FreshCart',
@@ -87,7 +95,10 @@ function FeaturedCaseStudy() {
     },
   ];
 
-  const maxScroll = (caseStudies.length - 1) * 100;
+  // Calculate scroll based on card width (80% + gap)
+  const cardWidthPercent = 80; // This matches md:w-[80%]
+  const gapPercent = 2; // Approximate gap as percentage
+  const maxScroll = (caseStudies.length - 1) * (cardWidthPercent + gapPercent);
   const horizontalOffset = scrollProgress * maxScroll;
 
   return (
@@ -122,78 +133,49 @@ function FeaturedCaseStudy() {
                   {caseStudies.map((study, index) => (
                     <div
                       key={index}
-                      className="flex-shrink-0 w-full h-full"
+                      className="flex-shrink-0 w-[90%] sm:w-[85%] md:w-[80%] h-full relative rounded-xl sm:rounded-2xl overflow-hidden"
+                      style={{
+                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 100%), url('${study.bgImage}')`,
+                        backgroundSize: '100% 100%',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat'
+                      }}
                     >
-                      <div
-                        className="relative h-full rounded-xl sm:rounded-2xl overflow-hidden bg-cover bg-center"
-                        style={{
-                          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('${study.bgImage}')`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center'
-                        }}
-                      >
-                        {/* Content Container */}
-                        <div className="flex flex-col md:flex-row h-full">
-                          {/* Left side - Text content */}
-                          <div className="w-full md:w-[55%] lg:w-[50%] p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
-                            <div>
-                              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">{study.title}</h3>
-                              <p className="text-emerald-300 text-base sm:text-lg mb-3 sm:mb-4">{study.subtitle}</p>
+                      {/* Content directly on background */}
+                      <div className="absolute inset-0 p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center max-w-2xl">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3">{study.title}</h3>
+                        <p className="text-emerald-300 text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">{study.subtitle}</p>
 
-                              <p className="text-white/90 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed">
-                                {study.description}
-                              </p>
+                        <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed max-w-xl">
+                          {study.description}
+                        </p>
 
-                              {/* Tech stack */}
-                             
-
-                              {/* Project info */}
-                              <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
-                                <div>
-                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Location</p>
-                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.location}</p>
-                                </div>
-                                <div>
-                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Duration</p>
-                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.duration}</p>
-                                </div>
-                                <div>
-                                  <p className="text-white/60 text-[10px] sm:text-xs mb-1">Industry</p>
-                                  <p className="text-white font-semibold text-xs sm:text-sm">{study.industry}</p>
-                                </div>
-                              </div>
-
-                               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                                {study.tech.map((tech, i) => (
-                                  <span
-                                    key={i}
-                                    className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/30 text-white text-[10px] sm:text-xs font-medium backdrop-blur-sm bg-white/5"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            
-
-                            {/* Features */}
-                            {/* <div className="space-y-1.5 sm:space-y-2">
-                              {study.features.map((feature, i) => (
-                                <div
-                                  key={i}
-                                  className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20"
-                                >
-                                  <p className="text-white text-[10px] sm:text-xs">{feature}</p>
-                                </div>
-                              ))}
-                            </div> */}
+                        {/* Project info */}
+                        <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 max-w-xl">
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Location</p>
+                            <p className="text-white font-semibold text-sm sm:text-base">{study.location}</p>
                           </div>
-
-                          {/* Right side - Image area (visible on larger screens) */}
-                          <div className="hidden md:block md:w-[45%] lg:w-[50%]">
-                            {/* Background image shows through here */}
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Duration</p>
+                            <p className="text-white font-semibold text-sm sm:text-base">{study.duration}</p>
                           </div>
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Industry</p>
+                            <p className="text-white font-semibold text-sm sm:text-base">{study.industry}</p>
+                          </div>
+                        </div>
+
+                        {/* Tech stack */}
+                        <div className="flex flex-wrap gap-2 sm:gap-2.5 max-w-xl">
+                          {study.tech.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/30 text-white text-xs sm:text-sm font-medium backdrop-blur-sm bg-white/10"
+                            >
+                              {tech}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     </div>

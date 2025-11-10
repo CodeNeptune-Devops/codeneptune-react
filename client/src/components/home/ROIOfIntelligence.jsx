@@ -126,7 +126,7 @@ function ROIOfIntelligence() {
                   
                   {/* Tabs - Horizontal scroll on mobile */}
                   <div className='w-full overflow-x-auto hide-scrollbar'>
-                    <div className='flex justify-start items-center gap-2 sm:gap-3 lg:gap-4 min-w-max pb-2'>
+                    <div className='flex justify-start items-center gap-2 sm:gap-3 lg:gap-4 min-w-max p-2'>
                       {steps.map((step) => (
                         <button
                           key={step.id}

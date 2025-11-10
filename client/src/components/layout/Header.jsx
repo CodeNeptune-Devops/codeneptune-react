@@ -83,7 +83,7 @@ function Header() {
     const shouldUseScrolledColors = isUIUXPage || isScrolled;
 
     return (
-        <header className={`fixed top-0 w-full z-[999999] bg-transparent transition-all duration-300 py-2`}>
+        <header className={`fixed top-0 w-full z-[999999] bg-transparent transition-all duration-300 py-2 px-2 lg:px-0`}>
             <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${isScrolled
                 ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
                 : 'py-3 px-3 border-[#D8D8D8]'
@@ -127,7 +127,7 @@ function Header() {
                         </button>
 
                         {/* Dropdown Menu - Centered */}
-                        <div className={`fixed top-[60px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full  z-50 transition-all duration-200 ${isScrolled ? 'py-4':'py-7'} ${isServicesOpen
+                        <div className={`fixed top-[50px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full  z-50 transition-all duration-200 ${isScrolled ? 'py-4':'py-7'} ${isServicesOpen
                             ? 'opacity-100 visible translate-y-0'
                             : 'opacity-0 invisible -translate-y-2'
                             } `}>
@@ -170,7 +170,7 @@ function Header() {
                                         {/* Row 1: Mobile Apps and Creative & Cloud */}
                                         <div className="grid grid-cols-2 gap-4">
                                             {/* Mobile Apps Section */}
-                                            <div className="bg-gray-50 rounded-xl p-5">
+                                            <div className=" rounded-xl p-5">
                                                 <h3 className="text-lg font-bold text-blue-600 mb-3">Mobile Apps</h3>
                                                 <ul className="space-y-2">
                                                     {appDevelopment.map((item,index) => (
@@ -184,7 +184,7 @@ function Header() {
                                             </div>
 
                                             {/* Creative & Cloud Section */}
-                                            <div className="bg-gray-50 rounded-xl p-5">
+                                            <div className=" rounded-xl p-5">
                                                 <h3 className="text-lg font-bold text-blue-600 mb-3">Creative & Cloud</h3>
                                                 <ul className="space-y-2">
                                                     {creativeCloud.map((item,index) => (
@@ -199,7 +199,7 @@ function Header() {
                                         </div>
 
                                         {/* Row 2: Web Development (full width) */}
-                                        <div className="bg-gray-50 rounded-xl p-5">
+                                        <div className=" rounded-xl p-5">
                                             <h3 className="text-lg font-bold text-blue-600 mb-3">Web Development</h3>
                                             <ul className="space-y-2">
                                                 {webDevelopment.map((item,index) => (
