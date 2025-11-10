@@ -5,11 +5,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import { GrLinkUp } from "react-icons/gr"
 import { IoIosArrowDown } from "react-icons/io"
 import { usePathname } from 'next/navigation';
+import { ArrowRight, Star } from 'lucide-react';
 
 function Header() {
     const pathname = usePathname();
     const isUIUXPage = pathname === '/ui-ux-design-services';
-    
+
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -83,17 +84,15 @@ function Header() {
 
     return (
         <header className={`fixed top-0 w-full z-[999999] bg-transparent transition-all duration-300 py-2`}>
-            <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${
-                    isScrolled
-                        ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
-                        : 'py-3 px-3 border-[#D8D8D8]'
+            <div className={`max-w-7xl mx-auto w-full flex justify-between items-center border rounded-full transition-all duration-300 ${isScrolled
+                ? 'py-3 px-2 shadow-lg bg-white/80 backdrop-blur-md border-white/20 text-black'
+                : 'py-3 px-3 border-[#D8D8D8]'
                 } ${shouldUseScrolledColors ? 'text-black bg-white/80 backdrop-blur-md border-white/20' : 'text-white'}`}>
                 <Link href='/'>
                     <Image
-                        className={`h-auto transition-all duration-300 ${
-                                isScrolled
-                                    ? 'w-20 lg:w-28'
-                                    : 'w-24 lg:w-40'
+                        className={`h-auto transition-all duration-300 ${isScrolled
+                            ? 'w-20 lg:w-28'
+                            : 'w-24 lg:w-40'
                             }`}
                         src={`${shouldUseScrolledColors ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
                         alt="Code Neptune Logo"
@@ -103,7 +102,7 @@ function Header() {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className='hidden md:flex justify-center items-center gap-5 md:gap-10'>
+                <nav className='hidden lg:flex justify-center items-center gap-5 md:gap-10'>
                     <Link href='/' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Home</Link>
                     <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>About</Link>
 
@@ -128,61 +127,127 @@ function Header() {
                         </button>
 
                         {/* Dropdown Menu - Centered */}
-                        <div className={`fixed top-[70px] left-1/2 transform -translate-x-1/2 max-w-3xl mx-auto w-full border border-gray-200 rounded-lg shadow-lg z-50 transition-all duration-200 ${isServicesOpen
+                        <div className={`fixed top-[60px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full  z-50 transition-all duration-200 ${isScrolled ? 'py-4':'py-7'} ${isServicesOpen
                             ? 'opacity-100 visible translate-y-0'
                             : 'opacity-0 invisible -translate-y-2'
-                            } ${shouldUseScrolledColors ? 'bg-white text-black' : 'bg-black text-white'}`}>
-                            <div className="flex flex-col md:flex-row md:items-stretch w-full gap-4">
-                                <div className="flex-1 flex flex-col justify-start items-start gap-6 p-4">
-                                    <div className="flex flex-col justify-start items-start gap-3">
-                                        <h3 className='font-semibold text-lg text-blue-500'>App Development</h3>
-                                        <div className="flex flex-col gap-3">
-                                            {appDevelopment.map((service) => (
-                                                <Link key={service.name} href={service.href} className="hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent text-sm">
-                                                    {service.name}
-                                                </Link>
-                                            ))}
+                            } `}>
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white text-black border border-gray-200 rounded-lg shadow-lg">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                                    {/* Left Column - Stats Cards */}
+                                    <div className="lg:col-span-3 space-y-4">
+                                        {/* 100+ Clients Card */}
+                                        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                                            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                                                100+ Clients
+                                            </h2>
+                                            <p className="text-gray-600 text-sm mb-4">
+                                                Our aim is to make products that bring people closer through digital.
+                                            </p>
+                                            <button className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
+                                                Work with us
+                                                <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                        </div>
+
+                                        {/* Global Presence Card */}
+                                        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                                            <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                                                Global Presence
+                                            </h2>
+                                            <p className="text-gray-600 text-sm mb-4">
+                                                Serving clients in India, UK, USA
+                                            </p>
+                                            <button className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
+                                                View Locations
+                                                <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-1 transition-transform" />
+                                            </button>
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col justify-start items-start gap-3">
-                                        <h3 className='font-semibold text-lg text-blue-500'>Creative & Cloud</h3>
-                                        <div className="flex flex-col gap-3">
-                                            {creativeCloud.map((service) => (
-                                                <Link key={service.name} href={service.href} className="hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent text-sm">
-                                                    {service.name}
-                                                </Link>
-                                            ))}
+                                    {/* Middle Column - Services */}
+                                    <div className="lg:col-span-5 space-y-4">
+                                        {/* Row 1: Mobile Apps and Creative & Cloud */}
+                                        <div className="grid grid-cols-2 gap-4">
+                                            {/* Mobile Apps Section */}
+                                            <div className="bg-gray-50 rounded-xl p-5">
+                                                <h3 className="text-lg font-bold text-blue-600 mb-3">Mobile Apps</h3>
+                                                <ul className="space-y-2">
+                                                    {appDevelopment.map((item,index) => (
+                                                        <li key={index}>
+                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                            {item.name}
+                                                        </a>
+                                                    </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            {/* Creative & Cloud Section */}
+                                            <div className="bg-gray-50 rounded-xl p-5">
+                                                <h3 className="text-lg font-bold text-blue-600 mb-3">Creative & Cloud</h3>
+                                                <ul className="space-y-2">
+                                                    {creativeCloud.map((item,index) => (
+                                                        <li key={index}>
+                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                            {item.name}
+                                                        </a>
+                                                    </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        {/* Row 2: Web Development (full width) */}
+                                        <div className="bg-gray-50 rounded-xl p-5">
+                                            <h3 className="text-lg font-bold text-blue-600 mb-3">Web Development</h3>
+                                            <ul className="space-y-2">
+                                                {webDevelopment.map((item,index) => (
+                                                        <li key={index}>
+                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                            {item.name}
+                                                        </a>
+                                                    </li>
+                                                    ))}
+                                            </ul>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="flex-1 flex flex-col gap-3 p-4">
-                                    <h3 className='font-semibold text-lg text-blue-500'>Design Services</h3>
-                                    <div className="flex flex-col gap-3">
-                                        {webDevelopment.map((service) => (
-                                            <Link key={service.name} href={service.href} className="hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent text-sm">
-                                                {service.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
+                                    {/* Right Column - Hero Card */}
+                                    <div className="lg:col-span-4 bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500 rounded-xl p-6 text-white flex flex-col justify-between">
+                                        {/* Badge/Logo */}
+                                        <div className="flex justify-center mb-0">
+                                            <div className=" bg-opacity-20 backdrop-blur-sm rounded-full p-4">
+                                                <div className="flex items-center gap-1">
+                                                    <Image 
+                                                    src={'/star-header.svg'}
+                                                    alt='Star'
+                                                    height={70}
+                                                    width={70}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div className="flex-1 flex flex-col justify-start items-start gap-3 bg-[#020796] text-white p-6 rounded-r-lg">
-                                    <h3 className='font-semibold text-2xl'>WHAT WE DO</h3>
-                                    <p className="mb-4 text-sm">
-                                        Next-generation assessments to increase self-awareness and drive behavior change.
-                                    </p>
+                                        {/* Heading */}
+                                        <div className="text-center mb-4">
+                                            <h2 className="text-2xl font-bold mb-3">
+                                                Work with Code Neptune
+                                            </h2>
+                                            <p className="text-white text-opacity-90 text-sm leading-relaxed">
+                                                Experience the excellence of our dedicated professionals who are adept in delivering top-notch solutions.
+                                            </p>
+                                        </div>
 
-                                    {/* push button to bottom so layout feels balanced */}
-                                    <div className="mt-auto">
-                                        <button className="px-4 py-2 bg-green-500 text-white rounded flex justify-start items-center gap-3 cursor-pointer">
-                                            Get a free quote
-                                            <GrLinkUp className='rotate-45' />
+                                        {/* CTA Button */}
+                                        <button className="bg-white text-purple-600 font-semibold px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:gap-3 transition-all hover:shadow-lg group mx-auto cursor-pointer">
+                                            Connect with us
+                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -191,11 +256,11 @@ function Header() {
                     <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
                 </nav>
 
-                <ContactButton isScrolled={shouldUseScrolledColors}/>
+                <ContactButton isScrolled={shouldUseScrolledColors} />
 
                 {/* Mobile Hamburger Menu */}
                 <button
-                    className='md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 hamburger-button'
+                    className='lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 hamburger-button'
                     onClick={() => {
                         setIsMobileMenuOpen(!isMobileMenuOpen);
                         // Reset mobile services dropdown when toggling mobile menu
@@ -213,7 +278,7 @@ function Header() {
             {/* Mobile Menu */}
             <div
                 ref={mobileMenuRef}
-                className={`md:hidden fixed left-0 w-full border-t border-gray-200 shadow-lg rounded-b-lg transition-all duration-300 ${shouldUseScrolledColors ? 'top-[60px] bg-white text-black' : 'top-[80px] bg-black text-white shadow-gray-900'
+                className={`lg:hidden fixed left-0 w-full border-t border-gray-200 shadow-lg rounded-b-lg transition-all duration-300 ${shouldUseScrolledColors ? 'top-[60px] bg-white text-black' : 'top-[80px] bg-black text-white shadow-gray-900'
                     } ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                     }`}
                 style={{
@@ -243,8 +308,8 @@ function Header() {
 
                         {/* Mobile Services Submenu */}
                         <div className={`pl-4 space-y-2 transition-all duration-200 ${isMobileServicesOpen
-                                ? 'max-h-screen opacity-100 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'
-                                : 'max-h-0 opacity-0 overflow-hidden'
+                            ? 'max-h-screen opacity-100 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'
+                            : 'max-h-0 opacity-0 overflow-hidden'
                             }`}
                             style={{
                                 maxHeight: isMobileServicesOpen ? 'calc(100vh - 200px)' : '0'
