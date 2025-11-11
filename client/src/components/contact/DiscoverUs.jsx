@@ -4,11 +4,7 @@ import SectionTitle from '../titles/SectionTitle';
 
 function DiscoverUs() {
     const contactInfo = [
-        {
-            icon: <MapPin className="w-6 h-6" />,
-            title: "LOCATION",
-            content: "Chennai, TN, INDIA"
-        },
+        
         {
             icon: <Mail className="w-6 h-6" />,
             title: "EMAIL US",

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import ContactModal from "@/modals/ContactModal";
 
 const plus_jakarta_sans = Plus_Jakarta_Sans({ subsets: ["latin"], weight: "500" });
 
@@ -20,12 +21,13 @@ const ShinyText = dynamic(() => import("@/animatedTexts/ShinyText/ShinyText"), {
 });
 
 export default function Hero() {
-  const scrollRef = useRef(null);
+ const scrollRef = useRef(null);
   const [translateY, setTranslateY] = useState(0);
   const [headingFadeComplete, setHeadingFadeComplete] = useState(false);
   const [headingScaleComplete, setHeadingScaleComplete] = useState(false);
   const [headingPositionComplete, setHeadingPositionComplete] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Sequential transitions
@@ -45,6 +47,18 @@ export default function Hero() {
       clearInterval(interval);
     };
   }, []);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
 
   return (
     <section className="relative w-full min-h-screen flex justify-center items-center overflow-hidden bg-[#090412] text-white pt-24 pb-10">
@@ -139,7 +153,9 @@ export default function Hero() {
           }`}
           style={{ transitionDelay: "300ms", willChange: "transform, opacity" }}
         >
-          <button className="px-6 py-3 rounded-full text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-52 hover:bg-white transition-colors cursor-pointer">
+          <button 
+          onClick={() => setIsModalOpen(true)}
+          className="px-6 py-3 rounded-full text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-52 hover:bg-white transition-colors cursor-pointer">
             Start Your Project
           </button>
 
@@ -191,6 +207,10 @@ export default function Hero() {
           ))}
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }
