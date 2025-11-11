@@ -6,6 +6,7 @@ import { GrLinkUp } from "react-icons/gr"
 import { IoIosArrowDown } from "react-icons/io"
 import { usePathname } from 'next/navigation';
 import { ArrowRight, Star } from 'lucide-react';
+import Sidebar from './Sidebar';
 
 function Header() {
     const pathname = usePathname();
@@ -127,7 +128,7 @@ function Header() {
                         </button>
 
                         {/* Dropdown Menu - Centered */}
-                        <div className={`fixed top-[50px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full  z-50 transition-all duration-200 ${isScrolled ? 'py-4':'py-7'} ${isServicesOpen
+                        <div className={`fixed top-[50px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full  z-50 transition-all duration-200 ${isScrolled ? 'py-4' : 'py-7'} ${isServicesOpen
                             ? 'opacity-100 visible translate-y-0'
                             : 'opacity-0 invisible -translate-y-2'
                             } `}>
@@ -173,12 +174,12 @@ function Header() {
                                             <div className=" rounded-xl p-5">
                                                 <h3 className="text-lg font-bold text-blue-600 mb-3">Mobile Apps</h3>
                                                 <ul className="space-y-2">
-                                                    {appDevelopment.map((item,index) => (
+                                                    {appDevelopment.map((item, index) => (
                                                         <li key={index}>
-                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
-                                                            {item.name}
-                                                        </a>
-                                                    </li>
+                                                            <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                                {item.name}
+                                                            </a>
+                                                        </li>
                                                     ))}
                                                 </ul>
                                             </div>
@@ -187,12 +188,12 @@ function Header() {
                                             <div className=" rounded-xl p-5">
                                                 <h3 className="text-lg font-bold text-blue-600 mb-3">Creative & Cloud</h3>
                                                 <ul className="space-y-2">
-                                                    {creativeCloud.map((item,index) => (
+                                                    {creativeCloud.map((item, index) => (
                                                         <li key={index}>
-                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
-                                                            {item.name}
-                                                        </a>
-                                                    </li>
+                                                            <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                                {item.name}
+                                                            </a>
+                                                        </li>
                                                     ))}
                                                 </ul>
                                             </div>
@@ -202,13 +203,13 @@ function Header() {
                                         <div className=" rounded-xl p-5">
                                             <h3 className="text-lg font-bold text-blue-600 mb-3">Web Development</h3>
                                             <ul className="space-y-2">
-                                                {webDevelopment.map((item,index) => (
-                                                        <li key={index}>
+                                                {webDevelopment.map((item, index) => (
+                                                    <li key={index}>
                                                         <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
                                                             {item.name}
                                                         </a>
                                                     </li>
-                                                    ))}
+                                                ))}
                                             </ul>
                                         </div>
                                     </div>
@@ -219,11 +220,11 @@ function Header() {
                                         <div className="flex justify-center mb-0">
                                             <div className=" bg-opacity-20 backdrop-blur-sm rounded-full p-4">
                                                 <div className="flex items-center gap-1">
-                                                    <Image 
-                                                    src={'/star-header.svg'}
-                                                    alt='Star'
-                                                    height={70}
-                                                    width={70}
+                                                    <Image
+                                                        src={'/star-header.svg'}
+                                                        alt='Star'
+                                                        height={70}
+                                                        width={70}
                                                     />
                                                 </div>
                                             </div>
@@ -252,8 +253,9 @@ function Header() {
                         </div>
                     </div>
 
-                    <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link>
+                    {/* <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link> */}
                     <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
+                    <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Contact Us</Link>
                 </nav>
 
                 <ContactButton isScrolled={shouldUseScrolledColors} />
@@ -275,88 +277,26 @@ function Header() {
                 </button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Offcanvas Menu */}
+            {/* Mobile Menu Overlay */}
             <div
-                ref={mobileMenuRef}
-                className={`lg:hidden fixed left-0 w-full border-t border-gray-200 shadow-lg rounded-b-lg transition-all duration-300 ${shouldUseScrolledColors ? 'top-[60px] bg-white text-black' : 'top-[80px] bg-black text-white shadow-gray-900'
-                    } ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                className={`lg:hidden fixed inset-0 bg-black transition-opacity duration-300 z-40 ${isMobileMenuOpen ? 'opacity-50 visible' : 'opacity-0 invisible'
                     }`}
-                style={{
-                    maxHeight: 'calc(100vh - 100px)',
-                    overflowY: 'auto'
-                }}>
-                <nav className='flex flex-col p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
-                    <Link href='/' className='hover:text-blue-500 py-2'>Home</Link>
-                    <Link href='/about' className='hover:text-blue-500 py-2'>About</Link>
+                onClick={() => setIsMobileMenuOpen(false)}
+            />
 
-                    {/* Mobile Services Dropdown */}
-                    <div className='flex flex-col'>
-                        <button
-                            className='hover:text-blue-500 flex items-center justify-between py-2'
-                            onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                        >
-                            Services
-                            <svg
-                                className={`w-4 h-4 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`}
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-
-                        {/* Mobile Services Submenu */}
-                        <div className={`pl-4 space-y-2 transition-all duration-200 ${isMobileServicesOpen
-                            ? 'max-h-screen opacity-100 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'
-                            : 'max-h-0 opacity-0 overflow-hidden'
-                            }`}
-                            style={{
-                                maxHeight: isMobileServicesOpen ? 'calc(100vh - 200px)' : '0'
-                            }}>
-                            <div className='py-2'>
-                                <h4 className='text-blue-500 font-semibold text-sm mb-2'>App Development</h4>
-                                {appDevelopment.map((service) => (
-                                    <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
-                                        {service.name}
-                                    </Link>
-                                ))}
-                            </div>
-                            <div className='py-2'>
-                                <h4 className='text-blue-500 font-semibold text-sm mb-2'>Web Development</h4>
-                                {webDevelopment.map((service) => (
-                                    <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
-                                        {service.name}
-                                    </Link>
-                                ))}
-                            </div>
-                            <div className='py-2'>
-                                <h4 className='text-blue-500 font-semibold text-sm mb-2'>Creative & Cloud</h4>
-                                {creativeCloud.map((service) => (
-                                    <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
-                                        {service.name}
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <Link href='/about' className='hover:text-blue-500 py-2'>Solutions</Link>
-                    <Link href='/about' className='hover:text-blue-500 py-2'>Blog</Link>
-
-                    {/* Mobile Contact Button */}
-                    <button
-                        className='text-white px-6 py-3 rounded-full font-bold text-sm mt-4 w-full transition-all duration-300 ease-in-out'
-                        style={{
-                            background: 'linear-gradient(to right,#4A3AFF 0%, #744EDF 100%)',
-                            border: '0.67px solid #897FFF',
-                            boxShadow: '0px 4px 5.33px rgba(223, 229, 255, 0.3), 0px 1.33px 1.33px rgba(255, 255, 255, 0.35%)'
-                        }}
-                    >
-                        Contact Us
-                    </button>
-                </nav>
-            </div>
+            {/* Mobile Offcanvas Menu */}
+            <Sidebar 
+            mobileMenuRef={mobileMenuRef}
+            isMobileMenuOpen={isMobileMenuOpen}
+            isMobileServicesOpen={isMobileServicesOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            setIsMobileServicesOpen={setIsMobileServicesOpen}
+            shouldUseScrolledColors={shouldUseScrolledColors}
+            appDevelopment={appDevelopment}
+            webDevelopment={webDevelopment}
+            creativeCloud={creativeCloud}
+            />
         </header>
     )
 }

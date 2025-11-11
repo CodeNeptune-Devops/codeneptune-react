@@ -15,7 +15,7 @@ export async function generateMetadata() {
   const h = await headers();
   const host = h.get("host") || "";
   const isNoIndex = host === "entrex-three.vercel.app" || host === "entrex-eta.vercel.app" || host === "entrex-gold.vercel.app";
-  
+
   return {
     title: {
       default: "Code Neptune - Mobile App & Web Development Company",
@@ -23,11 +23,11 @@ export async function generateMetadata() {
     },
     description: "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites for businesses worldwide.",
     keywords: [
-      "mobile app development", 
-      "web development", 
-      "custom apps", 
-      "responsive websites", 
-      "digital solutions", 
+      "mobile app development",
+      "web development",
+      "custom apps",
+      "responsive websites",
+      "digital solutions",
       "software development"
     ],
     authors: [{ name: "Code Neptune" }],
@@ -36,10 +36,10 @@ export async function generateMetadata() {
     category: "Technology",
     icons: {
       icon: [
-        { url: "/favicon.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon.png", sizes: "16x16", type: "image/png" }
+        { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16.png", sizes: "16x16", type: "image/png" }
       ],
-      shortcut: "/favicon.png",
+      shortcut: "/cn-favicon.ico",
       apple: [
         { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
       ],
@@ -89,12 +89,12 @@ export default function RootLayout({ children }) {
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* Enhanced favicon setup */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+        <link rel="icon" type="image/x-icon" href="/cn-favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/cn-favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        
+
         {/* Additional meta tags for better SEO */}
         <meta name="theme-color" content="#000000" />
         <meta name="format-detection" content="telephone=no" />

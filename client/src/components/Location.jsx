@@ -26,7 +26,7 @@ function Location() {
     },
     {
       label: "United Kingdom",
-      addressLine: "Rockingham House, Broad Ln, Sheffield Postcode: S1 3PD",
+      addressLine: "128, City Road, London, EC1V 2NX, UNITED KINGDOM",
       numbers: ["+44 74231 34945"],
       jobs: "careers@codeneptune.com",
      image: uk,
@@ -101,9 +101,15 @@ function Location() {
           </div>
         </div>
 
-        {/* RIGHT SIDE IMAGE */}
+         {/* RIGHT SIDE IMAGE */}
         <div className="w-full flex justify-center items-center lg:w-1/2 relative overflow-hidden mt-4 lg:mt-0">
-          <div className="w-full flex justify-center">
+          <div 
+            key={activeTab}
+            className="w-full flex justify-center"
+            style={{
+              animation: 'fadeInUp 0.7s ease-out',
+            }}
+          >
             <Image
               src={activeLocation.image}
               alt={activeLocation.label}
@@ -113,6 +119,19 @@ function Location() {
             />
           </div>
         </div>
+        
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}} />
       </div>
     </div>
   );
