@@ -27,7 +27,7 @@ function WhyYourWebsite() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-black text-white py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 sm:mb-10">

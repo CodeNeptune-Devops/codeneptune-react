@@ -49,7 +49,7 @@ function OnDemandeCommerceWebsiteDevelopment() {
                     {services.map((service, index) => (
                         <div
                             key={index}
-                            className='bg-blue-500/40 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-blue-500/50 transition-all duration-300'
+                            className='bg-blue-500/40 backdrop-blur-sm border border-white/30 rounded-2xl p-8 hover:bg-blue-500/50 transition-all duration-300'
                         >
                             <div className='mb-6'>
                                 <div className='w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center'>

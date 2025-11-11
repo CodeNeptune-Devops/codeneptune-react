@@ -3,7 +3,7 @@ import SectionTitle from '../titles/SectionTitle'
 
 function FullyIntegratedWithAllTheTools() {
     return (
-        <div className='w-full pt-16'>
+        <div className='w-full py-16'>
             <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-5'>
 
                 <span className='px-4 py-3 bg-[#e1f7df] text-black uppercase font-medium rounded-full'>

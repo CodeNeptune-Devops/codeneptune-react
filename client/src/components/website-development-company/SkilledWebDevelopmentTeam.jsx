@@ -15,8 +15,8 @@ function SkilledWebDevelopmentTeam() {
               <Image 
                 src={img1} 
                 alt="Team working together"
-                height={400}
-                width={400}
+                height={600}
+                width={600}
                 className="w-full h-auto object-cover"
               />
             </div>

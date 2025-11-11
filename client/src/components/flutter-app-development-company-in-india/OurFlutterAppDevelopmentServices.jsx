@@ -21,9 +21,9 @@ function OurFlutterAppDevelopmentServices() {
   ]
 
   return (
-    <div className='w-full py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 relative overflow-hidden'>
+    <div className='w-full py-16 px-4 sm:px-6 lg:px-8 bg-black text-white relative overflow-hidden'>
       {/* Diagonal Background Effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-teal-600/20 transform skew-y-3"></div>
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-teal-600/20 transform skew-y-3"></div> */}
       
       <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-5 relative z-10'>
         {/* Title Section */}

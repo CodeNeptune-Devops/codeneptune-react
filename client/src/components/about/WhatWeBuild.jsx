@@ -1,46 +1,37 @@
 import React from 'react';
-import { Lightbulb, Zap, RefreshCw, Box, ThumbsUp } from 'lucide-react';
+import { Briefcase, ShoppingCart, FileText, Zap, Code } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
 
-function WhyChooseCodeNeptune() {
+function WhatWeBuild() {
   const reasons = [
     {
-      icon: Lightbulb,
-      title: 'Result-Based Thinking',
-      description: 'We understand Agile, classic and CAC, and design solutions to drive these metrics.',
-      gradient: 'from-purple-600 to-pink-600',
-      position: 'top-left'
+      icon: Briefcase,
+      title: "Business Websites",
+      description: "For service providers, startups, local shops, and personal brands — websites that build trust and convert leads."
+    },
+    {
+      icon: ShoppingCart,
+      title: "eCommerce Stores",
+      description: "From small shops to full-featured product catalogs — we create online stores that are simple to manage and built to sell."
+    },
+    {
+      icon: FileText,
+      title: "Landing Pages",
+      description: "Targeted pages for ad campaigns, lead generation, or single product/service highlights."
     },
     {
       icon: Zap,
-      title: 'Fast and Flexible',
-      description: 'Our senior-level design support without long term contracts or heavy lift hiring fees.',
-      gradient: 'from-blue-500 to-cyan-500',
-      position: 'top-center'
+      title: "Redesign & Speed Optimization",
+      description: "Already have a website but it's slow, clunky, or outdated? We help you modernize and improve performance.",
+      fullWidth: true
     },
     {
-      icon: RefreshCw,
-      title: 'Outcome-Driven Design',
-      description: 'Every decision we make is tied back to a clear growth-focused measurable objective.',
-      gradient: 'from-orange-500 to-yellow-500',
-      position: 'top-right'
-    },
-    {
-      icon: Box,
-      title: 'Built to Scale',
-      description: 'We design systems that keep pace of consistent as your product evolves.',
-      gradient: 'from-pink-500 to-purple-600',
-      position: 'bottom-left'
-    },
-    {
-      icon: ThumbsUp,
-      title: 'Easy to Work With',
-      description: 'Simple, upfront and collaborative with no hidden or estimation of your next team.',
-      gradient: 'from-green-500 to-teal-500',
-      position: 'bottom-right'
+      icon: Code,
+      title: "Custom Web Applications",
+      description: "Dashboards, portals, LMS platforms — for when you need something beyond the basics.",
+      fullWidth: true
     }
   ];
-
   return (
     <div className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-black text-white relative overflow-hidden">
       {/* Background Effects */}
@@ -158,7 +149,7 @@ function WhyChooseCodeNeptune() {
         {/* CTA Button */}
         <div className="text-center">
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 cursor-pointer rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-            Get a Free Consultation →
+            Get a Free Quote →
           </button>
         </div>
       </div>
@@ -166,4 +157,4 @@ function WhyChooseCodeNeptune() {
   );
 }
 
-export default WhyChooseCodeNeptune;
+export default WhatWeBuild;

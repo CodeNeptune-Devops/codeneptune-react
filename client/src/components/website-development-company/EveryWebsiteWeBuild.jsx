@@ -24,7 +24,7 @@ function EveryWebsiteWeBuild() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight px-8">
                 What's Included in Every
               </h2>
-              
+
               {/* White Box with Title */}
               <div className="bg-white rounded-r-full py-6 px-8  mb-8 inline-block">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
@@ -38,61 +38,20 @@ function EveryWebsiteWeBuild() {
               </p>
 
               {/* CTA Button */}
-             <div className='px-8'>
-                 <button className="bg-white  text-blue-600 font-semibold px-6 py-3 rounded-full text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-lg transform hover:scale-105 cursor-pointer">
-                Start Your Project
-              </button>
-             </div>
+              <div className='px-8'>
+                <button className="bg-white  text-blue-600 font-semibold px-6 py-3 rounded-full text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-lg transform hover:scale-105 cursor-pointer">
+                  Start Your Project
+                </button>
+              </div>
             </div>
 
             {/* Right Side - Features Grid */}
-            <div className="space-y-4 px-8">
-              {/* Row 1 */}
-              <div className="flex flex-wrap gap-4 justify-end">
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[0].name}
+            <div className="space-y-4 flex flex-wrap gap-2 px-6">
+              {features.map((item, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
+                  {item.name}
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[1].name}
-                </div>
-              </div>
-
-              {/* Row 2 */}
-              <div className="flex flex-wrap gap-4">
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[2].name}
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[3].name}
-                </div>
-              </div>
-
-              {/* Row 3 */}
-              <div className="flex flex-wrap gap-4 justify-start md:justify-start">
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[4].name}
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[5].name}
-                </div>
-              </div>
-
-              {/* Row 4 */}
-              <div className="flex flex-wrap gap-4">
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[6].name}
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[7].name}
-                </div>
-              </div>
-
-              {/* Row 5 - Centered */}
-              <div className="flex justify-center">
-                <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl px-6 py-3 text-white text-sm sm:text-base hover:bg-white/20 transition-all duration-300">
-                  {features[8].name}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

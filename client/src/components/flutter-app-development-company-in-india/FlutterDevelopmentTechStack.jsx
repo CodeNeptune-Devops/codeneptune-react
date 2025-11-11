@@ -5,7 +5,7 @@ import { CheckCircle, Puzzle, Users } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
 
 function FlutterDevelopmentTechStack() {
-  const [activeTab, setActiveTab] = useState(5)
+  const [activeTab, setActiveTab] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
 
   const handleTabChange = (tabId) => {

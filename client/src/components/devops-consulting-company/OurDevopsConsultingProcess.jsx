@@ -1,18 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TrendingUp, FileText, Zap, Layers, Gauge, Rocket } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
 
 function OurDevopsConsultingProcess() {
   const [activeTab, setActiveTab] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
-
-  useEffect(() => {
-    setFadeIn(false);
-    const timer = setTimeout(() => setFadeIn(true), 100);
-    return () => clearTimeout(timer);
-  }, [activeTab]);
 
   const processes = [
     {
@@ -66,79 +59,108 @@ function OurDevopsConsultingProcess() {
   ];
 
   return (
-    <div className='w-full py-16 bg-white'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        {/* Header Section */}
-        <div className='text-center mb-8'>
-          
-          <SectionTitle 
-          title=' Our DevOps Consulting Process'
-          description=' We follow a strategy-led, agile methodology that ensures your DevOps consulting implementation is not just functional but highly efficient, scalable, and business-ready from day one.'
-          />
-        </div>
+    <>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes slideInFromLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
 
-        {/* Tab Buttons */}
-        <div className='mb-8 -mx-4 sm:mx-0'>
-          <div className='overflow-x-auto px-4 sm:px-0 scrollbar-hide'>
-            <div className='flex sm:flex-wrap sm:justify-center gap-3 min-w-max sm:min-w-0'>
-              {processes.map((process) => (
-                <button
-                  key={process.id}
-                  onClick={() => setActiveTab(process.id)}
-                  className={`px-6 py-3 rounded-lg text-xs sm:text-md font-medium transition-all duration-300 border-2 whitespace-nowrap cursor-pointer ${
-                    activeTab === process.id
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400 hover:text-blue-600'
-                  }`}
-                >
-                  {process.buttonText}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
-          {/* Image */}
-          <div className='order-2 lg:order-1'>
-            <div 
-              className={`relative rounded-2xl overflow-hidden shadow-2xl transition-all duration-1000 ease-out ${
-                fadeIn ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
-              }`}
-            >
-              <img
-                src={processes[activeTab].image}
-                alt={processes[activeTab].title}
-                className='w-full h-[200px] lg:h-[300px] object-cover'
-              />
-              <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent'></div>
-            </div>
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}} />
+      
+      <div className='w-full py-16 bg-white'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          {/* Header Section */}
+          <div className='text-center mb-8'>
+            
+            <SectionTitle 
+            title=' Our DevOps Consulting Process'
+            description=' We follow a strategy-led, agile methodology that ensures your DevOps consulting implementation is not just functional but highly efficient, scalable, and business-ready from day one.'
+            />
           </div>
 
-          {/* Text Content */}
-          <div className='order-1 lg:order-2'>
-            <div 
-              className={`transition-all duration-1000 ease-out ${
-                fadeIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-              }`}
-            >
-              <div className='bg-white p-2 rounded-2xl inline-block mb-6'>
-                <div className='text-gray-900'>
-                  {processes[activeTab].icon}
-                </div>
+          {/* Tab Buttons */}
+          <div className='mb-8 -mx-4 sm:mx-0'>
+            <div className='overflow-x-auto px-4 sm:px-0 scrollbar-hide'>
+              <div className='flex sm:flex-wrap sm:justify-center gap-3 min-w-max sm:min-w-0'>
+                {processes.map((process) => (
+                  <button
+                    key={process.id}
+                    onClick={() => setActiveTab(process.id)}
+                    className={`px-6 py-3 rounded-lg text-xs sm:text-md font-medium transition-all duration-300 border-2 whitespace-nowrap cursor-pointer ${
+                      activeTab === process.id
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                        : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400 hover:text-blue-600'
+                    }`}
+                  >
+                    {process.buttonText}
+                  </button>
+                ))}
               </div>
-              <h3 className='text-3xl sm:text-4xl font-bold text-blue-600 mb-6'>
-                {processes[activeTab].title}
-              </h3>
-              <p className='text-gray-700 text-base sm:text-lg leading-relaxed'>
-                {processes[activeTab].description}
-              </p>
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
+            {/* Image - Slide in from Left */}
+            <div className='order-2 lg:order-1 overflow-hidden'>
+              <div 
+                key={`image-${activeTab}`}
+                className='relative rounded-2xl overflow-hidden shadow-2xl'
+                style={{
+                  animation: 'slideInFromLeft 0.7s ease-out'
+                }}
+              >
+                <img
+                  src={processes[activeTab].image}
+                  alt={processes[activeTab].title}
+                  className='w-full h-[200px] lg:h-[300px] object-cover'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent'></div>
+              </div>
+            </div>
+
+            {/* Text Content - Slide in from Bottom */}
+            <div className='order-1 lg:order-2 overflow-hidden'>
+              <div 
+                key={`content-${activeTab}`}
+                style={{
+                  animation: 'fadeInUp 0.7s ease-out'
+                }}
+              >
+                <div className='bg-white p-2 rounded-2xl inline-block mb-6'>
+                  <div className='text-gray-900'>
+                    {processes[activeTab].icon}
+                  </div>
+                </div>
+                <h3 className='text-3xl sm:text-4xl font-bold text-blue-600 mb-6'>
+                  {processes[activeTab].title}
+                </h3>
+                <p className='text-gray-700 text-base sm:text-lg leading-relaxed'>
+                  {processes[activeTab].description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

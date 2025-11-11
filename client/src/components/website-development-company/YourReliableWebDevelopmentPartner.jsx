@@ -90,20 +90,20 @@ function YourReliableWebDevelopmentPartner() {
           </div>
 
           {/* Card 3 - Spans 1 column, with visual mockup area */}
-          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 md:row-span-2 relative overflow-hidden">
+          <div className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 md:row-span-2 relative overflow-hidden">
             <div className="relative z-10">
-              <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
                 <span className="text-white font-bold text-xl">{features[2].number}</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
                 {features[2].title}
               </h3>
-              <p className="text-purple-100 leading-relaxed mb-6">
+              <p className="text-gray-600 leading-relaxed mb-6">
                 {features[2].description}
               </p>
               
               {/* Mock notification UI */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mt-8 border border-white/20">
+              {/* <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mt-8 border border-white/20">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 bg-purple-400 rounded-full"></div>
                   <div className="flex-1">
@@ -112,7 +112,7 @@ function YourReliableWebDevelopmentPartner() {
                   </div>
                 </div>
                 <div className="h-1 bg-white/20 rounded w-full"></div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -134,20 +134,20 @@ function YourReliableWebDevelopmentPartner() {
           </div>
 
           {/* Card 5 - Spans 1 column, with dark theme */}
-          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+          <div className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
             <div className="relative z-10">
-              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
                 <span className="text-white font-bold text-xl">{features[4].number}</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
                 {features[4].title}
               </h3>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed">
                 {features[4].description}
               </p>
               
               {/* Mock inbox UI */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 mt-8 border border-white/10">
+              {/* <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 mt-8 border border-white/10">
                 <div className="flex items-center justify-between mb-3">
                   <div className="text-white/70 text-sm font-semibold">Inbox</div>
                   <div className="flex gap-2">
@@ -159,7 +159,7 @@ function YourReliableWebDevelopmentPartner() {
                   <div className="h-2 bg-white/10 rounded w-full"></div>
                   <div className="h-2 bg-white/10 rounded w-4/5"></div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

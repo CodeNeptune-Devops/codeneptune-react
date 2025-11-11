@@ -16,16 +16,16 @@ import SectionTitle from './titles/SectionTitle'
 
 function OurTrustedPartners({ infiniteScroll = true }) {
   const companies = [
-    { name: 'Company 1', logo: partner1 },
-    { name: 'Company 1', logo: partner2 },
-    { name: 'Company 1', logo: partner3 },
-    { name: 'Company 1', logo: partner4 },
-    { name: 'Company 1', logo: partner5 },
-    { name: 'Company 1', logo: partner6 },
-    { name: 'Company 1', logo: partner7 },
-    { name: 'Company 1', logo: partner8 },
-    { name: 'Company 1', logo: partner9 },
-    { name: 'Company 1', logo: partner10 },
+    { name: 'Company 1', logo:'/client-logo/logo-1.svg' },
+    { name: 'Company 1', logo:'/client-logo/logo-2.svg' },
+    { name: 'Company 1', logo:'/client-logo/logo-3.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-4.svg' },
+    { name: 'Company 1', logo:'/client-logo/logo-5.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-6.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-7.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-8.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-9.svg'  },
+    { name: 'Company 1', logo:'/client-logo/logo-10.svg'  },
   ];
 
   return (

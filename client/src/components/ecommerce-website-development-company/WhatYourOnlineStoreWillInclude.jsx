@@ -1,6 +1,8 @@
 import React from 'react';
 import { Package, ShoppingCart, DollarSign, Smartphone, Tag, Bell, MessageCircle, Search } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ecommerce from '../../assets/e-commerce-development/ecommerce.webp';
+import Image from 'next/image';
 
 const FeatureCard = ({ icon: Icon, title, description, bgColor }) => (
   <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
@@ -86,11 +88,13 @@ export default function FeaturesLayout() {
           </div>
 
           {/* Right: Image */}
-          <div className="relative rounded-2xl overflow-hidden shadow-xl">
-            <img
-              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80"
+          <div className="relative rounded-2xl overflow-hidden">
+            <Image
+              src={ecommerce}
               alt="E-commerce workspace"
-              className="w-full h-full object-cover"
+              height={500}
+              width={500}
+              className='h-full w-full'
             />
           </div>
         </div>

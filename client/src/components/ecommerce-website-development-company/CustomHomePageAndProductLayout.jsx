@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShoppingCart, Layout, CreditCard, MessageCircle, Mail, Smartphone, Tag, Users, BookOpen, Calendar } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import img1 from '../../assets/e-commerce-development/every-online-store-we-build.webp';
+import Image from 'next/image';
 
 function WhatsIncludedInEveryOnlineStore() {
   const features = [
@@ -90,82 +92,14 @@ function WhatsIncludedInEveryOnlineStore() {
 
           {/* Right Side - Visual Mockup */}
           <div className="order-1 lg:order-2 flex justify-center">
-            <div className="relative w-full max-w-sm lg:max-w-md">
-              {/* Background rounded rectangle */}
-              <div className="bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 rounded-3xl overflow-hidden shadow-xl">
-                {/* Person Image */}
-                <div className="relative aspect-[4/3] bg-gradient-to-br from-blue-50 to-blue-100">
-                  <div className="absolute inset-0 flex items-end justify-center pb-0">
-                    <div className="w-full h-[85%] bg-gradient-to-b from-transparent via-blue-600/20 to-blue-700/40 rounded-t-full"></div>
-                  </div>
-                  
-                  {/* Feature callouts */}
-                  <div className="absolute inset-0">
-                    {visualFeatures.map((feature, index) => {
-                      const Icon = feature.icon;
-                      const style = {
-                        top: feature.top,
-                        left: feature.left,
-                        right: feature.right
-                      };
-                      
-                      return (
-                        <div
-                          key={index}
-                          className="absolute"
-                          style={style}
-                        >
-                          <div className="bg-white/95 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-200 hover:scale-105 transition-transform">
-                            <div className="flex items-center gap-1.5">
-                              {feature.isWhatsApp ? (
-                                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <MessageCircle className="w-4 h-4 text-white" />
-                                </div>
-                              ) : (
-                                <Icon className="w-4 h-4 text-gray-700 flex-shrink-0" />
-                              )}
-                              <span className="text-[10px] font-medium text-gray-800 whitespace-pre-line leading-tight">
-                                {feature.label}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    
-                    {/* Checkmark badge */}
-                    <div className="absolute" style={{ top: '60%', left: '2%' }}>
-                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-                        <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Centered person illustration */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-0">
-                    <div className="w-[70%] h-[75%] bg-gradient-to-b from-blue-600 to-blue-700 rounded-t-[40%] flex items-center justify-center">
-                      <div className="w-[90%] h-[85%] bg-blue-500/30 rounded-t-[35%] flex items-center justify-center">
-                        {/* Face */}
-                        <div className="absolute top-[20%] w-32 h-32 bg-gradient-to-b from-amber-100 to-amber-200 rounded-full">
-                          {/* Eyes */}
-                          <div className="absolute top-[40%] left-[25%] w-2 h-3 bg-gray-800 rounded-full"></div>
-                          <div className="absolute top-[40%] right-[25%] w-2 h-3 bg-gray-800 rounded-full"></div>
-                          {/* Smile */}
-                          <div className="absolute top-[60%] left-[50%] transform -translate-x-1/2 w-12 h-6 border-b-2 border-gray-800 rounded-b-full"></div>
-                          {/* Hair */}
-                          <div className="absolute -top-2 left-0 right-0 h-16 bg-gray-900 rounded-t-full"></div>
-                        </div>
-                      </div>
-                      {/* Laptop */}
-                      <div className="absolute bottom-[10%] w-24 h-16 bg-gray-300 rounded-t-lg border-2 border-gray-400">
-                        <div className="w-full h-3/4 bg-gray-400 rounded-t-md"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="relative w-full max-w-sm lg:max-w-xl rounded-lg">
+              <Image 
+              src={img1}
+              alt='every-online-store-we-build'
+              height={500}
+              width={500}
+              className='h-full w-full rounded-lg'
+              />
             </div>
           </div>
         </div>
