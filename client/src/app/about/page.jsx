@@ -1,4 +1,6 @@
 import ASmallTeamWithABigFocus from '@/components/about/ASmallTeamWithABigFocus'
+import MeetTheTeam from '@/components/about/MeetTheTeam'
+import OurMissionVisionTeam from '@/components/about/OurMissionVisionTeam'
 import WhatDrivesUs from '@/components/about/WhatDrivesUs'
 import WhatWeBuild from '@/components/about/WhatWeBuild'
 import WhyClientChooseUs from '@/components/about/WhyClientChooseUs'
@@ -16,6 +18,8 @@ function page() {
         text2='by People Who Care'
         description='We’re Code Neptune. A team of thinkers, designers, and developers who believe great websites don’t need to be complicated or expensive. We keep things simple, personal, and results-driven.'
         />
+        <OurMissionVisionTeam />
+        {/* <MeetTheTeam /> */}
         <ASmallTeamWithABigFocus />
         <WhatDrivesUs />
         <WhatWeBuild />

@@ -29,7 +29,7 @@ const ContactButton = ({isScrolled}) => {
             <Link
                 href="tel:+916382958105"
                 className={`relative inline-block    mx-auto group  bg-white   rounded-full ${
-                    isScrolled ? 'h-[3em] sm:w-52 w-14' : 'h-[3.5em] sm:w-52 w-14'
+                    isScrolled ? 'h-[3em] sm:w-36 w-14' : 'h-[3.5em] sm:w-36 w-14'
                 }`}>
                 <div className="absolute w-[112.81%] h-[128.57%] top-[8.57%] left-1/2 -translate-x-1/2 filter blur-[19px] opacity-70">
                     <span className="absolute inset-0 rounded-full bg-[#d9d9d9] filter blur-[6.5px]"></span>
@@ -56,7 +56,7 @@ const ContactButton = ({isScrolled}) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}>
                     <span className=" flex  items-center justify-center gap-2   rounded-full  text-md text-white  font-semibold tracking-wide whitespace-nowrap">
-                        <span className="">Get Free Consultation</span>
+                        <span className="">Contact Us</span>
                     </span>
                 </button>
             </Link>
