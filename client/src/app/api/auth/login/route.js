@@ -1,10 +1,10 @@
 // app/api/auth/login/route.js
 import { NextResponse } from 'next/server';
-import { 
-  comparePassword, 
-  generateAccessToken, 
-  generateRefreshToken, 
-  isValidEmail 
+import {
+  comparePassword,
+  generateAccessToken,
+  generateRefreshToken,
+  isValidEmail
 } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import Admin from '@/models/Admin';
@@ -32,8 +32,8 @@ export async function POST(request) {
     await connectDB();
 
     // Find admin user using model
-    const admin = await Admin.findOne({ 
-      email: email.toLowerCase() 
+    const admin = await Admin.findOne({
+      email: email.toLowerCase()
     });
 
     if (!admin) {
@@ -77,25 +77,25 @@ export async function POST(request) {
     // Set refresh token as HTTP-only cookie
     response.cookies.set('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production', // always true in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: '/'
+      path: '/', // accessible throughout the app
     });
 
-    // Set access token in cookie for middleware
+    // Set access token as HTTP-only cookie
     response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 15 * 60, // 15 minutes
-      path: '/'
+      path: '/',
     });
 
     return response;
   } catch (error) {
     console.error('Login error:', error);
-    
+
     // Handle Mongoose validation errors
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(err => err.message);
@@ -104,7 +104,7 @@ export async function POST(request) {
         { status: 400 }
       );
     }
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
