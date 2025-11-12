@@ -27,14 +27,6 @@ export default function DashboardPage() {
         // Fetch user profile
         const profileResponse = await adminAPI.getProfile();
         setUser(profileResponse.user);
-
-        // Fetch dashboard stats (optional - handle if endpoint doesn't exist)
-        try {
-          const statsResponse = await adminAPI.getDashboardStats();
-          setStats(statsResponse);
-        } catch (statsError) {
-          console.log('Stats endpoint not available:', statsError);
-        }
       } catch (error) {
         console.error('Dashboard data fetch error:', error);
         router.replace('/admin/login');

@@ -27,26 +27,31 @@ export default function LoginPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+  e.preventDefault();
+  setError('');
+  setLoading(true);
 
-    try {
-      const response = await authAPI.login(formData);
-      
-      if (response.success) {
-        // Save access token to localStorage
-        localStorage.setItem('accessToken', response.accessToken);
-        
-        // Redirect to dashboard
-        router.push('/admin/dashboard');
-      }
-    } catch (err) {
-      setError(err.response?.data?.error || 'Login failed. Please try again.');
-    } finally {
-      setLoading(false);
+  console.log("🟢 Submitting login with:", formData);
+
+  try {
+    const response = await authAPI.login(formData);
+    console.log("✅ Login API response:", response);
+
+    if (response.success) {
+      localStorage.setItem('accessToken', response.accessToken);
+      console.log("💾 Access token stored:", response.accessToken?.slice(0, 15) + '...');
+      router.push('/admin/dashboard');
+    } else {
+      console.warn("⚠️ Login returned no success flag");
     }
-  };
+  } catch (err) {
+    console.error("❌ Login error response:", err.response || err.message);
+    setError(err.response?.data?.error || 'Login failed. Please try again.');
+  } finally {
+    setLoading(false);
+    console.log("🟡 Login request complete");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
