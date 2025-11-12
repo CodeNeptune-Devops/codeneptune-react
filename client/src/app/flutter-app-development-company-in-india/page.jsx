@@ -84,6 +84,7 @@ function page() {
     const stepsList = [
         {
             number: "01",
+            icon:'/proven-development-process/e-1.svg',
             title: "Discovery & User Journey",
             description:
                 "We start with workshops, analyze goals, and define personas to design a strategic user journey aligned with business objectives.",
@@ -91,6 +92,7 @@ function page() {
         },
         {
             number: "02",
+            icon:'/proven-development-process/e-2.svg',
             title: "Design & Prototyping",
             description:
                 "Our UI/UX team creates a custom design system and interactive prototypes to ensure smooth navigation and high user engagement.",
@@ -98,6 +100,7 @@ function page() {
         },
         {
             number: "03",
+            icon:'/proven-development-process/f-1.svg',
             title: "Agile Development",
             description:
                 "Using Flutter’s single codebase, we build cross-platform apps quickly, maintaining top performance, security, and continuous feedback throughout development.",
@@ -105,6 +108,7 @@ function page() {
         },
         {
             number: "04",
+            icon:'/proven-development-process/f-2.svg',
             title: "Integration & Features",
             description:
                 "We integrate APIs, payments, chat, and AI features to deliver a future-ready app with real-time updates and smart functionality.",
@@ -112,6 +116,7 @@ function page() {
         },
         {
             number: "05",
+            icon:'/proven-development-process/f-3.svg',
             title: "Launch & Optimization",
             description:
                 "From app store submission to post-launch monitoring, we provide updates, feature enhancements, and ongoing support for continuous growth.",
