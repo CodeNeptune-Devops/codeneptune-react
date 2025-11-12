@@ -1,4 +1,5 @@
 // app/api/auth/login/route.js
+// Updated to return tokens in response body (no cookies)
 import { NextResponse } from 'next/server';
 import {
   comparePassword,
@@ -31,7 +32,7 @@ export async function POST(request) {
     // Connect to database
     await connectDB();
 
-    // Find admin user using model
+    // Find admin user
     const admin = await Admin.findOne({
       email: email.toLowerCase()
     });
@@ -58,45 +59,28 @@ export async function POST(request) {
     const accessToken = generateAccessToken(adminId, admin.email);
     const refreshToken = generateRefreshToken(adminId, admin.email);
 
-    // Update last login using model
+    // Update last login
     await Admin.updateOne(
       { _id: admin._id },
       { $set: { lastLogin: new Date() } }
     );
 
-    const response = NextResponse.json({
+    console.log('✅ Login successful for:', admin.email);
+
+    // Return tokens in response body (Redux will handle storage)
+    return NextResponse.json({
       success: true,
       accessToken,
+      refreshToken, // Include refresh token
       user: {
         id: adminId,
         email: admin.email,
         name: admin.name
       }
     });
-
-    // Set refresh token as HTTP-only cookie
-    response.cookies.set('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true, // always true in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: '/', // accessible throughout the app
-    });
-
-    // Set access token as HTTP-only cookie
-    response.cookies.set('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 15 * 60, // 15 minutes
-      path: '/',
-    });
-
-    return response;
   } catch (error) {
     console.error('Login error:', error);
 
-    // Handle Mongoose validation errors
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(err => err.message);
       return NextResponse.json(
