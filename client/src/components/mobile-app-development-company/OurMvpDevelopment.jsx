@@ -60,8 +60,8 @@ function OurMvpDevelopment() {
               <Image
                 src={img1}
                 alt='MVP'
-                height={300}
-                width={300}
+                height={500}
+                width={500}
                 className='h-full w-full object-cover'
               />
             </div>

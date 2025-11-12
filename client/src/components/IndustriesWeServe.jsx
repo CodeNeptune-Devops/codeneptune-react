@@ -29,7 +29,7 @@ function IndustriesWeServe({padding = 'pb-0'}) {
     return (
         <div className='w-full'>
             <div className={`w-full bg-black pt-16 ${padding}`}>
-                <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
+                <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4 px-4'>
 
                     <div className='flex flex-col justify-start items-center gap-4'>
                         <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
@@ -49,7 +49,7 @@ function IndustriesWeServe({padding = 'pb-0'}) {
                                 key={industry.id}
                                 className='flex flex-col justify-center items-center gap-3 px-1 py-3 border border-[#353535] rounded-lg shadow-md w-[8rem]  hover:bg-[#353535] transition-all duration-300 cursor-pointer'
                             >
-                                <Image src={industry.icon} alt={industry.name} height={40} width={40} />
+                                <Image src={industry.icon} alt={industry.name} height={40} width={40} unoptimized/>
                                 <h3 className='text-xs font-semibold text-center text-white  '>{industry.name}</h3>
                             </div>
                         ))}

@@ -4,6 +4,9 @@ import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
 import { ImLinkedin } from "react-icons/im";
 import { Bebas_Neue } from 'next/font/google';
+import mission from '../../assets/our-team/mission.webp';
+import vission from '../../assets/our-team/vission.webp';
+import Image from 'next/image';
 
 const bebas = Bebas_Neue({
   subsets: ['latin'],
@@ -82,7 +85,7 @@ function OurMissionVisionTeam() {
 
 
 
-            <div className='flex justify-between items-end gap-3 w-full'>
+            <div className='flex justify-between items-end gap-3 w-full '>
               <div>
                 {/* Name */}
                 <div className={`flex flex-col justify-start items-start text-white ${bebas.className}`}>
@@ -102,7 +105,7 @@ function OurMissionVisionTeam() {
 
                 {/* Title */}
                 <p
-                  className="text-base md:text-lg text-white/90 drop-shadow-md mb-1"
+                  className="text-base md:text-lg text-white/90 drop-shadow-md mb-1 text-start"
                   style={{ transform: 'translateZ(30px)' }}
                 >
                   {title}
@@ -150,13 +153,13 @@ function OurMissionVisionTeam() {
     {
       title: 'OUR MISSION',
       quote: 'To provide superior quality products and services that customers recommend to family and friends, partners select Patriot for their customers and our employees are proud of the product they deliver.',
-      model: '🚀',
+      model: mission,
       type: 'emoji'
     },
     {
       title: 'OUR VISION',
       quote: 'To be the most trusted and innovative leader in our industry, creating lasting value for all stakeholders through excellence, integrity, and sustainable growth.',
-      model: '🔭',
+      model: vission,
       type: 'emoji'
     },
     {
@@ -252,7 +255,7 @@ function OurMissionVisionTeam() {
 
                 {/* 3D Model or Cards */}
                 <div
-                  className='relative mb-8'
+                  className={`relative mb-8 ${section.title === 'THE DUO' ? 'mt-0' : '-mt-28'}`}
                   style={{
                     transform: section.type === 'emoji'
                       ? `translateY(${translateY * 0.2}%) rotateY(${scrollProgress * 180}deg) rotateX(${Math.sin(scrollProgress * Math.PI * 4) * 10}deg)`
@@ -264,7 +267,13 @@ function OurMissionVisionTeam() {
                   {section.type === 'emoji' ? (
                     <>
                       <div className='text-7xl md:text-8xl lg:text-9xl filter drop-shadow-2xl'>
-                        {section.model}
+                        <Image 
+                        src={section.model}
+                        alt={section.title}
+                        height={200}
+                        width={200}
+                        
+                        />
                       </div>
 
                       {/* Glow effect */}

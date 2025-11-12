@@ -1,5 +1,5 @@
 import React from 'react'
-import { Smartphone, Users, TrendingUp } from 'lucide-react'
+import { Smartphone, Users, TrendingUp, Layers, Repeat2, ChartNoAxesCombined, HandHeart } from 'lucide-react'
 import Image from 'next/image'
 
 function MobileAsTheCoreOfModernBusiness() {
@@ -22,10 +22,10 @@ function MobileAsTheCoreOfModernBusiness() {
   ]
 
   const stats = [
-    { label: 'Revenue', value: '+10%', color: 'bg-gradient-to-br from-orange-400 to-orange-500',icon: '/android-app-development/revenue.svg' },
-    { label: 'ROI', value: '+17%', color: 'bg-gradient-to-br from-yellow-400 to-yellow-500',icon: '/android-app-development/roi.svg' },
-    { label: 'Loyalty', value: '+24%', color: 'bg-gradient-to-br from-purple-400 to-purple-500', icon: '/android-app-development/support.svg' },
-    { label: 'Growth', value: '+31%', color: 'bg-gradient-to-br from-green-300 to-green-400', icon: '/android-app-development/growth.svg' }
+    { label: 'Revenue', value: '+10%', color: 'bg-pink-600/10 text-pink-600',icon: <Layers size={30}/> },
+    { label: 'ROI', value: '+17%', color: 'bg-yellow-600/10 text-yellow-600',icon:  <Repeat2 size={30}/> },
+    { label: 'Loyalty', value: '+24%', color: 'bg-purple-600/10 text-purple-600', icon:  <HandHeart size={30}/> },
+    { label: 'Growth', value: '+31%', color: 'bg-green-600/10 text-green-600', icon: <ChartNoAxesCombined size={30}/> }
   ]
 
   return (
@@ -78,18 +78,13 @@ function MobileAsTheCoreOfModernBusiness() {
                 <div className="text-center flex flex-col justify-start items-center">
                   {stat.icon && (
                     <div className="text-5xl mb-3">
-                      <Image 
-                      src={stat.icon}
-                      alt={stat.label}
-                      height={70}
-                      width={70}
-                      />
+                     {stat.icon}
                     </div>
                   )}
-                  <h4 className="text-white text-xl font-semibold mb-2">
+                  <h4 className=" text-xl font-semibold mb-2">
                     {stat.label}
                   </h4>
-                  <p className="text-white text-3xl font-bold">
+                  <p className=" text-3xl font-bold">
                     {stat.value}
                   </p>
                 </div>

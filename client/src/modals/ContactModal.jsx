@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -6,6 +7,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 // Contact Modal Component
 function ContactModal({ isOpen, onClose }) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -36,6 +38,22 @@ function ContactModal({ isOpen, onClose }) {
     }
   ];
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+      // Disable body scroll when modal opens
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Re-enable body scroll when modal closes
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function to ensure scroll is re-enabled
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const handlePrevious = () => {
     setCurrentTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
   };
@@ -55,31 +73,34 @@ function ContactModal({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  if (!isOpen) return null;
+  if (!isOpen && !isAnimating) return null;
 
   return (
     <div 
-      className={`fixed inset-0 bg-black flex items-center justify-center p-4 z-50 transition-opacity duration-500 ${
+      className={`fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 transition-all duration-300 ${
         isOpen ? 'bg-opacity-50' : 'bg-opacity-0'
       }`}
       onClick={onClose}
     >
       <div 
-        className={`bg-white rounded-2xl max-w-5xl w-full max-h-[70vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-500 transform ${
-          isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        className={`bg-white rounded-2xl max-w-5xl w-full h-[73vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-300 ease-out transform ${
+          isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
         }`}
         onClick={(e) => e.stopPropagation()}
+        onTransitionEnd={() => {
+          if (!isOpen) setIsAnimating(false);
+        }}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+          className="absolute top-4 right-4 z-[999999] bg-white rounded-full p-2 hover:bg-gray-100 transition-colors cursor-pointer"
         >
           <X className="w-6 h-6 text-gray-600" />
         </button>
 
         {/* Left Section - Testimonial */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 lg:p-8 lg:w-1/2 flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 lg:p-8 lg:w-1/2 hidden lg:flex flex-col justify-around">
           <div>
             <h2 className="text-lg  font-bold text-gray-800 mb-2">
               Leaving already?
@@ -94,7 +115,7 @@ function ContactModal({ isOpen, onClose }) {
                 <button
                   key={index}
                   onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
+                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
                     index === currentTestimonial
                       ? 'bg-blue-600 w-8'
                       : 'bg-blue-300'
@@ -108,14 +129,14 @@ function ContactModal({ isOpen, onClose }) {
           <div className="bg-white rounded-2xl p-8 shadow-lg relative">
             <button
               onClick={handlePrevious}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
             </button>
 
             <button
               onClick={handleNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <ChevronRight className="w-5 h-5 text-gray-600" />
             </button>
@@ -141,7 +162,7 @@ function ContactModal({ isOpen, onClose }) {
         </div>
 
         {/* Right Section - Form */}
-        <div className="p-8 lg:p-8 lg:w-1/2 overflow-y-auto  flex justify-center itemms-start">
+        <div className="p-8 lg:p-8 w-full lg:w-1/2 overflow-y-auto  flex justify-center itemms-start">
           
 
           <div className="mt-5 space-y-6 ">

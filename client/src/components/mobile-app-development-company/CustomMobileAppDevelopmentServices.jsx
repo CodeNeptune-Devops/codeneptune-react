@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { CheckCheck } from 'lucide-react';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
 
 function CustomMobileAppDevelopmentServices() {
@@ -150,9 +150,9 @@ function CustomMobileAppDevelopmentServices() {
                                     {services[activeService].features.map((feature, index) => (
                                         <div key={index} className="flex items-start space-x-3">
                                             <div className="flex-shrink-0 mt-1">
-                                                <div className="bg-green-400 rounded p-1">
-                                                    <Check className="w-4 h-4 text-white" />
-                                                </div>
+                                                
+                                                    <CheckCheck className="w-4 h-4 text-white" />
+                                                
                                             </div>
                                             <p className="text-white/90 text-sm md:text-base leading-relaxed">
                                                 {feature}

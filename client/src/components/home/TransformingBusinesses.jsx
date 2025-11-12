@@ -42,7 +42,7 @@ function TransformingBusinesses() {
 
 
     return (
-        <div className='w-full pt-16 bg-black'>
+        <div className='w-full py-16 bg-black'>
             {/* <div className='w-full max-w-7xl mx-auto'>
             <MagicBento
                 textAutoHide={true}
@@ -57,7 +57,7 @@ function TransformingBusinesses() {
                 glowColor="132, 0, 255"
             />
         </div> */}
-            <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-10 text-white'>
+            <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-10 text-white px-4'>
 
               
 

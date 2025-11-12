@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionTitle from './titles/SectionTitle';
+import Image from 'next/image';
 
 function OurProvenDevelopmentProcess({
   title="Add A Title",
@@ -11,26 +12,31 @@ function OurProvenDevelopmentProcess({
   const stepsList = [
     {
       number: "01",
+      icon:'/proven-development-process/e-1.svg',
       title: "Discovery & Planning",
       description: "We start by understanding your business, goals, and audience. This ensures we're fully aligned on your vision and strategy."
     },
     {
       number: "02",
+      icon:'/proven-development-process/e-2.svg',
       title: "Wireframe & Design",
       description: "Next, we create wireframes and design mockups that bring your ideas to life. You'll review and approve before we move forward."
     },
     {
       number: "03",
+      icon:'/proven-development-process/e-3.svg',
       title: "Development",
       description: "Our team builds your site's functionality, integrating all the necessary features to deliver an exceptional user experience."
     },
     {
       number: "04",
+      icon:'/proven-development-process/e-4.svg',
       title: "Testing & QA",
       description: "We rigorously test your site across multiple devices and browsers to ensure everything works flawlessly before launch."
     },
     {
       number: "05",
+      icon:'/proven-development-process/e-5.svg',
       title: "Launch & Support",
       description: "Once everything is polished, we launch your site and provide ongoing support to ensure smooth operation and growth."
     }
@@ -58,8 +64,22 @@ function OurProvenDevelopmentProcess({
               className="bg-zinc-900 text-white rounded-2xl p-6 sm:p-5 transition-transform duration-300 hover:transform hover:scale-105 hover:shadow-xl hover:bg-zinc-800 border border-zinc-800"
             >
               {/* Number */}
-              <div className="text-5xl sm:text-6xl font-bold mb-4 opacity-70">
+              <div className='w-full flex justify-between items-center mb-4'>
+               {step.icon && (
+                <div className='w-10 h-10'>
+                  <Image 
+                  src={step.icon}
+                  alt={step.title}
+                  height={200}
+                  width={200}
+                  className='w-full h-full object-cover opacity-80'
+                  />
+                </div>
+               )}
+                <div className="text-5xl sm:text-5xl font-bold opacity-8">
                 {step.number}
+              </div>
+               
               </div>
 
               {/* Title */}

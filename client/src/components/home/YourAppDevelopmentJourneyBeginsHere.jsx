@@ -70,7 +70,7 @@ function YourAppDevelopmentJourneyBeginsHere() {
                             className="bg-white rounded-3xl border border-gray-200 p-8 pt-6 flex flex-col transition-all duration-300 relative overflow-visible cursor-pointer hover:shadow-sm"
                         >
                             {/* Image - Absolute positioned */}
-                            <div className="absolute top-0 right-3 w-28 h-auto md:w-24">
+                            <div className="absolute top-0 right-3 w-20 h-auto md:w-24">
                                 <Image
                                     src={service.imageUrl}
                                     alt={service.title}
@@ -81,17 +81,17 @@ function YourAppDevelopmentJourneyBeginsHere() {
                             </div>
 
                             {/* Title */}
-                            <h3 className="text-blue-600 text-md font-semibold mb-2 pr-20">
+                            <h3 className="text-blue-600 text-md font-semibold mb-2 pr-0 md:pr-20">
                                 {service.title}
                             </h3>
 
                             {/* Subtitle */}
-                            <h4 className="text-gray-900 text-xl font-bold mb-4 pr-32">
+                            <h4 className="text-gray-900 text-xl font-bold mb-4 pr-16 sm:pr-32">
                                 {service.subtitle}
                             </h4>
 
                             {/* Description */}
-                            <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6 flex-grow pr-20">
+                            <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6 flex-grow sm:pr-20">
                                 {service.description}
                             </p>
 

@@ -18,7 +18,7 @@ function Sidebar({
     return (
         <div
             ref={mobileMenuRef}
-            className={`lg:hidden fixed right-0 top-0 h-full w-[85%] max-w-sm shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col bg-white text-black ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`lg:hidden z-[9999] fixed right-0 top-0 h-full w-[85%] max-w-sm shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col bg-white text-black ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
             {/* Fixed Header with Close Button */}
             <div className={`flex justify-between items-center px-4 py-5 border-b flex-shrink-0 border-gray-200`}>

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Github, Star } from 'lucide-react';
 import { Liquid } from '@/components/ui/button-1';
 import Link from 'next/link';
+import ContactModal from '@/modals/ContactModal';
+
 const COLORS = {
     color1: '#FFFFFF',
     color2: '#1E10C5',
@@ -22,13 +24,14 @@ const COLORS = {
     color16: '#290ECB',
     color17: '#3F4CC0',
 };
-const ContactButton = ({isScrolled}) => {
+
+const ContactButton = ({isScrolled, isModalOpen, setIsModalOpen}) => {
     const [isHovered, setIsHovered] = useState(false);
+    
     return (
         <div className="hidden lg:flex justify-center ">
-            <Link
-                href="tel:+916382958105"
-                className={`relative inline-block    mx-auto group  bg-white   rounded-full ${
+            <div
+                className={`relative inline-block mx-auto group bg-white rounded-full ${
                     isScrolled ? 'h-[3em] sm:w-36 w-14' : 'h-[3.5em] sm:w-36 w-14'
                 }`}>
                 <div className="absolute w-[112.81%] h-[128.57%] top-[8.57%] left-1/2 -translate-x-1/2 filter blur-[19px] opacity-70">
@@ -50,17 +53,20 @@ const ContactButton = ({isScrolled}) => {
                     <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[70.8%] h-[42.85%] rounded-full filter blur-[15px] bg-[#006]"></span>
                 </div>
                 <button
+                    onClick={() => setIsModalOpen(true)}
                     className="absolute inset-0 rounded-full bg-transparent cursor-pointer"
-                    aria-label="Get Starteqwed"
+                    aria-label="Contact Us"
                     type="button"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}>
-                    <span className=" flex  items-center justify-center gap-2   rounded-full  text-md text-white  font-semibold tracking-wide whitespace-nowrap">
+                    <span className="flex items-center justify-center gap-2 rounded-full text-md text-white font-semibold tracking-wide whitespace-nowrap">
                         <span className="">Contact Us</span>
                     </span>
                 </button>
-            </Link>
+            </div>
+            
         </div>
     );
 };
+
 export default ContactButton;

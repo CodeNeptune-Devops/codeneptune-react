@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import img1 from '../../assets/about/img-1.webp';
 
 function ASmallTeamWithABigFocus() {
   return (
@@ -29,15 +30,15 @@ function ASmallTeamWithABigFocus() {
           <div className='w-full lg:w-1/2 order-1 lg:order-2'>
             <div className='relative h-64 sm:h-80 lg:h-96 w-full rounded-2xl lg:rounded-3xl overflow-hidden  bg-gradient-to-br from-blue-100 to-blue-200'>
               {/* Uncomment when you have the image */}
-              {/* <Image
+              <Image
                 src={img1}
                 alt='Team'
                 fill
                 className='object-cover'
-              /> */}
+              />
               
               {/* Placeholder content */}
-              <div className='absolute inset-0 flex items-center justify-center'>
+              {/* <div className='absolute inset-0 flex items-center justify-center'>
                 <div className='text-center p-8'>
                   <div className='w-20 h-20 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center'>
                     <div className='w-16 h-16 bg-blue-500 rounded-full'></div>
@@ -46,7 +47,7 @@ function ASmallTeamWithABigFocus() {
                     Code Neptune
                   </h3>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

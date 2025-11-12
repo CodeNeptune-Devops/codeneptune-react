@@ -1,6 +1,6 @@
 import React from 'react';
 import { Globe, DollarSign, Smartphone, User } from "lucide-react";
-import img1 from '../../assets/mobile-app-development/why-client-choose-us.webp'
+import img2 from '../../assets/about/img-2.webp';
 import Image from 'next/image';
 
 function WhyClientChooseUs() {
@@ -92,10 +92,10 @@ function WhyClientChooseUs() {
                 {/* Placeholder for image - Replace with actual image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
                   <Image 
-                  src={img1}
+                  src={img2}
                   alt='Why Client Choose Us'
-                  height={300}
-                  width={300}
+                  height={500}
+                  width={500}
                   className='h-full w-full object-cover'
                   />
                 </div>
