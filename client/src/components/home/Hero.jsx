@@ -111,7 +111,7 @@ export default function Hero() {
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className={`text-xl md:text-4xl lg:text-5xl text-center justify-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
+                  className={`text-lg md:text-4xl lg:text-5xl uppercase text-center justify-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
                 />
               </div>
             </h2>
@@ -126,7 +126,7 @@ export default function Hero() {
                 colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                 animationSpeed={3}
                 showBorder={false}
-                className="text-xl md:text-5xl lg:text-5xl"
+                className="text-lg md:text-5xl lg:text-5xl uppercase"
               >
                 AI Agents That Redefine Possibility
               </GradientText>

@@ -2,60 +2,61 @@
 
 import React, { useState } from 'react';
 import SectionTitle from '../titles/SectionTitle';
+import Image from 'next/image';
 
 const servicesData = [
   {
     id: 1,
     title: 'Custom DevOps Strategy & Implementation',
-    icon: '∞',
+    icon: '/devops-development/img1.svg',
     description: 'We design tailored strategies that align with your business goals. From assessment to implementation, we ensure faster cycles, cost efficiency, and improved collaboration.'
   },
   {
     id: 2,
     title: 'CI/CD Pipeline Automation',
-    icon: '⚡',
+   icon: '/devops-development/img2.svg',
     description: 'Streamline your development workflow with automated continuous integration and deployment pipelines. Reduce manual errors, accelerate releases, and maintain consistent quality across all environments.'
   },
   {
     id: 3,
     title: 'Cloud Infrastructure & Management',
-    icon: '☁',
+   icon: '/devops-development/img3.svg',
     description: 'Optimize your cloud resources with scalable infrastructure solutions. We help you architect, deploy, and manage cloud environments that grow with your business needs.'
   },
   {
     id: 4,
     title: 'DevOps Toolchain Integration',
-    icon: '🔧',
+    icon: '/devops-development/img4.svg',
     description: 'Seamlessly integrate best-in-class DevOps tools to create a unified workflow. From version control to monitoring, we connect your entire software delivery pipeline.'
   },
   {
     id: 5,
     title: 'DevSecOps for Enhanced Security',
-    icon: '🔒',
+    icon: '/devops-development/img5.svg',
     description: 'Build security into every stage of your development process. We implement automated security testing, compliance monitoring, and vulnerability management to protect your applications.'
   },
   {
     id: 6,
     title: 'Docker & Kubernetes',
-    icon: '📦',
+    icon: '/devops-development/img6.svg',
     description: 'Containerize your applications and orchestrate them at scale. We implement Docker and Kubernetes solutions for consistent deployment across any environment.'
   },
   {
     id: 7,
     title: 'Infrastructure as Code Solutions',
-    icon: '💻',
+   icon: '/devops-development/img7.svg',
     description: 'Manage your infrastructure through code for reproducible, version-controlled deployments. Reduce configuration drift and accelerate infrastructure provisioning.'
   },
   {
     id: 8,
     title: 'Continuous Monitoring & Logging',
-    icon: '📊',
+    icon: '/devops-development/img8.svg',
     description: 'Gain real-time visibility into your systems with comprehensive monitoring and logging solutions. Identify issues before they impact users and optimize performance continuously.'
   },
   {
     id: 9,
     title: 'Multi-Cloud & Hybrid Cloud Strategy',
-    icon: '🌐',
+    icon: '/devops-development/img9.svg',
     description: 'Navigate complex multi-cloud environments with strategic guidance. We help you leverage multiple cloud providers while maintaining flexibility and avoiding vendor lock-in.'
   }
 ];
@@ -155,7 +156,12 @@ function OurComprehensiveDevOpsConsultingServices() {
               }`}>
                 <div className="mb-6 transform transition-all duration-700 ease-out">
                   <span className="text-6xl inline-block hover:scale-110 transition-transform duration-300">
-                    {activeService.icon}
+                   <Image 
+                   src={activeService.icon}
+                   alt={activeService.title}
+                   height={50}
+                   width={50}
+                   />
                   </span>
                 </div>
                 <h2 className="text-3xl font-bold mb-6 transition-all duration-500">

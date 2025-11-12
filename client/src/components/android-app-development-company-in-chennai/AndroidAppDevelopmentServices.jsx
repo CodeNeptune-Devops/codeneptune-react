@@ -4,7 +4,12 @@ import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
 import { Smartphone, Building2, ShoppingCart, Palette, Headphones, Sparkles } from 'lucide-react';
-import img1 from '../../assets/roi/img-1.webp';
+import img1 from '../../assets/android-app-development/img1.webp';
+import img2 from '../../assets/android-app-development/img2.webp';
+import img3 from '../../assets/android-app-development/img3.webp';
+import img4 from '../../assets/android-app-development/img4.webp';
+import img5 from '../../assets/android-app-development/img5.webp';
+import img6 from '../../assets/android-app-development/img6.webp';
 import Image from 'next/image';
 
 function AndroidAppDevelopmentServices() {
@@ -31,7 +36,7 @@ function AndroidAppDevelopmentServices() {
             icon: <Building2 className="w-8 h-8" />,
             title: 'Enterprise Solutions',
             description: 'Secure, scalable platforms designed to simplify operations and support business expansion.',
-            image:img1,
+            image:img2,
             features: [
                 'Native performance with Swift and Objective-C for seamless functionality.',
                 'Intuitive interfaces following Apple\'s Human Interface Guidelines.',
@@ -46,7 +51,7 @@ function AndroidAppDevelopmentServices() {
             icon: <ShoppingCart className="w-8 h-8" />,
             title: 'E-commerce and On-Demand Apps',
             description: 'Seamless shopping and service booking experiences that boost conversions and customer loyalty.',
-            image:img1,
+            image:img3,
             features: [
                 'Single codebase for multiple platforms, reducing development time and costs.',
                 'Native-like performance with beautiful, customizable UI components.',
@@ -61,7 +66,7 @@ function AndroidAppDevelopmentServices() {
             icon: <Palette className="w-8 h-8" />,
             title: 'Design and Experience Engineering',
             description: 'Intuitive UI/UX that enhances user journeys and drives long-term retention.',
-            image:img1,
+            image:img4,
             features: [
                 'JavaScript-based development with native performance capabilities.',
                 'Reusable components that accelerate development across platforms.',
@@ -76,7 +81,7 @@ function AndroidAppDevelopmentServices() {
             icon: <Headphones className="w-8 h-8" />,
             title: 'Continuous Support and Maintenance',
             description: 'Ensuring apps stay updated, secure, and aligned with evolving market needs.',
-            image:img1,
+            image:img5,
             features: [
                 'Tailored solutions designed specifically for your business needs.',
                 'Flexible architecture that scales with your growing requirements.',
@@ -91,7 +96,7 @@ function AndroidAppDevelopmentServices() {
             icon: <Sparkles className="w-8 h-8" />,
             title: 'Advanced Integrations and Emerging Tech',
             description: 'Integrating AI, IoT, payments, and future-ready tech for smarter, scalable apps.',
-            image:img1,
+            image:img6,
             features: [
                 'Secure payment gateway integration with multiple payment options.',
                 'Intuitive product browsing with advanced search and filters.',
@@ -168,12 +173,13 @@ function AndroidAppDevelopmentServices() {
                                     {services[activeService].description}
                                 </p>
 
-                                <div>
+                                <div className='rounded-lg w-[30rem] h-[20rem] bg-red-500'>
                                     <Image 
                                     src={services[activeService].image}
                                     alt={services[activeService].title}
                                     height={300}
                                     width={300}
+                                    className='rounded-lg w-full h-full object-cover'
                                     />
                                 </div>
 
