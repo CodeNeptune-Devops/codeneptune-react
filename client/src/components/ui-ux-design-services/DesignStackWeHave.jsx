@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Layout, Shuffle, Code, Workflow } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import Image from 'next/image';
 
 function DesignStackWeHave() {
   const [activeCategory, setActiveCategory] = useState('Interface Design');
@@ -12,36 +13,36 @@ function DesignStackWeHave() {
       name: 'Interface Design',
       icon: Layout,
       tools: [
-        { name: 'Figma', color: 'bg-red-500', icon: '●●●' },
-        { name: 'Sketch', color: 'bg-orange-400', icon: '◆' },
-        { name: 'Adobe XD', color: 'bg-purple-600', icon: 'Xd' }
+        { name: 'Figma', color: 'bg-red-500', icon: '/uiux/figma.svg' },
+        { name: 'Sketch', color: 'bg-orange-400', icon: '/uiux/sketch.svg' },
+        { name: 'Adobe XD', color: 'bg-purple-600', icon: '/uiux/xd.svg' }
       ]
     },
     {
       name: 'Prototyping & Animation',
       icon: Shuffle,
       tools: [
-        { name: 'Figma', color: 'bg-red-500', icon: '●●●' },
-        { name: 'Principle', color: 'bg-blue-500', icon: 'P' },
-        { name: 'After Effects', color: 'bg-purple-700', icon: 'Ae' }
+        { name: 'Figma', color: 'bg-red-500', icon: '/uiux/figma.svg' },
+        { name: 'Principle', color: 'bg-blue-500', icon: '/uiux/principle.svg' },
+        { name: 'After Effects', color: 'bg-purple-700', icon: '/uiux/after-effects.svg' }
       ]
     },
     {
       name: 'Design Systems & Handoff',
       icon: Code,
       tools: [
-        { name: 'Figma', color: 'bg-red-500', icon: '●●●' },
-        { name: 'Storybook', color: 'bg-pink-500', icon: 'SB' },
-        { name: 'Zeroheight', color: 'bg-indigo-500', icon: 'Zh' }
+        { name: 'Figma', color: 'bg-red-500', icon: '/uiux/figma.svg' },
+        { name: 'Storybook', color: 'bg-pink-500', icon: '/uiux/story-book.svg' },
+        { name: 'Zeroheight', color: 'bg-indigo-500', icon: '/uiux/zero-height.svg' }
       ]
     },
     {
       name: 'User Flows & Wireframing',
       icon: Workflow,
       tools: [
-        { name: 'Figma', color: 'bg-red-500', icon: '●●●' },
-        { name: 'Whimsical', color: 'bg-yellow-400', icon: 'W' },
-        { name: 'Miro', color: 'bg-yellow-300', icon: 'M' }
+        { name: 'Figma', color: 'bg-red-500', icon: '/uiux/figma.svg' },
+        { name: 'Whimsical', color: 'bg-yellow-400', icon: '/uiux/whimsical.svg' },
+        { name: 'Miro', color: 'bg-yellow-300', icon: '/uiux/miro.svg' }
       ]
     }
   ];
@@ -117,25 +118,19 @@ function DesignStackWeHave() {
                   >
                     <div className="flex items-center gap-4">
                       {/* Tool Icon */}
-                      <div className={`${tool.color} w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold shadow-sm`}>
-                        {tool.name === 'Figma' ? (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-                            <circle cx="8" cy="6" r="3" />
-                            <circle cx="16" cy="6" r="3" />
-                            <circle cx="8" cy="14" r="3" />
-                            <circle cx="8" cy="22" r="3" />
-                            <circle cx="16" cy="14" r="3" />
-                          </svg>
-                        ) : tool.name === 'Sketch' ? (
-                          <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-                            <path d="M12 2 L2 9 L12 22 L22 9 Z" />
-                          </svg>
-                        ) : (
-                          <span className="text-sm">{tool.icon}</span>
-                        )}
+                      <div className={` w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold `}>
+                       <div>
+                        <Image 
+                        src={tool.icon}
+                        alt={tool.name}
+                        height={200}
+                        width={200}
+                        className='h-full w-full'
+                        />
+                       </div>
                       </div>
                       {/* Tool Name */}
-                      <span className="font-bold text-gray-900 text-lg">
+                      <span className="font-bold text-gray-900 text-sm">
                         {tool.name}
                       </span>
                     </div>

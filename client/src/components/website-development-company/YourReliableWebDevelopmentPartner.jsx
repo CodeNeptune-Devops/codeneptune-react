@@ -1,6 +1,8 @@
 import React from 'react';
 import { MessageSquare, Users, Sparkles, DollarSign, Zap } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import img1 from '../../assets/web-development/img1.webp';
+import Image from 'next/image';
 
 function YourReliableWebDevelopmentPartner() {
   const features = [
@@ -101,6 +103,16 @@ function YourReliableWebDevelopmentPartner() {
               <p className="text-gray-600 leading-relaxed mb-6">
                 {features[2].description}
               </p>
+
+              <div className='h-[15rem]  rounded-lg'>
+                <Image 
+                src={img1}
+                alt='Designs'
+                height={400}
+                width={400}
+                className='h-full w-full object-cover rounded-lg'
+                />
+              </div>
               
               {/* Mock notification UI */}
               {/* <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mt-8 border border-white/20">

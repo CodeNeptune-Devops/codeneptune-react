@@ -84,7 +84,7 @@ function page() {
     const stepsList = [
         {
             number: "01",
-            icon:'/proven-development-process/e-1.svg',
+            icon: '/proven-development-process/e-1.svg',
             title: "Discovery & User Journey",
             description:
                 "We start with workshops, analyze goals, and define personas to design a strategic user journey aligned with business objectives.",
@@ -92,7 +92,7 @@ function page() {
         },
         {
             number: "02",
-            icon:'/proven-development-process/e-2.svg',
+            icon: '/proven-development-process/e-2.svg',
             title: "Design & Prototyping",
             description:
                 "Our UI/UX team creates a custom design system and interactive prototypes to ensure smooth navigation and high user engagement.",
@@ -100,7 +100,7 @@ function page() {
         },
         {
             number: "03",
-            icon:'/proven-development-process/f-1.svg',
+            icon: '/proven-development-process/f-1.svg',
             title: "Agile Development",
             description:
                 "Using Flutter’s single codebase, we build cross-platform apps quickly, maintaining top performance, security, and continuous feedback throughout development.",
@@ -108,7 +108,7 @@ function page() {
         },
         {
             number: "04",
-            icon:'/proven-development-process/f-2.svg',
+            icon: '/proven-development-process/f-2.svg',
             title: "Integration & Features",
             description:
                 "We integrate APIs, payments, chat, and AI features to deliver a future-ready app with real-time updates and smart functionality.",
@@ -116,11 +116,79 @@ function page() {
         },
         {
             number: "05",
-            icon:'/proven-development-process/f-3.svg',
+            icon: '/proven-development-process/f-3.svg',
             title: "Launch & Optimization",
             description:
                 "From app store submission to post-launch monitoring, we provide updates, feature enhancements, and ongoing support for continuous growth.",
             bgColor: "bg-neutral-800",
+        },
+    ];
+
+    const flutterFaqs = [
+        {
+            id: 1,
+            question: "What is Flutter app development and why is it popular?",
+            answer:
+                "Flutter is Google’s UI framework that allows developers to build high-performance apps for multiple platforms using a single codebase. It’s popular because it reduces development time, lowers costs, and delivers a native-like experience.",
+        },
+        {
+            id: 2,
+            question:
+                "Which industries benefit the most from Flutter app development?",
+            answer:
+                "Industries like fintech, healthcare, education, e-commerce, logistics, entertainment, and travel leverage Flutter for scalable, engaging apps.",
+        },
+        {
+            id: 3,
+            question: "How does Flutter app development benefit businesses?",
+            answer:
+                "Flutter enables faster deployment, consistent design across platforms, and smooth performance. This makes it ideal for businesses aiming for quick market entry and better ROI.",
+        },
+        {
+            id: 4,
+            question:
+                "Does Flutter support advanced features like AI or real-time data?",
+            answer:
+                "Absolutely. Flutter integrates with AI tools, chat systems, live tracking, payment gateways, and analytics, enabling feature-rich applications.",
+        },
+        {
+            id: 5,
+            question: "How much does it cost to develop a Flutter app?",
+            answer:
+                "The cost varies based on complexity, features, and integrations. At Code Neptune, we offer custom quotes to match your business goals and budget.",
+        },
+        {
+            id: 6,
+            question:
+                "How does Code Neptune ensure great UI and UX in Flutter apps?",
+            answer:
+                "Our design-first approach focuses on interactive prototypes, user journey mapping, and responsive designs, ensuring every app looks stunning and performs flawlessly.",
+        },
+        {
+            id: 7,
+            question: "How long does it take to build a Flutter app?",
+            answer:
+                "A basic app can take 8 to 12 weeks, while more complex apps may require additional time. Our agile process ensures speed without sacrificing quality.",
+        },
+        {
+            id: 8,
+            question:
+                "Does Code Neptune provide post-launch Flutter app maintenance?",
+            answer:
+                "Yes. We offer end-to-end support, including bug fixes, performance monitoring, feature updates, and scalability planning.",
+        },
+        {
+            id: 9,
+            question: "Can Flutter be used for enterprise-grade applications?",
+            answer:
+                "Yes. Flutter supports advanced architectures and integrations, making it suitable for large-scale enterprise applications across finance, healthcare, retail, and more.",
+        },
+        {
+            id: 10,
+            question:
+                "How can I start my Flutter app development project with Code Neptune?",
+            answer:
+                "Simply book a free consultation with our experts. We’ll discuss your goals, share insights, and create a tailored roadmap for your app development journey.",
         },
     ];
 
@@ -155,9 +223,9 @@ function page() {
                 padding='pb-16'
             />
             <Testimonials />
-            <IndustriesWeServe padding='pb-16'/>
+            <IndustriesWeServe padding='pb-16' />
             <TechStack />
-            <Faqs />
+            <Faqs faqs={flutterFaqs}/>
             <Blogs />
             <ContactForm />
             <Location />

@@ -15,50 +15,62 @@ const servicesData = [
     id: 2,
     title: 'CI/CD Pipeline Automation',
    icon: '/devops-development/img2.svg',
-    description: 'Streamline your development workflow with automated continuous integration and deployment pipelines. Reduce manual errors, accelerate releases, and maintain consistent quality across all environments.'
+    description: 'Automate your entire release process with robust CI/CD pipelines for seamless, error-free deployments.'
   },
   {
     id: 3,
     title: 'Cloud Infrastructure & Management',
    icon: '/devops-development/img3.svg',
-    description: 'Optimize your cloud resources with scalable infrastructure solutions. We help you architect, deploy, and manage cloud environments that grow with your business needs.'
+    description: 'We build and manage secure, scalable cloud environments across AWS, Azure, and Google Cloud.'
   },
   {
     id: 4,
     title: 'DevOps Toolchain Integration',
     icon: '/devops-development/img4.svg',
-    description: 'Seamlessly integrate best-in-class DevOps tools to create a unified workflow. From version control to monitoring, we connect your entire software delivery pipeline.'
+    description: 'Unify your tools into a cohesive DevOps toolchain for better collaboration and visibility.'
   },
   {
     id: 5,
     title: 'DevSecOps for Enhanced Security',
     icon: '/devops-development/img5.svg',
-    description: 'Build security into every stage of your development process. We implement automated security testing, compliance monitoring, and vulnerability management to protect your applications.'
+    description: 'We embed security into every stage with automated scans, audits, and compliance checks.'
   },
   {
     id: 6,
     title: 'Docker & Kubernetes',
     icon: '/devops-development/img6.svg',
-    description: 'Containerize your applications and orchestrate them at scale. We implement Docker and Kubernetes solutions for consistent deployment across any environment.'
+    description: 'Adopt containerization and Kubernetes for scalable, modern application environments.'
   },
   {
     id: 7,
     title: 'Infrastructure as Code Solutions',
    icon: '/devops-development/img7.svg',
-    description: 'Manage your infrastructure through code for reproducible, version-controlled deployments. Reduce configuration drift and accelerate infrastructure provisioning.'
+    description: 'Automate infrastructure with IaC tools for repeatable, error-free deployments.'
   },
   {
     id: 8,
     title: 'Continuous Monitoring & Logging',
     icon: '/devops-development/img8.svg',
-    description: 'Gain real-time visibility into your systems with comprehensive monitoring and logging solutions. Identify issues before they impact users and optimize performance continuously.'
+    description: 'Gain visibility with real-time monitoring and proactive issue resolution'
   },
   {
     id: 9,
     title: 'Multi-Cloud & Hybrid Cloud Strategy',
     icon: '/devops-development/img9.svg',
-    description: 'Navigate complex multi-cloud environments with strategic guidance. We help you leverage multiple cloud providers while maintaining flexibility and avoiding vendor lock-in.'
-  }
+    description: 'Build flexible, future-ready cloud strategies for resilience and scalability.'
+  },
+  {
+    id: 10,
+    title: 'Performance Optimization & Cost Management',
+    icon: '/devops-development/img9.svg',
+    description: 'Boost performance while cutting operational costs for maximum ROI.'
+  },
+  {
+    id: 11,
+    title: 'Managed DevOps Services & Training',
+    icon: '/devops-development/img9.svg',
+    description: 'Get ongoing support, monitoring, and team training for long-term success.'
+  },
 ];
 
 function OurComprehensiveDevOpsConsultingServices() {

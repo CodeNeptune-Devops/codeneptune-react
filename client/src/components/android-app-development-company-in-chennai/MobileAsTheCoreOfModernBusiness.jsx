@@ -22,8 +22,8 @@ function MobileAsTheCoreOfModernBusiness() {
   ]
 
   const stats = [
-    { label: 'Revenue', value: '+10%', color: 'bg-pink-600/10 text-pink-600',icon: <Layers size={30}/> },
-    { label: 'ROI', value: '+17%', color: 'bg-yellow-600/10 text-yellow-600',icon:  <Repeat2 size={30}/> },
+    { label: 'Engagement', value: '+10%', color: 'bg-pink-600/10 text-pink-600',icon: <Layers size={30}/> },
+    { label: 'Trust', value: '+17%', color: 'bg-yellow-600/10 text-yellow-600',icon:  <Repeat2 size={30}/> },
     { label: 'Loyalty', value: '+24%', color: 'bg-purple-600/10 text-purple-600', icon:  <HandHeart size={30}/> },
     { label: 'Growth', value: '+31%', color: 'bg-green-600/10 text-green-600', icon: <ChartNoAxesCombined size={30}/> }
   ]

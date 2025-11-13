@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import SectionTitle from './titles/SectionTitle';
 
 function Faqs({ faqs: fq }) {
-  const [openFaq, setOpenFaq] = useState(0) // First FAQ open by default
+  const [openFaq, setOpenFaq] = useState(1) // First FAQ open by default
 
  const staticfaqs = [
   {
@@ -57,8 +57,6 @@ function Faqs({ faqs: fq }) {
   }
 ];
 
-
-
   const toggleFaq = (id) => {
     setOpenFaq(prev => prev === id ? null : id)
   }
@@ -90,7 +88,7 @@ function Faqs({ faqs: fq }) {
               <div key={faq.id} className="border-b border-gray-200 pb-2 px-3">
                 <button
                   onClick={() => toggleFaq(faq.id)}
-                  className="w-full text-left flex items-center justify-between py-4 "
+                  className="w-full text-left flex items-center justify-between py-4 cursor-pointer "
                 >
                   <h3 className={`text-lg cursor-pointer font-medium pr-2 hover:text-blue-400 ${
                     openFaq === faq.id ? 'text-blue-500' : 'text-gray-700'
@@ -119,7 +117,7 @@ function Faqs({ faqs: fq }) {
               <div key={faq.id} className="border-b border-gray-200 pb-2 px-3">
                 <button
                   onClick={() => toggleFaq(faq.id)}
-                  className="w-full text-left flex items-center justify-between py-4 hover:opacity-80 transition-opacity"
+                  className="w-full text-left flex items-center justify-between py-4 hover:opacity-80 transition-opacity cursor-pointer"
                 >
                   <h3 className={`text-lg font-medium pr-2 cursor-pointer hover:text-blue-400 ${
                     openFaq === faq.id ? 'text-blue-500' : 'text-gray-700'

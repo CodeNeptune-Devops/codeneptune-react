@@ -3,57 +3,59 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight, Bot, BrainCircuit, Globe, Smartphone, Layers, Zap, BarChart3, Code2, Cloud } from 'lucide-react';
 
-function OurServices() {
+const dataSet = [
+    {
+        title: "AI Agent Development",
+        text: "We create intelligent AI Agents capable of understanding context, automating workflows, and making decisions independently to enhance productivity and user interaction.",
+        icon: Bot
+    },
+    {
+        title: "AI Development Services",
+        text: "Our AI and ML development includes predictive analytics, NLP automation, and LLM fine tuning to help businesses scale with intelligent automation.",
+        icon: BrainCircuit
+    },
+    {
+        title: "Web Design & Development",
+        text: "We build powerful, responsive, and SEO optimized websites using the latest frameworks and AI-driven insights to improve engagement and conversions.",
+        icon: Globe
+    },
+    {
+        title: "Native App Development",
+        text: "Our expert team crafts high-performance native applications with smooth user experiences and seamless integration for iOS and Android platforms.",
+        icon: Smartphone
+    },
+    {
+        title: "Hybrid App Development",
+        text: "We deliver cross-platform hybrid applications designed for speed, scalability, and performance — optimized to reduce development time and cost.",
+        icon: Layers
+    },
+    {
+        title: "Digital Transformation",
+        text: "From modernizing legacy systems to automating workflows, we help businesses embrace AI-driven transformation across every process.",
+        icon: Zap
+    },
+    {
+        title: "Data Analytics",
+        text: "We transform complex data into actionable insights through AI-powered analytics that support smarter decisions and measurable growth.",
+        icon: BarChart3
+    },
+    {
+        title: "Web & Software Engineering",
+        text: "We architect scalable software systems and enterprise web platforms powered by AI-augmented SDLC methodologies for maximum efficiency.",
+        icon: Code2
+    },
+    {
+        title: "DevOps & Cloud Management",
+        text: "We automate deployment, monitoring, and scaling using AIOps and intelligent cloud frameworks for secure, cost-efficient operations.",
+        icon: Cloud
+    }
+];
+
+function OurServices({ data = dataSet }) {
     const containerRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const data = [
-        {
-            title: "AI Agent Development",
-            text: "We create intelligent AI Agents capable of understanding context, automating workflows, and making decisions independently to enhance productivity and user interaction.",
-            icon: Bot
-        },
-        {
-            title: "AI Development Services",
-            text: "Our AI and ML development includes predictive analytics, NLP automation, and LLM fine tuning to help businesses scale with intelligent automation.",
-            icon: BrainCircuit
-        },
-        {
-            title: "Web Design & Development",
-            text: "We build powerful, responsive, and SEO optimized websites using the latest frameworks and AI-driven insights to improve engagement and conversions.",
-            icon: Globe
-        },
-        {
-            title: "Native App Development",
-            text: "Our expert team crafts high-performance native applications with smooth user experiences and seamless integration for iOS and Android platforms.",
-            icon: Smartphone
-        },
-        {
-            title: "Hybrid App Development",
-            text: "We deliver cross-platform hybrid applications designed for speed, scalability, and performance — optimized to reduce development time and cost.",
-            icon: Layers
-        },
-        {
-            title: "Digital Transformation",
-            text: "From modernizing legacy systems to automating workflows, we help businesses embrace AI-driven transformation across every process.",
-            icon: Zap
-        },
-        {
-            title: "Data Analytics",
-            text: "We transform complex data into actionable insights through AI-powered analytics that support smarter decisions and measurable growth.",
-            icon: BarChart3
-        },
-        {
-            title: "Web & Software Engineering",
-            text: "We architect scalable software systems and enterprise web platforms powered by AI-augmented SDLC methodologies for maximum efficiency.",
-            icon: Code2
-        },
-        {
-            title: "DevOps & Cloud Management",
-            text: "We automate deployment, monitoring, and scaling using AIOps and intelligent cloud frameworks for secure, cost-efficient operations.",
-            icon: Cloud
-        }
-    ];
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -116,30 +118,28 @@ function OurServices() {
                             return (
                                 <div
                                     key={index}
-                                    className={`service-item group cursor-pointer transition-all duration-300 ${
-                                        isActive ? 'scale-100' : 'scale-95 sm:scale-95 opacity-70 sm:opacity-60'
-                                    }`}
+                                    className={`service-item group cursor-pointer transition-all duration-300 ${isActive ? 'scale-100' : 'scale-95 sm:scale-95 opacity-70 sm:opacity-60'
+                                        }`}
                                 >
-                                    <div className={`relative border rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 transition-all duration-300 ${
-                                        isActive
+                                    <div className={`relative border rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 transition-all duration-300 ${isActive
                                             ? 'border-blue-500 bg-gradient-to-br from-blue-950/50 to-gray-900/50'
                                             : 'border-gray-700 bg-gray-900/30 hover:border-gray-600'
-                                    }`}>
+                                        }`}>
                                         <div className="flex items-start justify-between gap-3 sm:gap-4">
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                                                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors flex-shrink-0 ${
-                                                        isActive ? 'bg-blue-600' : 'bg-gray-800'
-                                                    }`}>
-                                                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                                                   {item.icon && (
+                                                     <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors flex-shrink-0 ${isActive ? 'bg-blue-600' : 'bg-gray-800'
+                                                        }`}>
+                                                        {item.icon && <Icon className="w-5 h-5 sm:w-6 sm:h-6" />}
                                                     </div>
+                                                   )}
                                                     <h3 className="text-xl sm:text-2xl font-bold leading-tight">{item.title}</h3>
                                                 </div>
                                                 <p className="text-sm sm:text-base text-gray-300 leading-relaxed">{item.text}</p>
                                             </div>
-                                            <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-all mt-1 ${
-                                                isActive ? 'text-blue-500 translate-x-1' : 'text-gray-500'
-                                            }`} />
+                                            <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-all mt-1 ${isActive ? 'text-blue-500 translate-x-1' : 'text-gray-500'
+                                                }`} />
                                         </div>
                                     </div>
                                 </div>

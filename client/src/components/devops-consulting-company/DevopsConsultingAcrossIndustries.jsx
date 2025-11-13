@@ -1,7 +1,18 @@
 'use client'
 
 import React, { useState } from 'react';
-import { TrendingUp, Activity, ShoppingBag, Cloud, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  TrendingUp,
+  Activity,
+  ShoppingBag,
+  Cloud,
+  Monitor,
+  Landmark,
+  Code2,
+  Smartphone,
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react";
 
 function DevopsConsultingAcrossIndustries() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -9,24 +20,54 @@ function DevopsConsultingAcrossIndustries() {
   const industries = [
     {
       icon: <TrendingUp className="w-8 h-8" />,
-      title: 'Fintech',
-      description: 'We develop secure and scalable pipelines for financial applications, ensuring compliance, rapid deployment, and high availability for critical financial services.'
+      title: "Fintech",
+      description:
+        "We develop secure and scalable pipelines for financial applications, ensuring compliance, rapid deployment, and high availability for critical financial services.",
     },
     {
       icon: <Activity className="w-8 h-8" />,
-      title: 'Healthcare',
-      description: 'Our team builds HIPAA-compliant CI/CD pipelines for healthcare applications, enhancing accessibility, data security, and operational efficiency for providers and patients alike.'
+      title: "Healthcare",
+      description:
+        "Our team builds HIPAA-compliant CI/CD pipelines for healthcare applications, enhancing accessibility, data security, and operational efficiency for providers and patients alike.",
     },
     {
       icon: <ShoppingBag className="w-8 h-8" />,
-      title: 'E-commerce',
-      description: 'Our solutions for retail include automated deployments, real-time monitoring, and scalable infrastructure designed to boost engagement, conversion rates, and revenue for online businesses.'
+      title: "E-commerce",
+      description:
+        "Our solutions for retail include automated deployments, real-time monitoring, and scalable infrastructure designed to boost engagement, conversion rates, and revenue for online businesses.",
     },
     {
       icon: <Cloud className="w-8 h-8" />,
-      title: 'SaaS',
-      description: 'We streamline SaaS operations with continuous delivery, robust monitoring, and scalable cloud infrastructure, significantly improving deployment speed and cost efficiency for software-as-a-service providers.'
-    }
+      title: "SaaS",
+      description:
+        "We streamline SaaS operations with continuous delivery, robust monitoring, and scalable cloud infrastructure, significantly improving deployment speed and cost efficiency for software-as-a-service providers.",
+    },
+
+    // ✅ New 4 industries from the image
+    {
+      icon: <Monitor className="w-8 h-8" />,
+      title: "Media & Entertainment",
+      description:
+        "From content delivery to real-time streaming, we help media companies optimize their operations with cloud platforms and automation. Our solutions ensure high performance, scalability, and security, supporting smooth content distribution and audience engagement.",
+    },
+    {
+      icon: <Landmark className="w-8 h-8" />,
+      title: "Enterprise",
+      description:
+        "Our expertise extends to large-scale enterprise systems, driving unparalleled efficiency, reliability, and security within complex IT environments for major corporations. DevOps is highly suitable for large-scale enterprise applications across finance, healthcare, retail, and more.",
+    },
+    {
+      icon: <Code2 className="w-8 h-8" />,
+      title: "Technology & Software Development",
+      description:
+        "We empower tech and software development companies by building scalable DevOps pipelines, automating testing and deployment, and optimizing cloud infrastructure to accelerate software releases, ensuring high performance and innovation.",
+    },
+    {
+      icon: <Smartphone className="w-8 h-8" />,
+      title: "Mobile Application Services",
+      description:
+        "We specialize in setting up end-to-end DevOps for mobile applications and their related architectures, enabling seamless delivery, enhanced customer experience, greater innovation, reduced risk, and superior product quality.",
+    },
   ];
 
   const handlePrev = () => {
@@ -76,7 +117,7 @@ function DevopsConsultingAcrossIndustries() {
           </button>
 
           <button
-            onClick={handleNext} 
+            onClick={handleNext}
             className='hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-10 w-12 h-12 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 cursor-pointer'
             aria-label="Next"
           >
@@ -103,7 +144,7 @@ function DevopsConsultingAcrossIndustries() {
 
           {/* Cards Carousel - Mobile (One card at a time) */}
           <div className='md:hidden relative overflow-hidden'>
-            <div 
+            <div
               className='flex transition-transform duration-500 ease-in-out'
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
@@ -168,9 +209,8 @@ function DevopsConsultingAcrossIndustries() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === index ? 'bg-blue-600 w-8' : 'bg-gray-300'
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === index ? 'bg-blue-600 w-8' : 'bg-gray-300'
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -183,9 +223,8 @@ function DevopsConsultingAcrossIndustries() {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                currentIndex === index ? 'bg-blue-600 w-8' : 'bg-gray-300'
-              }`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === index ? 'bg-blue-600 w-8' : 'bg-gray-300'
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

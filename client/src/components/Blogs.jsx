@@ -1,34 +1,42 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import img1 from '../assets/blogs/img1.webp';
+import img2 from '../assets/blogs/img2.webp';
+import img3 from '../assets/blogs/img3.webp';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function Blogs() {
   const articles = [
     {
       id: 1,
       badge: 'TOP 10',
-      title: 'Top 10 Mobile App Development Companies in Pune...',
-      description: 'The startup ecosystem in Pune continues to thrive with innovation, creativity, and strong engineering excellence....',
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
-      date: 'November 6, 2025',
-      author: 'codeneptune'
+      title: 'iOS App Development: Powering the Next Generation of Digital Experiences',
+      description: 'The world of mobile innovation keeps moving forward, and iOS app development has become a core part of that transformation.',
+      image: img1,
+      date: 'November 12, 2025',
+      author: 'codeneptune',
+      href: '/blog/ios-app-development-business-growth/'
     },
     {
       id: 2,
-      badge: null,
-      title: 'Best Website Development Company in Chennai | Build Your Digital Success with Code Neptune...',
-      description: 'Discovering the Best Website Development Company in Chennai Finding the best website development company in...',
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80',
-      date: 'November 5, 2025',
-      author: 'codeneptune'
+      badge: 'TOP 10',
+      title: 'Expertise in Native iOS and Android Development in Chennai',
+      description: 'Building a mobile app that feels smooth, fast, and reliable is no longer a luxury in fact, it has become',
+      image: img3,
+      date: '11 November, 2025',
+      author: 'codeneptune',
+      href: '/blog/expertise-native-ios-android-development-chennai'
     },
     {
       id: 3,
-      badge: 'TOP 10',
-      title: 'Top 10 Website Development Companies in Bangalore: Build Your Digital Presence with the Best...',
-      description: 'Why Bangalore Leads India\'s Website Development Market Bangalore has earned its title as the Silicon...',
-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
-      date: 'October 30, 2025',
-      author: 'codeneptune'
+      badge: null,
+      title: 'Best Website Development Company in India – A Complete Guide to Choosing the Right Partner',
+      description: 'Finding the best website development company in India can feel like navigating through a maze filled with countless choices, each',
+      image: img2,
+      date: 'November 10, 2025',
+      author: 'codeneptune',
+      href: '/blog/best-website-development-company-in-india/'
     }
   ];
 
@@ -43,15 +51,19 @@ function Blogs() {
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {articles.map((article) => (
-            <div
+            <Link
+              href={article.href}
+              target='_blank'
               key={article.id}
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col"
             >
               {/* Image Container */}
               <div className="relative h-64 overflow-hidden">
-                <img
+                <Image
                   src={article.image}
                   alt={article.title}
+                  height={300}
+                  width={300}
                   className="w-full h-full object-cover"
                 />
                 {article.badge && (
@@ -85,7 +97,7 @@ function Blogs() {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

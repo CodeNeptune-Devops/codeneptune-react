@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lightbulb, Zap, RefreshCw, Box, ThumbsUp } from 'lucide-react';
+import { Lightbulb, Smartphone, Component, Blocks, MousePointerClick } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
 
 function WhyChooseCodeNeptune() {
@@ -12,28 +12,28 @@ function WhyChooseCodeNeptune() {
       position: 'top-left'
     },
     {
-      icon: Zap,
+      icon: Smartphone,
       title: 'Fast and Flexible',
       description: 'Our senior-level design support without long term contracts or heavy lift hiring fees.',
       gradient: 'from-blue-500 to-cyan-500',
       position: 'top-center'
     },
     {
-      icon: RefreshCw,
+      icon: Component,
       title: 'Outcome-Driven Design',
       description: 'Every decision we make is tied back to a clear growth-focused measurable objective.',
       gradient: 'from-orange-500 to-yellow-500',
       position: 'top-right'
     },
     {
-      icon: Box,
+      icon: Blocks,
       title: 'Built to Scale',
       description: 'We design systems that keep pace of consistent as your product evolves.',
       gradient: 'from-pink-500 to-purple-600',
       position: 'bottom-left'
     },
     {
-      icon: ThumbsUp,
+      icon: MousePointerClick,
       title: 'Easy to Work With',
       description: 'Simple, upfront and collaborative with no hidden or estimation of your next team.',
       gradient: 'from-green-500 to-teal-500',
@@ -73,28 +73,7 @@ function WhyChooseCodeNeptune() {
                 {/* Icon with Gradient Background */}
                 <div className="mb-6 flex justify-center">
                   <div className={` rounded-2xl  flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300`}>
-                    {index === 0 ? (
-                      // Custom Lightbulb Icon
-                      <svg viewBox="0 0 64 64" className="w-14 h-14 text-white">
-                        <circle cx="32" cy="28" r="18" fill="currentColor" opacity="0.3"/>
-                        <path d="M32 10 C24 10 18 16 18 24 C18 30 22 34 24 38 L24 48 C24 50 26 52 28 52 L36 52 C38 52 40 50 40 48 L40 38 C42 34 46 30 46 24 C46 16 40 10 32 10 Z" fill="currentColor"/>
-                        <line x1="28" y1="54" x2="36" y2="54" stroke="currentColor" strokeWidth="2"/>
-                        <line x1="28" y1="58" x2="36" y2="58" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                    ) : index === 1 ? (
-                      // Running figure
-                      <svg viewBox="0 0 64 64" className="w-14 h-14 text-white">
-                        <circle cx="45" cy="12" r="4" fill="currentColor"/>
-                        <path d="M38 20 L35 28 L30 35 L22 42 M45 22 L48 30 L52 38 M38 22 L42 32 L38 42 L35 50" stroke="currentColor" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    ) : (
-                      // Circular target
-                      <svg viewBox="0 0 64 64" className="w-14 h-14 text-white">
-                        <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.3"/>
-                        <circle cx="32" cy="32" r="16" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.5"/>
-                        <circle cx="32" cy="32" r="8" fill="currentColor"/>
-                      </svg>
-                    )}
+                   <Icon className='h-10 w-10'/>
                   </div>
                 </div>
 
@@ -122,24 +101,7 @@ function WhyChooseCodeNeptune() {
                 {/* Icon with Gradient Background */}
                 <div className="mb-6 flex justify-center">
                   <div className={`rounded-2xl  flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300`}>
-                    {actualIndex === 3 ? (
-                      // Building blocks
-                      <svg viewBox="0 0 64 64" className="w-14 h-14 text-white">
-                        <rect x="8" y="38" width="14" height="14" fill="currentColor" opacity="0.4" rx="2"/>
-                        <rect x="25" y="38" width="14" height="14" fill="currentColor" opacity="0.6" rx="2"/>
-                        <rect x="42" y="38" width="14" height="14" fill="currentColor" opacity="0.9" rx="2"/>
-                        <rect x="16" y="22" width="14" height="14" fill="currentColor" opacity="0.5" rx="2"/>
-                        <rect x="33" y="22" width="14" height="14" fill="currentColor" opacity="0.8" rx="2"/>
-                        <rect x="25" y="6" width="14" height="14" fill="currentColor" opacity="0.3" rx="2"/>
-                      </svg>
-                    ) : (
-                      // Thumbs up with globe
-                      <svg viewBox="0 0 64 64" className="w-14 h-14 text-white">
-                        <circle cx="42" cy="24" r="16" fill="currentColor" opacity="0.3"/>
-                        <path d="M42 10 L42 38 M28 24 L56 24 M34 14 Q42 18 50 14 M34 34 Q42 30 50 34" stroke="currentColor" strokeWidth="2.5" fill="none"/>
-                        <path d="M18 32 L22 28 L22 32 L26 32 L26 48 L16 48 L14 42 Q12 36 16 32 Z" fill="currentColor"/>
-                      </svg>
-                    )}
+                    <Icon className='h-10 w-10'/>
                   </div>
                 </div>
 

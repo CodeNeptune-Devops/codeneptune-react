@@ -10,83 +10,106 @@ function CustomMobileAppDevelopmentServices() {
     const services = [
         {
             id: 1,
-            title: 'Android Application Development',
-            description: 'At Code Neptune, we design and develop feature-rich Android applications that cater to businesses of all sizes. Our Android app development services ensure your app is:',
+            title: "Android Application Development",
+            description:
+                "At Code Neptune, we design and develop feature-rich Android applications that cater to businesses of all sizes. Our Android app development services ensure your app is:",
             features: [
-                'Scalable and high-performing, optimized for millions of users.',
-                'Secure and reliable, following best practices in data protection.',
-                'Compatible with all Android devices, from smartphones to tablets, TVs, and wearables.'
+                "Scalable and high-performing, optimized for millions of users.",
+                "Secure and reliable, following best practices in data protection.",
+                "Compatible with all Android devices, from smartphones to tablets, TVs, and wearables.",
             ],
-            additionalText: 'We leverage Kotlin and Java to build native Android apps, ensuring they are fast, responsive, and tailored to your business needs. From MVPs to enterprise solutions, our Android apps are built to engage users and drive growth',
-            bgGradient: 'from-blue-500 via-blue-600 to-blue-800',
-            contentGradient: 'from-blue-700 to-blue-900'
+            additionalText:
+                "We leverage Kotlin and Java to build native Android apps, ensuring they are fast, responsive, and tailored to your business needs. From MVPs to enterprise solutions, our Android apps are built to engage users and drive growth.",
+            bgGradient: "from-blue-500 via-blue-600 to-blue-800",
+            contentGradient: "from-blue-700 to-blue-900",
         },
+
+        // 2. iOS – rewritten exactly like screenshot
         {
             id: 2,
-            title: 'iOS Application Development',
-            description: 'We create elegant and powerful iOS applications that deliver exceptional user experiences across all Apple devices. Our iOS development services ensure:',
+            title: "iOS Application Development",
+            description:
+                "We create custom iOS applications that work flawlessly across all Apple devices. As a leading mobile app development company, we build secure, high-performance apps using Swift and Objective-C.",
             features: [
-                'Native performance with Swift and Objective-C for seamless functionality.',
-                'Intuitive interfaces following Apple\'s Human Interface Guidelines.',
-                'Full integration with iOS ecosystem including Apple Watch, iPad, and Apple TV.'
+                "Optimized for iPhones, iPads, Apple Watches, and Apple TVs.",
+                "Built with clean, scalable code for smooth performance.",
+                "Follows Apple’s strict design and security guidelines.",
             ],
-            additionalText: 'Our iOS apps are designed to meet App Store standards while providing innovative features that set your business apart in the competitive Apple marketplace.',
-            bgGradient: 'from-purple-500 via-purple-600 to-purple-800',
-            contentGradient: 'from-purple-700 to-purple-900'
+            additionalText:
+                "Whether it’s a startup MVP or a full-featured enterprise solution, our iOS app development services help you reach Apple users with confidence. Let’s build your iOS app.",
+            bgGradient: "from-purple-500 via-purple-600 to-purple-800",
+            contentGradient: "from-purple-700 to-purple-900",
         },
+
+        // 3. Flutter – rewritten exactly like screenshot
         {
             id: 3,
-            title: 'Flutter Application Development',
-            description: 'Build cross-platform applications with Flutter that work beautifully on both iOS and Android. Our Flutter development services provide:',
+            title: "Flutter Application Development",
+            description:
+                "Our Flutter app development team at Code Neptune builds beautiful, fast apps that run on both Android and iOS from a single codebase. This means faster delivery and reduced costs—without compromising quality.",
             features: [
-                'Single codebase for multiple platforms, reducing development time and costs.',
-                'Native-like performance with beautiful, customizable UI components.',
-                'Hot reload feature for rapid development and instant updates.'
+                "One codebase, two platforms.",
+                "Stunning UI with native performance.",
+                "Scalable for MVPs and enterprise-level apps.",
             ],
-            additionalText: 'Using Flutter\'s powerful framework, we create visually stunning apps with smooth animations and responsive designs that feel native on every platform.',
-            bgGradient: 'from-cyan-500 via-cyan-600 to-cyan-800',
-            contentGradient: 'from-cyan-700 to-cyan-900'
+            additionalText:
+                "As a trusted mobile app development company, we help you save time and money with cross-platform Flutter development. Let’s turn your idea into a Flutter-powered app.",
+            bgGradient: "from-cyan-500 via-cyan-600 to-cyan-800",
+            contentGradient: "from-cyan-700 to-cyan-900",
         },
+
+        // 4. React Native – rewritten exactly like screenshot
         {
             id: 4,
-            title: 'React Native Application Development',
-            description: 'Leverage the power of React Native to build efficient cross-platform mobile applications. Our React Native services deliver:',
+            title: "React Native Application Development",
+            description:
+                "React Native lets you reach both Android and iOS users with a single app. Our team builds flexible and responsive apps using this popular framework from Meta (Facebook).",
             features: [
-                'JavaScript-based development with native performance capabilities.',
-                'Reusable components that accelerate development across platforms.',
-                'Strong community support and extensive third-party library ecosystem.'
+                "Faster development with reusable components.",
+                "Real-time updates and smoother animations.",
+                "Lower development cost, quicker launch time.",
             ],
-            additionalText: 'We build React Native apps that combine the best of web and mobile development, ensuring fast deployment and easy maintenance for your business.',
-            bgGradient: 'from-indigo-500 via-indigo-600 to-indigo-800',
-            contentGradient: 'from-indigo-700 to-indigo-900'
+            additionalText:
+                "If you’re looking for a reliable mobile app development company to build scalable cross-platform apps, React Native is a top choice. Build a powerful app with React Native.",
+            bgGradient: "from-indigo-500 via-indigo-600 to-indigo-800",
+            contentGradient: "from-indigo-700 to-indigo-900",
         },
+
+        // 5. Custom Apps – rewritten exactly like screenshot
         {
             id: 5,
-            title: 'Custom Application Development',
-            description: 'Every business is unique, and so are its mobile app requirements. Our custom application development services offer:',
+            title: "Custom Application Development",
+            description:
+                "Your business is unique—your app should be too. We offer custom app development services to match your exact business goals, whether it’s a new startup or an existing brand going mobile.",
             features: [
-                'Tailored solutions designed specifically for your business needs.',
-                'Flexible architecture that scales with your growing requirements.',
-                'Integration with existing systems and third-party services.'
+                "Built for your unique needs, not one-size-fits-all.",
+                "Designed with users and scalability in mind.",
+                "Integration-ready with your existing tools and systems.",
             ],
-            additionalText: 'Whether you need a specialized industry solution or a unique consumer app, we build custom applications from the ground up to match your exact specifications.',
-            bgGradient: 'from-emerald-500 via-emerald-600 to-emerald-800',
-            contentGradient: 'from-emerald-700 to-emerald-900'
+            additionalText:
+                "Code Neptune is the mobile app development company you can trust to build tailor-made digital products that grow with your business. Let’s customize your app to success.",
+            bgGradient: "from-emerald-500 via-emerald-600 to-emerald-800",
+            contentGradient: "from-emerald-700 to-emerald-900",
         },
+
+        // 6. eCommerce Apps – rewritten exactly like screenshot
         {
             id: 6,
-            title: 'eCommerce App Development',
-            description: 'Transform your retail business with powerful eCommerce mobile applications. Our eCommerce app development includes:',
+            title: "eCommerce App Development",
+            description:
+                "We develop high-performance eCommerce apps that drive engagement and boost conversions. Whether you sell fashion, food, or electronics, our apps help you sell more—faster.",
             features: [
-                'Secure payment gateway integration with multiple payment options.',
-                'Intuitive product browsing with advanced search and filters.',
-                'Real-time inventory management and order tracking capabilities.'
+                "Smooth user experience with fast checkout.",
+                "Built-in payment gateway integration.",
+                "Real-time inventory, cart, and order management.",
             ],
-            additionalText: 'We create feature-rich eCommerce apps with shopping cart functionality, user reviews, push notifications, and analytics to help you maximize sales and customer satisfaction.',
-            bgGradient: 'from-orange-500 via-orange-600 to-orange-800',
-            contentGradient: 'from-orange-700 to-orange-900'
-        }
+            additionalText:
+                "As a top-rated mobile app development company, we know how to design apps that grow your online business. Start your eCommerce app journey with us.",
+            bgGradient: "from-orange-500 via-orange-600 to-orange-800",
+            contentGradient: "from-orange-700 to-orange-900",
+        },
     ];
+
 
     const menuItems = [
         'Android Application Development',
@@ -150,9 +173,9 @@ function CustomMobileAppDevelopmentServices() {
                                     {services[activeService].features.map((feature, index) => (
                                         <div key={index} className="flex items-start space-x-3">
                                             <div className="flex-shrink-0 mt-1">
-                                                
-                                                    <CheckCheck className="w-4 h-4 text-white" />
-                                                
+
+                                                <CheckCheck className="w-4 h-4 text-white" />
+
                                             </div>
                                             <p className="text-white/90 text-sm md:text-base leading-relaxed">
                                                 {feature}
