@@ -87,7 +87,7 @@ export default function Hero() {
               width={20}
               priority
             />
-            <span className="text-[10px] sm:text-md font-medium text-white/90">
+            <span className="text-[10px] sm:text-md md:text-md font-medium text-white/90">
               Best mobile app development company in India and USA
             </span>
           </button>
@@ -150,7 +150,7 @@ export default function Hero() {
                 colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                 animationSpeed={3}
                 showBorder={false}
-                className="text-lg md:text-5xl lg:text-5xl uppercase"
+                className="text-lg md:text-5xl lg:text-5xl"
               >
                 AI Agents That Redefine Possibility
               </GradientText>

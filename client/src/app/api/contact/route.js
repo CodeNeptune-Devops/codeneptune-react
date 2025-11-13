@@ -3,6 +3,22 @@ import { NextResponse } from 'next/server';
 import ContactForm from '@/models/ContactForm';
 import { connectDB } from "@/lib/db";
 
+// Verify reCAPTCHA token
+async function verifyRecaptcha(token) {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  
+  const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `secret=${secretKey}&response=${token}`,
+  });
+
+  const data = await response.json();
+  return data;
+}
+
 export async function POST(request) {
   try {
     // Connect to database
@@ -11,11 +27,48 @@ export async function POST(request) {
     const body = await request.json();
     
     // Validate required fields
-    const { name, mobile, email, foundUs, message, formType, submittedFrom } = body;
+    const { name, mobile, email, foundUs, message, formType, submittedFrom, recaptchaToken, service } = body;
     
     if (!name || !mobile || !email || !message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    // Service is required only for contact-page-form
+    if (formType === 'contact-page-form' && !service) {
+      return NextResponse.json(
+        { error: 'Service selection is required' },
+        { status: 400 }
+      );
+    }
+
+    // Verify reCAPTCHA token
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed' },
+        { status: 400 }
+      );
+    }
+
+    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+    
+    if (!recaptchaResult.success) {
+      console.error('reCAPTCHA verification failed:', recaptchaResult);
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed. Please try again.' },
+        { status: 400 }
+      );
+    }
+
+    // Optional: Check reCAPTCHA score (for v3, score ranges from 0.0 to 1.0)
+    // Higher scores indicate more likely human interaction
+    if (recaptchaResult.score < 0.5) {
+      console.warn('Low reCAPTCHA score:', recaptchaResult.score);
+      // You can either reject or flag for manual review
+      return NextResponse.json(
+        { error: 'Suspicious activity detected. Please try again.' },
         { status: 400 }
       );
     }
@@ -38,12 +91,9 @@ export async function POST(request) {
       );
     }
 
-    // Get additional request metadata
+    // Get additional request metadata (removed IP address)
     const userAgent = request.headers.get('user-agent') || null;
     const referer = request.headers.get('referer') || null;
-    const ipAddress = request.headers.get('x-forwarded-for') || 
-                      request.headers.get('x-real-ip') || 
-                      null;
 
     // Create new contact form submission
     const contactSubmission = await ContactForm.create({
@@ -56,15 +106,17 @@ export async function POST(request) {
       submittedFrom: submittedFrom || '/',
       submittedAt: new Date(),
       status: 'new',
-      ipAddress,
       userAgent,
-      referrer: referer
+      referrer: referer,
+      recaptchaScore: recaptchaResult.score, // Store the reCAPTCHA score
+      ...(service && { service }) // Add service field only if provided
     });
 
     console.log('Contact form submission saved:', {
       id: contactSubmission._id,
       formType: contactSubmission.formType,
-      submittedFrom: contactSubmission.submittedFrom
+      submittedFrom: contactSubmission.submittedFrom,
+      recaptchaScore: recaptchaResult.score
     });
 
     // Here you can add additional logic:

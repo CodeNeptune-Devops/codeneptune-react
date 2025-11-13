@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TiTick } from "react-icons/ti"
 import { IoArrowForwardCircle } from 'react-icons/io5'
 import { FaRegStar } from "react-icons/fa"
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 
 function ContactForm() {
     const pathname = usePathname();
+    const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -43,6 +44,27 @@ function ContactForm() {
         { platform: 'Facebook', icon: '/contact-form/facebook.svg', url: 'https://www.facebook.com/codeneptune' },
     ];
 
+    // Load reCAPTCHA script
+    useEffect(() => {
+        const loadRecaptcha = () => {
+            if (window.grecaptcha) {
+                setRecaptchaLoaded(true);
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                setRecaptchaLoaded(true);
+            };
+            document.body.appendChild(script);
+        };
+
+        loadRecaptcha();
+    }, []);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -60,32 +82,49 @@ function ContactForm() {
 
     const isFormValid = formData.name && formData.mobile && formData.email && formData.message;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        submitForm(
-            {
-                ...formData,
-                formType: 'contact-form',
-                submittedFrom: pathname || '/',
-            },
-            {
-                onSuccess: (data) => {
-                    toast.success(data.message || "Form submitted successfully!");
+        if (!recaptchaLoaded) {
+            toast.error('reCAPTCHA not loaded yet. Please try again.');
+            return;
+        }
 
-                    setFormData({
-                        name: '',
-                        mobile: '',
-                        email: '',
-                        foundUs: null,
-                        message: '',
-                    });
+        try {
+            // Execute reCAPTCHA
+            const token = await window.grecaptcha.execute(
+                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                { action: 'submit_contact_form' }
+            );
+
+            submitForm(
+                {
+                    ...formData,
+                    formType: 'contact-form',
+                    submittedFrom: pathname || '/',
+                    recaptchaToken: token,
                 },
-                onError: (error) => {
-                    toast.error(error?.message || "Failed to submit form.");
+                {
+                    onSuccess: (data) => {
+                        toast.success(data.message || "Form submitted successfully!");
+
+                        setFormData({
+                            name: '',
+                            mobile: '',
+                            email: '',
+                            foundUs: null,
+                            message: '',
+                        });
+                    },
+                    onError: (error) => {
+                        toast.error(error?.message || "Failed to submit form.");
+                    }
                 }
-            }
-        );
+            );
+        } catch (error) {
+            console.error('reCAPTCHA error:', error);
+            toast.error('Failed to verify reCAPTCHA. Please try again.');
+        }
     };
 
     return (
@@ -188,9 +227,9 @@ function ContactForm() {
                         {/* SUBMIT BUTTON */}
                         <button
                             type="submit"
-                            disabled={!isFormValid || isPending}
+                            disabled={!isFormValid || isPending || !recaptchaLoaded}
                             className={`px-6 py-3 w-60 cursor-pointer rounded-lg flex items-center gap-3 text-sm sm:text-base transition-all 
-                                ${isFormValid && !isPending
+                                ${isFormValid && !isPending && recaptchaLoaded
                                     ? 'bg-[#0072FF] text-white hover:bg-blue-600'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 }`}
@@ -198,6 +237,19 @@ function ContactForm() {
                             <IoArrowForwardCircle className='text-xl sm:text-2xl' />
                             {isPending ? 'Sending...' : 'Send Message'}
                         </button>
+
+                        {/* reCAPTCHA Badge Notice */}
+                        <p className='text-xs text-gray-500'>
+                            This site is protected by reCAPTCHA and the Google{' '}
+                            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+                                Privacy Policy
+                            </a>{' '}
+                            and{' '}
+                            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+                                Terms of Service
+                            </a>{' '}
+                            apply.
+                        </p>
                     </form>
                 </div>
 

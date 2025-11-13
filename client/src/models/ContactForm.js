@@ -42,10 +42,15 @@ const ContactFormSchema = new mongoose.Schema({
     trim: true,
     maxlength: [2000, 'Message cannot exceed 2000 characters']
   },
+  service: {
+    type: String,
+    enum: ['web-design', 'web-development', 'mobile-app', 'ui-ux', 'consulting', 'not_specified'],
+    default: 'not_specified'
+  },
   formType: {
     type: String,
     required: [true, 'Form type is required'],
-    enum: ['contact-form', 'quote-form', 'consultation-form', 'support-form', 'newsletter-form'],
+    enum: ['contact-form', 'contact-page-form', 'quote-form', 'consultation-form', 'support-form', 'newsletter-form'],
     default: 'contact-form',
     index: true
   },
@@ -72,10 +77,6 @@ const ContactFormSchema = new mongoose.Schema({
     type: String,
     default: null
   },
-  ipAddress: {
-    type: String,
-    default: null
-  },
   userAgent: {
     type: String,
     default: null
@@ -83,6 +84,12 @@ const ContactFormSchema = new mongoose.Schema({
   referrer: {
     type: String,
     default: null
+  },
+  recaptchaScore: {
+    type: Number,
+    default: null,
+    min: 0,
+    max: 1
   }
 }, {
   timestamps: true // Adds createdAt and updatedAt automatically
@@ -94,6 +101,7 @@ ContactFormSchema.index({ status: 1, submittedAt: -1 });
 ContactFormSchema.index({ createdAt: -1 });
 ContactFormSchema.index({ formType: 1, submittedAt: -1 });
 ContactFormSchema.index({ submittedFrom: 1 });
+ContactFormSchema.index({ recaptchaScore: 1 });
 
 // Add a method to format the submission data
 ContactFormSchema.methods.toClientJSON = function() {
@@ -104,10 +112,12 @@ ContactFormSchema.methods.toClientJSON = function() {
     mobile: this.mobile,
     foundUs: this.foundUs,
     message: this.message,
+    service: this.service,
     formType: this.formType,
     submittedFrom: this.submittedFrom,
     status: this.status,
-    submittedAt: this.submittedAt
+    submittedAt: this.submittedAt,
+    recaptchaScore: this.recaptchaScore
   };
 };
 
