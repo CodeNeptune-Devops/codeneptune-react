@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { headers } from "next/headers";
 import Layout from "@/components/layout/Layout";
-import { Providers } from "./providers";
 
 // inter font style with optimized display for better load speed
 const inter = Inter({
@@ -107,11 +106,11 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} font-sans`}
         style={{ fontFamily: "var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
-       <Providers>
+       
          <Layout>
           {children}
         </Layout>
-       </Providers>
+      
       </body>
     </html>
   );
