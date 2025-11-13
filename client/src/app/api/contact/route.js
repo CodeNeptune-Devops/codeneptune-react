@@ -26,51 +26,74 @@ export async function POST(request) {
 
     const body = await request.json();
     
-    // Validate required fields
+    // Extract fields
     const { name, mobile, email, foundUs, message, formType, submittedFrom, recaptchaToken, service } = body;
     
-    if (!name || !mobile || !email || !message) {
+    // Basic required fields for all forms
+    if (!name || !mobile || !email) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Name, mobile, and email are required' },
         { status: 400 }
       );
     }
 
-    // Service is required only for contact-page-form
-    if (formType === 'contact-page-form' && !service) {
-      return NextResponse.json(
-        { error: 'Service selection is required' },
-        { status: 400 }
-      );
+    // Form type specific validations
+    if (formType === 'contact-modal') {
+      // For contact-modal, only name, email, and mobile are required
+      // message, service, and foundUs are optional
+    } else {
+      // For other form types, message is required
+      if (!message) {
+        return NextResponse.json(
+          { error: 'Message is required' },
+          { status: 400 }
+        );
+      }
+      
+      // Service is required only for contact-page-form
+      if (formType === 'contact-page-form' && !service) {
+        return NextResponse.json(
+          { error: 'Service selection is required' },
+          { status: 400 }
+        );
+      }
     }
 
     // Verify reCAPTCHA token
-    if (!recaptchaToken) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed' },
-        { status: 400 }
-      );
-    }
-
-    const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+    let recaptchaResult = { success: true, score: 1.0 };
     
-    if (!recaptchaResult.success) {
-      console.error('reCAPTCHA verification failed:', recaptchaResult);
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed. Please try again.' },
-        { status: 400 }
-      );
-    }
+    // Skip reCAPTCHA in development if not configured
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const hasRecaptchaKey = process.env.RECAPTCHA_SECRET_KEY && process.env.RECAPTCHA_SECRET_KEY !== 'YOUR_RECAPTCHA_SECRET_KEY';
+    
+    if (!isDevelopment || hasRecaptchaKey) {
+      if (!recaptchaToken) {
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed' },
+          { status: 400 }
+        );
+      }
 
-    // Optional: Check reCAPTCHA score (for v3, score ranges from 0.0 to 1.0)
-    // Higher scores indicate more likely human interaction
-    if (recaptchaResult.score < 0.5) {
-      console.warn('Low reCAPTCHA score:', recaptchaResult.score);
-      // You can either reject or flag for manual review
-      return NextResponse.json(
-        { error: 'Suspicious activity detected. Please try again.' },
-        { status: 400 }
-      );
+      recaptchaResult = await verifyRecaptcha(recaptchaToken);
+      
+      if (!recaptchaResult.success) {
+        console.error('reCAPTCHA verification failed:', recaptchaResult);
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
+
+      // Optional: Check reCAPTCHA score (for v3, score ranges from 0.0 to 1.0)
+      if (recaptchaResult.score < 0.5) {
+        console.warn('Low reCAPTCHA score:', recaptchaResult.score);
+        return NextResponse.json(
+          { error: 'Suspicious activity detected. Please try again.' },
+          { status: 400 }
+        );
+      }
+    } else {
+      console.warn('⚠️  reCAPTCHA bypassed in development mode. Configure RECAPTCHA_SECRET_KEY for production.');
     }
 
     // Validate email format
@@ -82,7 +105,7 @@ export async function POST(request) {
       );
     }
 
-    // Validate mobile number (basic validation)
+    // Validate mobile number
     const mobileRegex = /^[0-9]{10,15}$/;
     if (!mobileRegex.test(mobile.replace(/[\s-+()]/g, ''))) {
       return NextResponse.json(
@@ -91,26 +114,34 @@ export async function POST(request) {
       );
     }
 
-    // Get additional request metadata (removed IP address)
+    // Get additional request metadata
     const userAgent = request.headers.get('user-agent') || null;
     const referer = request.headers.get('referer') || null;
 
-    // Create new contact form submission
-    const contactSubmission = await ContactForm.create({
+    // Create new contact form submission with conditional fields
+    const submissionData = {
       name,
       mobile,
       email,
       foundUs: foundUs || 'not_specified',
-      message,
       formType: formType || 'contact-form',
       submittedFrom: submittedFrom || '/',
       submittedAt: new Date(),
       status: 'new',
       userAgent,
       referrer: referer,
-      recaptchaScore: recaptchaResult.score, // Store the reCAPTCHA score
-      ...(service && { service }) // Add service field only if provided
-    });
+      recaptchaScore: recaptchaResult.score,
+    };
+
+    // Add optional fields only if they exist
+    if (message) {
+      submissionData.message = message;
+    }
+    if (service) {
+      submissionData.service = service;
+    }
+
+    const contactSubmission = await ContactForm.create(submissionData);
 
     console.log('Contact form submission saved:', {
       id: contactSubmission._id,
@@ -118,13 +149,6 @@ export async function POST(request) {
       submittedFrom: contactSubmission.submittedFrom,
       recaptchaScore: recaptchaResult.score
     });
-
-    // Here you can add additional logic:
-    // 1. Send email notification to admin
-    // 2. Send confirmation email to user
-    // 3. Integrate with CRM
-    // 4. Send Slack/Discord notification
-    // etc.
 
     return NextResponse.json(
       { 
@@ -153,7 +177,7 @@ export async function POST(request) {
   }
 }
 
-// GET endpoint to retrieve contact form submissions (optional - for admin panel)
+// GET endpoint to retrieve contact form submissions
 export async function GET(request) {
   try {
     await connectDB();

@@ -1,13 +1,16 @@
-
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { toast } from "react-toastify";
 
 // Contact Modal Component
 function ContactModal({ isOpen, onClose }) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+  const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 4, num2: 3 });
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -16,6 +19,7 @@ function ContactModal({ isOpen, onClose }) {
     contactNumber: '',
     captcha: ''
   });
+  const [errors, setErrors] = useState({});
 
   const testimonials = [
     {
@@ -38,17 +42,40 @@ function ContactModal({ isOpen, onClose }) {
     }
   ];
 
+  // Generate random captcha numbers
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    setCaptchaQuestion({ num1, num2 });
+  };
+
+  // Load reCAPTCHA script
+  useEffect(() => {
+    const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || 'YOUR_RECAPTCHA_SITE_KEY';
+    
+    if (!window.grecaptcha && RECAPTCHA_SITE_KEY !== 'YOUR_RECAPTCHA_SITE_KEY') {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setRecaptchaLoaded(true);
+      document.head.appendChild(script);
+    } else if (window.grecaptcha) {
+      setRecaptchaLoaded(true);
+    }
+
+    // Generate initial captcha
+    generateCaptcha();
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
-      // Disable body scroll when modal opens
       document.body.style.overflow = 'hidden';
     } else {
-      // Re-enable body scroll when modal closes
       document.body.style.overflow = 'unset';
     }
 
-    // Cleanup function to ensure scroll is re-enabled
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -62,15 +89,117 @@ function ContactModal({ isOpen, onClose }) {
     setCurrentTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    if (!formData.contactNumber.trim()) {
+      newErrors.contactNumber = 'Contact number is required';
+    } else if (!/^[0-9]{10,15}$/.test(formData.contactNumber.replace(/[\s-+()]/g, ''))) {
+      newErrors.contactNumber = 'Invalid phone number';
+    }
+
+    const correctAnswer = captchaQuestion.num1 + captchaQuestion.num2;
+    if (formData.captcha !== correctAnswer.toString()) {
+      newErrors.captcha = 'Incorrect answer';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const getRecaptchaToken = async () => {
+    const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || 'YOUR_RECAPTCHA_SITE_KEY';
+    
+    if (!window.grecaptcha || RECAPTCHA_SITE_KEY === 'YOUR_RECAPTCHA_SITE_KEY') {
+      console.warn('reCAPTCHA not configured. Please add NEXT_PUBLIC_RECAPTCHA_SITE_KEY to your .env file');
+      return null;
+    }
+
+    try {
+      const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' });
+      return token;
+    } catch (error) {
+      console.error('reCAPTCHA error:', error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Form submitted successfully!');
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const recaptchaToken = await getRecaptchaToken();
+      
+      if (!recaptchaToken) {
+        toast.warn('reCAPTCHA verification failed. Please make sure reCAPTCHA is properly configured.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          mobile: `${formData.countryCode}${formData.contactNumber}`,
+          message: formData.projectDescription || 'No message provided',
+          formType: 'contact-modal',
+          submittedFrom: window.location.pathname,
+          recaptchaToken: recaptchaToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success('Form submitted successfully! We will get back to you soon.');
+        setFormData({
+          fullName: '',
+          email: '',
+          projectDescription: '',
+          countryCode: '+91',
+          contactNumber: '',
+          captcha: ''
+        });
+        generateCaptcha(); // Generate new captcha after successful submit
+        onClose();
+      } else {
+        alert(data.error || 'Failed to submit form');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast.error('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+      generateCaptcha(); // Generate new captcha after every submit attempt
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   if (!isOpen && !isAnimating) return null;
@@ -91,7 +220,6 @@ function ContactModal({ isOpen, onClose }) {
           if (!isOpen) setIsAnimating(false);
         }}
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-[999999] bg-white rounded-full p-2 hover:bg-gray-100 transition-colors cursor-pointer"
@@ -102,14 +230,13 @@ function ContactModal({ isOpen, onClose }) {
         {/* Left Section - Testimonial */}
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 lg:p-8 lg:w-1/2 hidden lg:flex flex-col justify-around">
           <div>
-            <h2 className="text-lg  font-bold text-gray-800 mb-2">
+            <h2 className="text-lg font-bold text-gray-800 mb-2">
               Leaving already?
             </h2>
             <p className="text-gray-600 text-sm mb-4">
               Hear from our clients and why 3000+ businesses trust CodeNeptune
             </p>
 
-            {/* Testimonial Indicators */}
             <div className="flex gap-2 mb-4">
               {testimonials.map((_, index) => (
                 <button
@@ -125,7 +252,6 @@ function ContactModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Testimonial Card */}
           <div className="bg-white rounded-2xl p-8 shadow-lg relative">
             <button
               onClick={handlePrevious}
@@ -162,20 +288,19 @@ function ContactModal({ isOpen, onClose }) {
         </div>
 
         {/* Right Section - Form */}
-        <div className="p-8 lg:p-8 w-full lg:w-1/2 overflow-y-auto  flex justify-center itemms-start">
-          
-
-          <div className="mt-5 space-y-6 ">
+        <div className="p-8 lg:p-8 w-full lg:w-1/2 overflow-y-auto flex justify-center items-start">
+          <div className="mt-5 space-y-6 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <input
                   type="text"
                   name="fullName"
-                  placeholder="Full name"
+                  placeholder="Full name*"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full text-sm border-b-2 border-gray-300 focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500"
+                  className={`w-full text-sm border-b-2 ${errors.fullName ? 'border-red-500' : 'border-gray-300'} focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500`}
                 />
+                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
               </div>
               <div>
                 <input
@@ -184,15 +309,16 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="E-Mail ID*"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full text-sm border-b-2 border-gray-300 focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500"
+                  className={`w-full text-sm border-b-2 ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500`}
                 />
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </div>
             </div>
 
             <div>
               <textarea
                 name="projectDescription"
-                placeholder="Describe Your Project/Idea In Brief (Helps Us Come Back Better Prepared)"
+                placeholder="Describe Your Project/Idea In Brief (Optional)"
                 value={formData.projectDescription}
                 onChange={handleInputChange}
                 rows={3}
@@ -221,8 +347,9 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Contact Number*"
                   value={formData.contactNumber}
                   onChange={handleInputChange}
-                  className="w-full text-sm border-b-2 border-gray-300 focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500"
+                  className={`w-full text-sm border-b-2 ${errors.contactNumber ? 'border-red-500' : 'border-gray-300'} focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500`}
                 />
+                {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber}</p>}
               </div>
             </div>
 
@@ -231,21 +358,22 @@ function ContactModal({ isOpen, onClose }) {
                 <input
                   type="text"
                   name="captcha"
-                  placeholder="4 + 3 ="
+                  placeholder={`${captchaQuestion.num1} + ${captchaQuestion.num2} = ?`}
                   value={formData.captcha}
                   onChange={handleInputChange}
-                  className="w-full text-sm border-b-2 border-gray-300 focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500"
+                  className={`w-full text-sm border-b-2 ${errors.captcha ? 'border-red-500' : 'border-gray-300'} focus:border-blue-600 outline-none pb-2 text-gray-800 placeholder-gray-500`}
                 />
+                {errors.captcha && <p className="text-red-500 text-xs mt-1">{errors.captcha}</p>}
               </div>
-             
             </div>
 
             <div>
-               <button
+              <button
                 onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-700 text-sm text-white font-semibold px-4 py-3 rounded-full transition-colors whitespace-nowrap cursor-pointer"
+                disabled={isSubmitting}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-sm text-white font-semibold px-4 py-3 rounded-full transition-colors whitespace-nowrap cursor-pointer"
               >
-                Schedule Free Consultation
+                {isSubmitting ? 'Submitting...' : 'Schedule Free Consultation'}
               </button>
             </div>
 
@@ -260,4 +388,4 @@ function ContactModal({ isOpen, onClose }) {
   );
 }
 
-export default ContactModal
+export default ContactModal;

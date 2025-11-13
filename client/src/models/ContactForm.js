@@ -38,19 +38,26 @@ const ContactFormSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: [true, 'Message is required'],
+    required: function() {
+      // Message is required for all form types except 'contact-modal'
+      return this.formType !== 'contact-modal';
+    },
     trim: true,
     maxlength: [2000, 'Message cannot exceed 2000 characters']
   },
   service: {
     type: String,
     enum: ['web-design', 'web-development', 'mobile-app', 'ui-ux', 'consulting', 'not_specified'],
-    default: 'not_specified'
+    default: 'not_specified',
+    required: function() {
+      // Service is required only for 'contact-page-form'
+      return this.formType === 'contact-page-form';
+    }
   },
   formType: {
     type: String,
     required: [true, 'Form type is required'],
-    enum: ['contact-form', 'contact-page-form', 'quote-form', 'consultation-form', 'support-form', 'newsletter-form'],
+    enum: ['contact-form', 'contact-page-form', 'quote-form', 'consultation-form', 'support-form', 'newsletter-form', 'contact-modal'],
     default: 'contact-form',
     index: true
   },
@@ -92,7 +99,7 @@ const ContactFormSchema = new mongoose.Schema({
     max: 1
   }
 }, {
-  timestamps: true // Adds createdAt and updatedAt automatically
+  timestamps: true
 });
 
 // Create indexes for better query performance
