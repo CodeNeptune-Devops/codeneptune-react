@@ -1,17 +1,18 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { TiTick } from "react-icons/ti"
-import { IoArrowForwardCircle } from 'react-icons/io5'
-import { FaRegStar } from "react-icons/fa"
-import { useContactForm } from '@/hooks/useContactForm'
-import { usePathname } from 'next/navigation'
-import { toast } from 'react-toastify'
+import React, { useState, useEffect } from 'react';
+import { TiTick } from "react-icons/ti";
+import { IoArrowForwardCircle } from 'react-icons/io5';
+import { FaRegStar } from "react-icons/fa";
+import { useContactForm } from '@/hooks/useContactForm';
+import { usePathname } from 'next/navigation';
+import { toast } from 'react-toastify';
 
-function ContactForm() {
+export default function ContactForm() {
     const pathname = usePathname();
     const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
+    // FORM STATE
     const [formData, setFormData] = useState({
         name: '',
         mobile: '',
@@ -22,6 +23,7 @@ function ContactForm() {
 
     const { mutate: submitForm, isPending } = useContactForm();
 
+    // OPTIONS
     const options = [
         { label: 'Google', value: 'google' },
         { label: 'Social Media', value: 'social_media' },
@@ -44,27 +46,48 @@ function ContactForm() {
         { platform: 'Facebook', icon: '/contact-form/facebook.svg', url: 'https://www.facebook.com/codeneptune' },
     ];
 
-    // Load reCAPTCHA script
+    // ============================================================
+    // ✅ LAZY LOAD RECAPTCHA v3 WHEN CONTACT FORM ENTERS VIEWPORT
+    // ============================================================
     useEffect(() => {
+        const element = document.getElementById("contact-form-container");
+        let observer;
+
         const loadRecaptcha = () => {
-            if (window.grecaptcha) {
+            if (window.grecaptcha || document.getElementById("recaptcha-script")) {
                 setRecaptchaLoaded(true);
                 return;
             }
 
-            const script = document.createElement('script');
+            const script = document.createElement("script");
+            script.id = "recaptcha-script";
             script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
             script.async = true;
             script.defer = true;
-            script.onload = () => {
-                setRecaptchaLoaded(true);
-            };
+            script.onload = () => setRecaptchaLoaded(true);
+
             document.body.appendChild(script);
         };
 
-        loadRecaptcha();
+        // Observe the form section
+        if (element) {
+            observer = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting) {
+                        loadRecaptcha();
+                        observer.disconnect();
+                    }
+                },
+                { threshold: 0.2 }
+            );
+
+            observer.observe(element);
+        }
+
+        return () => observer?.disconnect();
     }, []);
 
+    // HANDLERS
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -74,10 +97,7 @@ function ContactForm() {
     };
 
     const handleOptionSelect = (value) => {
-        setFormData(prev => ({
-            ...prev,
-            foundUs: value
-        }));
+        setFormData(prev => ({ ...prev, foundUs: value }));
     };
 
     const isFormValid = formData.name && formData.mobile && formData.email && formData.message;
@@ -86,12 +106,11 @@ function ContactForm() {
         e.preventDefault();
 
         if (!recaptchaLoaded) {
-            toast.error('reCAPTCHA not loaded yet. Please try again.');
+            toast.error('reCAPTCHA not ready. Please wait 1 second and try again.');
             return;
         }
 
         try {
-            // Execute reCAPTCHA
             const token = await window.grecaptcha.execute(
                 process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
                 { action: 'submit_contact_form' }
@@ -107,14 +126,7 @@ function ContactForm() {
                 {
                     onSuccess: (data) => {
                         toast.success(data.message || "Form submitted successfully!");
-
-                        setFormData({
-                            name: '',
-                            mobile: '',
-                            email: '',
-                            foundUs: null,
-                            message: '',
-                        });
+                        setFormData({ name: '', mobile: '', email: '', foundUs: null, message: '' });
                     },
                     onError: (error) => {
                         toast.error(error?.message || "Failed to submit form.");
@@ -122,31 +134,27 @@ function ContactForm() {
                 }
             );
         } catch (error) {
-            console.error('reCAPTCHA error:', error);
             toast.error('Failed to verify reCAPTCHA. Please try again.');
+            console.error(error);
         }
     };
 
     return (
-        <div className='w-full pt-12 sm:pt-16 md:pt-24 px-4 sm:px-6 lg:px-8'>
+        <div
+            id="contact-form-container"
+            className='w-full pt-12 sm:pt-16 md:pt-24 px-4 sm:px-6 lg:px-8'
+        >
             <div className='w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-start items-start gap-5 sm:gap-8 lg:gap-5 relative'>
 
                 <span className='hidden md:block absolute top-[1px] right-0 w-[50%] lg:w-[70%] h-1 bg-[#0072FF]'></span>
 
                 {/* LEFT SIDE FORM */}
-                <div className='w-full lg:basis-[55%] flex flex-col justify-start items-start gap-3 pt-[7px]'>
+                <div className='w-full lg:basis-[55%] flex flex-col gap-3 pt-[7px]'>
 
                     <h3 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900'>
                         Your Next
-                        <span className='bg-[#0072FF] rounded-t-md rounded-br-md px-2 ml-2'>
-                            Big
-                        </span>
-                        <br />
-                        Move
-                        <span className='bg-[#0072FF] rounded-b-md rounded-tl-md ml-2'>
-                            Starts
-                        </span>
-                        {' '}Here!
+                        <span className='bg-[#0072FF] rounded-t-md rounded-br-md px-2 ml-2'>Big</span><br />
+                        Move<span className='bg-[#0072FF] rounded-b-md rounded-tl-md ml-2'>Starts</span> Here!
                     </h3>
 
                     {/* FORM */}
@@ -194,13 +202,12 @@ function ContactForm() {
                                 {options.map((option) => (
                                     <div key={option.value} className='flex items-center gap-2 cursor-pointer'>
                                         <span
-                                            className={`w-4 h-4 border border-[#DADADA] rounded-sm flex justify-center items-center
-                                            ${formData.foundUs === option.value ? 'bg-[#02BC7D]' : ''}`}
+                                            className={`w-4 h-4 border border-[#DADADA] rounded-sm flex justify-center items-center ${
+                                                formData.foundUs === option.value ? 'bg-[#02BC7D]' : ''
+                                            }`}
                                             onClick={() => handleOptionSelect(option.value)}
                                         >
-                                            {formData.foundUs === option.value && (
-                                                <TiTick className='text-white text-sm' />
-                                            )}
+                                            {formData.foundUs === option.value && <TiTick className='text-white text-sm' />}
                                         </span>
                                         <span
                                             className='text-xs sm:text-sm text-[#2D2D2D]'
@@ -228,11 +235,11 @@ function ContactForm() {
                         <button
                             type="submit"
                             disabled={!isFormValid || isPending || !recaptchaLoaded}
-                            className={`px-6 py-3 w-60 cursor-pointer rounded-lg flex items-center gap-3 text-sm sm:text-base transition-all 
-                                ${isFormValid && !isPending && recaptchaLoaded
-                                    ? 'bg-[#0072FF] text-white hover:bg-blue-600'
+                            className={`px-6 py-3 w-60 rounded-lg flex items-center gap-3 text-sm sm:text-base transition-all ${
+                                isFormValid && !isPending && recaptchaLoaded
+                                    ? 'bg-[#0072FF] text-white hover:bg-blue-600 cursor-pointer'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                }`}
+                            }`}
                         >
                             <IoArrowForwardCircle className='text-xl sm:text-2xl' />
                             {isPending ? 'Sending...' : 'Send Message'}
@@ -241,11 +248,11 @@ function ContactForm() {
                         {/* reCAPTCHA Badge Notice */}
                         <p className='text-xs text-gray-500'>
                             This site is protected by reCAPTCHA and the Google{' '}
-                            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/privacy" target="_blank">
                                 Privacy Policy
                             </a>{' '}
                             and{' '}
-                            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/terms" target="_blank">
                                 Terms of Service
                             </a>{' '}
                             apply.
@@ -253,7 +260,7 @@ function ContactForm() {
                     </form>
                 </div>
 
-                {/* RIGHT SIDE (STATIC DETAILS) */}
+                {/* RIGHT SIDE STATIC SECTION */}
                 <div className='w-full lg:basis-[45%] flex flex-col gap-0 mt-1'>
 
                     {/* STEPS */}
@@ -261,9 +268,7 @@ function ContactForm() {
                         <div className='flex flex-col w-full sm:w-[60%] gap-7 py-6'>
                             {aboutUs.map((item, index) => (
                                 <div key={index} className='flex gap-3'>
-                                    <p className='text-4xl md:text-5xl font-medium text-[#0072FF]'>
-                                        0{index + 1}
-                                    </p>
+                                    <p className='text-4xl md:text-5xl font-medium text-[#0072FF]'>0{index + 1}</p>
                                     <div>
                                         <h3 className='text-sm font-light'>{item.title}</h3>
                                         <p className='text-xs'>{item.description}</p>
@@ -285,7 +290,6 @@ function ContactForm() {
                     {/* CONTACT BOXES */}
                     <div className='border border-[#0072FF]'>
 
-                        {/* ENQUIRY + CAREERS */}
                         <div className='p-4 flex flex-col gap-4'>
                             <div className='flex flex-col sm:flex-row gap-4'>
 
@@ -312,7 +316,7 @@ function ContactForm() {
 
                                 <div className='w-full border-b border-[#BEBEBE] pb-2'>
                                     <p className='uppercase font-medium'>Email</p>
-                                    <a className='text-xs break-all' href="mailto:info@codeneptune.com">
+                                    <a className='text-xs' href="mailto:info@codeneptune.com">
                                         info@codeneptune.com
                                     </a>
                                 </div>
@@ -341,7 +345,5 @@ function ContactForm() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
-export default ContactForm
