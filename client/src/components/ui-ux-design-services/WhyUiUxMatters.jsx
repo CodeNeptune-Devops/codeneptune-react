@@ -1,4 +1,9 @@
 import React from 'react';
+import img1 from '../../assets/uiux/img1.webp';
+import img2 from '../../assets/uiux/img2.webp';
+import img3 from '../../assets/uiux/img3.webp';
+import img4 from '../../assets/uiux/img4.webp';
+import Image from 'next/image';
 
 function WhyUiUxMatters() {
   const benefits = [
@@ -24,6 +29,13 @@ function WhyUiUxMatters() {
     }
   ];
 
+  const images = [
+    {label:'Image 1',src:img1},
+    {label:'Image 2',src:img2},
+    {label:'Image 3',src:img3},
+    {label:'Image 4',src:img4},
+  ];
+
   return (
     <div className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="max-w-7xl mx-auto">
@@ -43,57 +55,19 @@ function WhyUiUxMatters() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Column - Images */}
           <div className="grid grid-cols-2 gap-4">
-            {/* Top Left - Woman with alarm clock */}
-            <div className="bg-red-800 rounded-2xl h-[13rem] overflow-hidden shadow-lg">
-              <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" 
-                alt="Professional woman with clock"
+  
+            {images.map((item,index) => (
+              <div key={index} className="bg-red-800 rounded-2xl h-[13rem] overflow-hidden shadow-lg">
+              <Image
+                src={item.src}
+                alt={item.label}
+                height={400}
+                width={400}
                 className="w-full h-full object-cover"
               />
             </div>
+            ))}
             
-            {/* Top Right - Growth chart */}
-            <div className="bg-gray-300 rounded-2xl overflow-hidden shadow-lg flex items-center justify-center p-6">
-              <div className="relative w-full h-full flex items-end justify-center gap-2">
-                {/* Bar chart visualization */}
-                <div className="w-8 h-12 bg-teal-400 rounded-t"></div>
-                <div className="w-8 h-20 bg-red-500 rounded-t"></div>
-                <div className="w-8 h-32 bg-blue-500 rounded-t"></div>
-                <div className="w-8 h-40 bg-orange-500 rounded-t"></div>
-                {/* Arrow */}
-                <div className="absolute -top-8 right-4">
-                  <svg width="60" height="80" viewBox="0 0 60 80" className="text-red-500">
-                    <path d="M30 10 L30 60 M30 10 L15 25 M30 10 L45 25" 
-                          stroke="currentColor" 
-                          strokeWidth="8" 
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-            
-            {/* Bottom Left - Building blocks */}
-            <div className="bg-white rounded-2xl h-[13rem] overflow-hidden shadow-lg">
-              <img 
-                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=400&fit=crop" 
-                alt="Business planning with blocks"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Bottom Right - Woman with arrow */}
-            <div className="bg-gray-400 rounded-2xl h-[13rem] overflow-hidden shadow-lg flex items-center justify-center p-6">
-              <div className="text-center">
-                <div className="text-white text-8xl mb-4">↑</div>
-                <img 
-                  src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop" 
-                  alt="Happy professional"
-                  className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-white"
-                />
-              </div>
-            </div>
           </div>
 
           {/* Right Column - Benefits */}

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Code, Users, Star, User } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import img1 from '../../assets/uiux/ux.webp';
+import Image from 'next/image';
 
 function DesignPartner() {
   const features = [
@@ -64,34 +66,15 @@ function DesignPartner() {
           {/* Right Visual */}
           <div className="relative">
             {/* Main Device Image */}
-            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl  shadow-2xl">
               <div className="relative aspect-[4/4]">
-                {/* Phone illustration */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg viewBox="0 0 200 300" className="w-full h-full">
-                    {/* Hand */}
-                    <defs>
-                      <linearGradient id="handGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#ec4899" />
-                        <stop offset="50%" stopColor="#a855f7" />
-                        <stop offset="100%" stopColor="#3b82f6" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M80 200 Q70 180 75 160 L85 120 Q90 100 100 105 L110 115 Q120 100 130 110 L140 125 Q145 115 150 125 L155 140 Q160 135 162 145 L165 180 Q170 220 150 240 L120 260 Q95 250 85 230 Z"
-                      fill="url(#handGradient)"
-                      opacity="0.8"
-                    />
-                    {/* Phone */}
-                    <rect x="85" y="80" width="70" height="120" rx="8" fill="#1e293b" opacity="0.9" />
-                    <rect x="90" y="90" width="60" height="100" rx="4" fill="#334155" />
-                    {/* Screen elements */}
-                    <rect x="95" y="100" width="20" height="15" rx="2" fill="#3b82f6" opacity="0.6" />
-                    <rect x="120" y="100" width="25" height="15" rx="2" fill="#8b5cf6" opacity="0.6" />
-                    <rect x="95" y="125" width="50" height="30" rx="2" fill="#ec4899" opacity="0.4" />
-                    <circle cx="120" cy="170" r="8" fill="#f472b6" opacity="0.7" />
-                  </svg>
-                </div>
+                <Image 
+                src={img1}
+                alt='Ui & UX'
+                height={600}
+                width={600}
+                className='h-full w-full object-cover rounded-lg'
+                />
               </div>
             </div>
 

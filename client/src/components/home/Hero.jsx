@@ -5,8 +5,10 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import ContactModal from "@/modals/ContactModal";
+import { Bebas_Neue } from "next/font/google";
 
 const plus_jakarta_sans = Plus_Jakarta_Sans({ subsets: ["latin"], weight: "500" });
+const bebas_neue = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 
 // ✅ Lazy-load all animated text components
 const BlurText = dynamic(() => import("@/animatedTexts/blurText/BlurText"), {
@@ -92,10 +94,10 @@ export default function Hero() {
         </div>
 
         {/* Heading */}
-        <div className="flex flex-col items-center justify-center  gap-4 mt-2 min-h-[200px]  w-[13rem] sm:w-full">
-          <div className="flex flex-col w-full justify-center items-center gap-6 sm:gap-2">
+        <div className="flex flex-col items-center justify-center  gap-4 mt-0 min-h-[120px] sm:min-h-[200px]  w-[13rem] sm:w-full">
+          <div className="flex flex-col w-full justify-center items-center gap-2 sm:gap-2">
             <h2
-              className={`text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
+              className={`hidden sm:block text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
                 !headingFadeComplete
                   ? "scale-150 opacity-0"
                   : "scale-150 opacity-100"
@@ -111,13 +113,35 @@ export default function Hero() {
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className={`text-lg md:text-4xl lg:text-5xl uppercase text-center justify-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
+                  className={`text-lg md:text-4xl lg:text-5xl text-center justify-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
+                />
+              </div>
+            </h2>
+
+             <h2
+              className={`sm:hidden block text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
+                !headingFadeComplete
+                  ? "scale-150 opacity-0"
+                  : "scale-150 opacity-100"
+              } ${headingPositionComplete ? "translate-y-0" : "translate-y-[10vh]"}`}
+              style={{
+                transitionDuration: "800ms",
+                willChange: "transform, opacity",
+              }}
+            >
+              <div className="flex justify-center items-center pb-0">
+                <BlurText
+                  text="Crafting Websites, Mobile Apps &"
+                  delay={150}
+                  animateBy="words"
+                  direction="top"
+                  className={`text-lg md:text-4xl lg:text-5xl text-center justify-center leading-relaxed text-white font-extrabold ${bebas_neue.className}`}
                 />
               </div>
             </h2>
 
             <h2
-              className={`text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
+              className={`hidden sm:block text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
                 isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ willChange: "transform, opacity" }}
@@ -131,12 +155,28 @@ export default function Hero() {
                 AI Agents That Redefine Possibility
               </GradientText>
             </h2>
+
+            <h2
+              className={`block sm:hidden text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
+                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+              }`}
+              style={{ willChange: "transform, opacity" }}
+            >
+              <GradientText
+                colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+                animationSpeed={3}
+                showBorder={false}
+                className={`text-xl md:text-5xl lg:text-5xl uppercase ${bebas_neue.className}`}
+              >
+                AI Agents That Redefine Possibility
+              </GradientText>
+            </h2>
           </div>
         </div>
 
         {/* Description */}
         <p
-          className={`text-sm sm:text-[18px] font-medium mt-2 text-center max-w-6xl text-white/90 leading-relaxed transition-all duration-700 ease-out ${
+          className={`text-sm sm:text-[18px] font-medium mt-0 sm:mt-2 text-center max-w-6xl text-white/90 leading-relaxed transition-all duration-700 ease-out ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
           style={{ transitionDelay: "150ms", willChange: "transform, opacity" }}
@@ -159,7 +199,7 @@ export default function Hero() {
             Start Your Project
           </button>
 
-          <button className="flex items-center gap-2 px-2 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+          <button className="flex items-center gap-2 px-3 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
             <ShinyText text="Call Us Now" speed={3} className="text-md sm:text-lg" />
           </button>
         </div>

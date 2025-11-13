@@ -5,9 +5,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 function SectionTitle({ textColor, title, description }) {
   return (
-    <div className="mb-8">
-      <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${textColor}`}>{title}</h2>
-      <p className={`text-lg ${textColor} opacity-80`}>{description}</p>
+    <div className="mb-4 sm:mb-8">
+      <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 ${textColor}`}>{title}</h2>
+      <p className={`text-base sm:text-lg ${textColor} opacity-80 hidden sm:block`}>{description}</p>
     </div>
   );
 }
@@ -40,10 +40,18 @@ function FeaturedCaseStudy() {
       }
     };
 
+    const handleResize = () => {
+      handleScroll();
+    };
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const caseStudies = [
@@ -82,23 +90,30 @@ function FeaturedCaseStudy() {
     },
   ];
 
-  // Calculate scroll based on card width (80% + gap)
-  const cardWidthPercent = 80; // This matches md:w-[80%]
-  const gapPercent = 2; // Approximate gap as percentage
+  // Calculate scroll based on viewport size and card count
+  const getCardWidth = () => {
+    if (typeof window === 'undefined') return 80;
+    if (window.innerWidth < 640) return 98; // sm - increased to 98
+    if (window.innerWidth < 768) return 85; // md
+    return 80; // lg+
+  };
+  
+  const cardWidthPercent = getCardWidth();
+  const gapPercent = typeof window !== 'undefined' && window.innerWidth < 640 ? 1.5 : 2;
   const maxScroll = (caseStudies.length - 1) * (cardWidthPercent + gapPercent);
   const horizontalOffset = scrollProgress * maxScroll;
 
   return (
-    <div className="w-full bg-slate-950 pt-8 sm:pt-12 md:pt-10">
+    <div className="w-full bg-slate-950 pt-4 sm:pt-8 md:pt-10">
       <div
         ref={sectionRef}
         className="relative"
-        style={{ height: `${300 + caseStudies.length * 100}vh` }}
+        style={{ height: `${250 + caseStudies.length * 100}vh` }}
       >
-        <div className="sticky top-0 h-screen overflow-hidden pb-16">
+        <div className="sticky top-0 h-screen overflow-hidden pb-8 sm:pb-14 md:pb-16">
 
           {/* Section Title */}
-          <div className='max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6'>
+          <div className='max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-2 sm:py-4 md:py-6'>
             <SectionTitle
               textColor='text-white'
               title='How We Build Intelligent Solutions'
@@ -106,13 +121,13 @@ function FeaturedCaseStudy() {
             />
           </div>
 
-          <div className="w-full h-full flex items-start pb-6">
+          <div className="w-full h-full flex items-start pb-2 sm:pb-5 md:pb-6">
             {/* Horizontal scrolling cards */}
-            <div className="w-full overflow-hidden h-[80%] px-4 sm:px-6 lg:px-8 pb-5">
+            <div className="w-full overflow-hidden px-2 sm:px-6 lg:px-8 pb-2 sm:pb-5">
               <div className="max-w-7xl mx-auto h-full">
                 <div
                   ref={cardsRef}
-                  className="flex gap-4 sm:gap-6 transition-transform duration-100 ease-out h-full"
+                  className="flex gap-4 sm:gap-6 transition-transform duration-100 ease-out"
                   style={{
                     transform: `translateX(-${horizontalOffset}%)`,
                   }}
@@ -120,7 +135,7 @@ function FeaturedCaseStudy() {
                   {caseStudies.map((study, index) => (
                     <div
                       key={index}
-                      className="flex-shrink-0 w-[90%] sm:w-[85%] md:w-[80%] h-full relative rounded-xl sm:rounded-2xl overflow-hidden"
+                      className="flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden"
                       style={{
                         backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 100%), url('${study.bgImage}')`,
                         backgroundSize: '100% 100%',
@@ -129,8 +144,8 @@ function FeaturedCaseStudy() {
                       }}
                     >
                       {/* Content directly on background */}
-                      <div className="absolute inset-0 p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-start max-w-2xl">
-                        <div className='h-auto w-40 mb-3'>
+                      <div className="absolute inset-0 p-4 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-start max-w-2xl overflow-y-auto">
+                        <div className='h-auto w-28 sm:w-36 md:w-40 mb-4 flex-shrink-0'>
                           <Image
                             src={study.logo}
                             alt={study.title}
@@ -139,29 +154,29 @@ function FeaturedCaseStudy() {
                             className='w-full h-full'
                           />
                         </div>
-                        <h3 className="text-lg sm:text-xl md:text-2xl  font-bold text-white mb-2 sm:mb-3">{study.title}</h3>
+                        <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-3">{study.title}</h3>
 
-                        <p className="text-white/90 text-sm md:text-md mb-6 leading-relaxed max-w-xl">
+                        <p className="text-white/90 text-sm sm:text-base md:text-lg mb-5 sm:mb-6 leading-relaxed max-w-xl">
                           {study.description}
                         </p>
 
                         {/* Project info */}
-                        <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6  max-w-xl">
+                        <div className="grid grid-cols-2 gap-4 sm:gap-4 mb-5 sm:mb-6 max-w-xl">
                           <div>
                             <p className="text-white/60 text-xs sm:text-sm mb-1">Industry</p>
-                            <p className="text-white font-semibold text-sm sm:text-base">{study.industry}</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.industry}</p>
                           </div>
                           <div>
                             <p className="text-white/60 text-xs sm:text-sm mb-1">Platform</p>
-                            <p className="text-white font-semibold text-sm sm:text-base">{study.platform}</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.platform}</p>
                           </div>
                           <div>
                             <p className="text-white/60 text-xs sm:text-sm mb-1">Regions Covered</p>
-                            <p className="text-white font-semibold text-sm sm:text-base">{study.location}</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.location}</p>
                           </div>
                           <div>
                             <p className="text-white/60 text-xs sm:text-sm mb-1">Users Served</p>
-                            <p className="text-white font-semibold text-sm sm:text-base">{study.userServed}</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.userServed}</p>
                           </div>
                         </div>
 
@@ -170,7 +185,7 @@ function FeaturedCaseStudy() {
                           {study.tech.map((tech, i) => (
                             <span
                               key={i}
-                              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/30 text-white text-xs sm:text-sm font-medium backdrop-blur-sm bg-white/10"
+                              className="px-3 sm:px-3 md:px-4 py-1.5 sm:py-1.5 md:py-2 rounded-full border border-white/30 text-white text-xs sm:text-sm font-medium backdrop-blur-sm bg-white/10"
                             >
                               {tech}
                             </span>
