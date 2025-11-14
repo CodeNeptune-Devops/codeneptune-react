@@ -1,13 +1,13 @@
 import Blogs from '@/components/Blogs'
 import Faqs from '@/components/Faqs'
 import ContactForm from '@/components/forms/ContactForm'
+import Hero from '@/components/Hero'
 import HowWeBuildIntelligentSolutions from '@/components/home/HowWeBuildIntelligentSolutions'
 import OurServices from '@/components/home/OurServices'
 import HowWeWorkOurEcommerceDevelopment from '@/components/HowWeWorkOurEcommerceDevelopment'
 import IndustriesWeServe from '@/components/IndustriesWeServe'
 import Location from '@/components/Location'
 import CustomMobileAppDevelopmentServices from '@/components/mobile-app-development-company/CustomMobileAppDevelopmentServices'
-import Hero from '@/components/mobile-app-development-company/Hero'
 import OurMvpDevelopment from '@/components/mobile-app-development-company/OurMvpDevelopment'
 import WhyClientChooseUs from '@/components/mobile-app-development-company/WhyClientChooseUs'
 import TechStack from '@/components/TechStack'
@@ -105,7 +105,12 @@ function MobileAppDevelopmentCompany() {
 
     return (
         <div>
-            <Hero />
+            <Hero 
+            text1='Building Apps,'
+            text2='Transforming Your Business'
+            description='At Code Neptune, we specialize in mobile app development that not only meets your business needs but drives real growth. From intuitive ui/ux design to seamless performance, our solutions help businesses stand out in a mobile first world.'
+            buttonText='Lets Build Together'
+            />
             <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
                 <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
                     <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>

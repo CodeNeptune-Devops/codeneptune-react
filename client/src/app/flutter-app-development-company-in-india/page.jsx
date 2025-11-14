@@ -4,7 +4,6 @@ import FlutterDevelopmentTechStack from '@/components/flutter-app-development-co
 import OurFlutterAppDevelopmentServices from '@/components/flutter-app-development-company-in-india/OurFlutterAppDevelopmentServices'
 import WhyChooseCNForFlutterDevelopment from '@/components/flutter-app-development-company-in-india/WhyChooseCNForFlutterDevelopment'
 import WhyChooseOurFlutterSolutions from '@/components/flutter-app-development-company-in-india/WhyChooseOurFlutterSolutions'
-import Hero from '@/components/Hero'
 import SectionTitle from '@/components/titles/SectionTitle'
 import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects'
 import WorkWithUs from '@/components/WorkWithUs'
@@ -27,6 +26,7 @@ import Faqs from '@/components/Faqs'
 import Blogs from '@/components/Blogs'
 import ContactForm from '@/components/forms/ContactForm'
 import Location from '@/components/Location'
+import Hero from '@/components/Hero'
 
 function page() {
 
@@ -198,6 +198,7 @@ function page() {
                 text1='Build High Quality,'
                 text2='Multi-Platform Apps with Flutter'
                 description='We are a leading Flutter app development company based in India, specializing in end to end Flutter solutions that combine exceptional UI and UX with measurable business impact. Our mission is clear: to deliver stunning apps that provide a native like experience on iOS, Android, web, and desktops.'
+                buttonText='Start Your Project'
             />
             <WhyChooseOurFlutterSolutions />
             <DesignedForGrowthAndConversion />

@@ -134,12 +134,11 @@ function Footer() {
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-3">
                 <Link
                   className="text-sm"
-                  href="https://maps.app.goo.gl/Qy1xyxWiNiYJBj4A8"
+                  href="https://maps.app.goo.gl/r6XPgFke25c1gTdk9"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  No. 57/25, P.V. Kovil Street, Mylapore
-                  <br /> Chennai, Tamil Nadu – 600004
+                  No. 624, 3rd Floor – S2, Khivraj Building, Anna Salai, Chennai – 600 006
                 </Link>
 
                 <div className="flex flex-col justify-start items-start gap-3">

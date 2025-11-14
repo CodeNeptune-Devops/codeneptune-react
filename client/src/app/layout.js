@@ -15,7 +15,7 @@ const inter = Inter({
 export async function generateMetadata() {
   const h = await headers();
   const host = h.get("host") || "";
-  const isNoIndex = host === "entrex-three.vercel.app" || host === "entrex-eta.vercel.app" || host === "entrex-gold.vercel.app";
+  const isNoIndex = host === "codeneptune-react.vercel.app/" ;
 
   return {
     title: {

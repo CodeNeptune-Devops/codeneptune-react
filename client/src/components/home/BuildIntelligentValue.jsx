@@ -3,14 +3,14 @@ import React from 'react'
 
 function BuildIntelligentValue() {
     return (
-        <div className='max-w-7xl mx-auto w-full px-6 '>
+        <div className='max-w-7xl mx-auto w-full px-6 overflow-x-hidden'>
             {/* <h5 className='w-full text-center text-5xl font-medium leading-relaxed'>Building Intelligent Value, Not Just Software</h5> */}
 
             <ScrollReveal
                 baseOpacity={100}
                 enableBlur={true}
                 baseRotation={5}
-                blurStrength={40}
+                blurStrength={150}
                 containerClassName=''
             >
                 

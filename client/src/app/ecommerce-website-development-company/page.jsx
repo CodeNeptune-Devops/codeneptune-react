@@ -9,7 +9,6 @@ import WhoWeBuildOnlineStoresFor from '@/components/ecommerce-website-developmen
 import Faqs from '@/components/Faqs'
 import FeaturedCaseStudy from '@/components/FeaturedCaseStudy'
 import ContactForm from '@/components/forms/ContactForm'
-import Hero from '@/components/Hero'
 import IndustriesWeServe from '@/components/IndustriesWeServe'
 import Location from '@/components/Location'
 import OurProvenDevelopmentProcess from '@/components/OurProvenDevelopmentProcess'
@@ -28,6 +27,7 @@ import {
   Search,
   TrendingUp,
 } from "lucide-react";
+import Hero from '@/components/Hero'
 
 function page() {
 
@@ -151,6 +151,7 @@ function page() {
         text1='Build a Store That Looks '
         text2='Great and Sells Better'
         description='We specialize in building high performance, mobile first eCommerce websites that captivate users and turn clicks into customers. As a trusted eCommerce website development company with technical expertise, we’ve helped businesses succeed online by integrating intelligent chatbots, voice search, and AI-driven personalization to enhance discovery and boost conversions.'
+        buttonText='Lets Start Your Store'
       />
       <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
         {/* <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>

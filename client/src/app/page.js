@@ -2,7 +2,7 @@ import Faqs from "@/components/Faqs";
 import ContactForm from "@/components/forms/ContactForm";
 import BuildIntelligentValue from "@/components/home/BuildIntelligentValue";
 import FeaturedCaseStudy from "@/components/FeaturedCaseStudy";
-import Hero from "@/components/home/Hero";
+import Hero from "@/components/Hero";
 import HowWeBuildIntelligentSolutions from "@/components/home/HowWeBuildIntelligentSolutions";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
 import OurImpactInNumbers from "@/components/home/OurImpactInNumbers";

@@ -99,6 +99,7 @@ function page() {
         text1='Websites That Work, Built'
         text2='by People Who Care'
         description='We’re Code Neptune. A team of thinkers, designers, and developers who believe great websites don’t need to be complicated or expensive. We keep things simple, personal, and results-driven.'
+        buttonText='Get A Free Quote'
       />
       <OurMissionVisionTeam />
       {/* <MeetTheTeam /> */}
