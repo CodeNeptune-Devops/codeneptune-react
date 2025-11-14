@@ -12,7 +12,8 @@ import ContactModal from '@/modals/ContactModal';
 function Hero() {
   const pathname = usePathname();
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  const [isModalOpen,setIsModalOpen] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -25,20 +26,23 @@ function Hero() {
 
   const { mutate: submitForm, isPending } = useContactForm();
 
-  // === ⚡ FIXED & OPTIMIZED RECAPTCHA LOADER ===
+  // ============================================================
+  // ✅ LAZY LOAD RECAPTCHA v2 WHEN CONTACT FORM ENTERS VIEWPORT
+  // ============================================================
   useEffect(() => {
     let observer;
     let scriptLoaded = false;
 
     const loadRecaptcha = () => {
-      if (scriptLoaded || window.grecaptcha) {
+      if (scriptLoaded || window.grecaptcha || document.getElementById('recaptcha-script')) {
         setRecaptchaLoaded(true);
         return;
       }
 
       scriptLoaded = true;
       const script = document.createElement('script');
-      script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+      script.id = 'recaptcha-script';
+      script.src = 'https://www.google.com/recaptcha/api.js';
       script.async = true;
       script.defer = true;
       script.onload = () => setRecaptchaLoaded(true);
@@ -75,6 +79,41 @@ function Hero() {
     };
   }, []);
 
+  // Set up reCAPTCHA v2 callbacks and render widget
+  useEffect(() => {
+    // Define global callback functions
+    window.onRecaptchaSuccess = (token) => {
+      setRecaptchaToken(token);
+    };
+
+    window.onRecaptchaExpired = () => {
+      setRecaptchaToken(null);
+      toast.warning('reCAPTCHA expired. Please verify again.');
+    };
+
+    // Render reCAPTCHA when script is loaded
+    if (recaptchaLoaded && window.grecaptcha && window.grecaptcha.render) {
+      const recaptchaContainer = document.getElementById('recaptcha-container');
+      if (recaptchaContainer && !recaptchaContainer.hasChildNodes()) {
+        try {
+          window.grecaptcha.render('recaptcha-container', {
+            sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+            callback: 'onRecaptchaSuccess',
+            'expired-callback': 'onRecaptchaExpired',
+            theme: 'light'
+          });
+        } catch (error) {
+          console.error('reCAPTCHA render error:', error);
+        }
+      }
+    }
+
+    return () => {
+      delete window.onRecaptchaSuccess;
+      delete window.onRecaptchaExpired;
+    };
+  }, [recaptchaLoaded]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -95,50 +134,50 @@ function Hero() {
       return;
     }
 
-    if (!recaptchaLoaded && !window.grecaptcha) {
-      toast.error('Loading security checks... please try again.');
+    if (!recaptchaToken) {
+      toast.error('Please complete the reCAPTCHA verification');
       return;
     }
 
-    try {
-      const token = await window.grecaptcha.execute(
-        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-        { action: 'submit_contact_page_form' }
-      );
-
-      submitForm(
-        {
-          name: formData.fullName,
-          mobile: formData.phone,
-          email: formData.email,
-          foundUs: formData.source || 'not_specified',
-          message: formData.message,
-          service: formData.service,
-          formType: 'contact-page-form',
-          submittedFrom: pathname || '/',
-          recaptchaToken: token,
-        },
-        {
-          onSuccess: (data) => {
-            toast.success(data.message || 'Form submitted successfully!');
-            setFormData({
-              fullName: '',
-              phone: '',
-              email: '',
-              service: '',
-              source: '',
-              message: ''
-            });
-          },
-          onError: (error) => {
-            toast.error(error?.message || 'Failed to submit form.');
+    submitForm(
+      {
+        name: formData.fullName,
+        mobile: formData.phone,
+        email: formData.email,
+        foundUs: formData.source || 'not_specified',
+        message: formData.message,
+        service: formData.service,
+        formType: 'contact-page-form',
+        submittedFrom: pathname || '/',
+        recaptchaToken: recaptchaToken,
+      },
+      {
+        onSuccess: (data) => {
+          toast.success(data.message || 'Form submitted successfully!');
+          setFormData({
+            fullName: '',
+            phone: '',
+            email: '',
+            service: '',
+            source: '',
+            message: ''
+          });
+          setRecaptchaToken(null);
+          // Reset reCAPTCHA
+          if (window.grecaptcha) {
+            window.grecaptcha.reset();
           }
+        },
+        onError: (error) => {
+          toast.error(error?.message || 'Failed to submit form.');
+          // Reset reCAPTCHA on error
+          if (window.grecaptcha) {
+            window.grecaptcha.reset();
+          }
+          setRecaptchaToken(null);
         }
-      );
-    } catch (error) {
-      console.error('reCAPTCHA error:', error);
-      toast.error('Failed to verify reCAPTCHA. Please try again.');
-    }
+      }
+    );
   };
 
   const serviceOptions = [
@@ -157,14 +196,14 @@ function Hero() {
     { value: 'referral', label: 'Referral' }
   ];
 
-  // 🔥 FIXED FORM VALIDATION
+  // Form validation
   const isFormValid =
     formData.fullName &&
     formData.phone &&
     formData.email &&
     formData.service &&
     formData.message &&
-    (recaptchaLoaded || window.grecaptcha);
+    recaptchaToken;
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -259,13 +298,21 @@ function Hero() {
                 required
               />
 
+              {/* reCAPTCHA v2 CHECKBOX - ALWAYS VISIBLE */}
+              <div className="flex  justify-start py-2">
+                <div id="recaptcha-container"></div>
+                {!recaptchaLoaded && (
+                  <div className="bg-white/20 rounded p-4 animate-pulse w-[304px] h-[78px]"></div>
+                )}
+              </div>
+
               {/* SUBMIT BUTTON */}
               <button
                 type="submit"
                 disabled={!isFormValid || isPending}
-                className={`w-full py-3 rounded-lg font-semibold transition-colors duration-300 cursor-pointer ${
+                className={`w-full py-3 rounded-lg font-semibold transition-colors duration-300 ${
                   isFormValid && !isPending
-                    ? 'bg-white text-black hover:bg-gray-200'
+                    ? 'bg-white text-black hover:bg-gray-200 cursor-pointer'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -278,6 +325,7 @@ function Hero() {
                 <a
                   href="https://policies.google.com/privacy"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white hover:underline"
                 >
                   Privacy Policy
@@ -286,6 +334,7 @@ function Hero() {
                 <a
                   href="https://policies.google.com/terms"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white hover:underline"
                 >
                   Terms of Service
@@ -298,8 +347,8 @@ function Hero() {
         </div>
       </div>
       <ContactModal 
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );

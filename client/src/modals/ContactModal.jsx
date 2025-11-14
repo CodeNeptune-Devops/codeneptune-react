@@ -9,18 +9,16 @@ function ContactModal({ isOpen, onClose }) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ⭐ Optimized reCAPTCHA state
+  // ⭐ reCAPTCHA v2 state
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  const [recaptchaReady, setRecaptchaReady] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
-  const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 4, num2: 3 });
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     projectDescription: '',
     countryCode: '+91',
-    contactNumber: '',
-    captcha: ''
+    contactNumber: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -31,62 +29,77 @@ function ContactModal({ isOpen, onClose }) {
       role: "Managing Director ER Civil Planners",
       color: 'bg-[#e81e61]',
       quote:
-        "“Code Neptune transformed the way we present our company online.Our new website reflects the quality and reliability we stand for in the construction industry.I recommend code neptune for website development“"
+        "Code Neptune transformed the way we present our company online.Our new website reflects the quality and reliability we stand for in the construction industry.I recommend code neptune for website development"
     },
     {
       name: "Ayyappan Ramesh",
       role: "Founder Shoptune",
       color: 'bg-[#2196f3]',
-      quote: "“We needed an online store, and Code Neptune delivered that as we expected. The checkout flow, product filters, and mobile experience were all good in terms of design. Sales have noticeably improved since the revamp.”"
+      quote: "We needed an online store, and Code Neptune delivered that as we expected. The checkout flow, product filters, and mobile experience were all good in terms of design. Sales have noticeably improved since the revamp."
     },
     {
       name: "Amelia Harper",
       role: "Founder Harper Glow Studio",
       color: 'bg-[#4caf50]',
-      quote: "“I was looking for a salon booking platform that looked premium and worked flawlessly on mobile. Code Neptune delivered a stunning website that reflects our brand’s personality and makes appointment scheduling super easy for our clients.”"
+      quote: "I was looking for a salon booking platform that looked premium and worked flawlessly on mobile. Code Neptune delivered a stunning website that reflects our brand's personality and makes appointment scheduling super easy for our clients."
     }
   ];
 
   // ======================================================
-  // 🚀 Optimized reCAPTCHA Loader (loads only when modal opens)
+  // 🚀 Load reCAPTCHA v2 when modal opens
   // ======================================================
   useEffect(() => {
     if (!isOpen || recaptchaLoaded) return;
 
-    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
-    if (!siteKey) {
-      console.warn("Missing NEXT_PUBLIC_RECAPTCHA_SITE_KEY");
-      return;
-    }
-
     if (window.grecaptcha) {
       setRecaptchaLoaded(true);
-      window.grecaptcha.ready(() => setRecaptchaReady(true));
       return;
     }
 
     const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.id = "recaptcha-script-modal";
+    script.src = "https://www.google.com/recaptcha/api.js";
     script.async = true;
     script.defer = true;
-
-    script.onload = () => {
-      setRecaptchaLoaded(true);
-      window.grecaptcha.ready(() => setRecaptchaReady(true));
-    };
+    script.onload = () => setRecaptchaLoaded(true);
 
     document.body.appendChild(script);
   }, [isOpen]);
 
-  // Basic captcha generator (your custom math fallback)
-  const generateCaptcha = () => {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    setCaptchaQuestion({ num1, num2 });
-  };
+  // Set up reCAPTCHA v2 callbacks and render widget
+  useEffect(() => {
+    // Define global callback functions
+    window.onRecaptchaSuccessModal = (token) => {
+      setRecaptchaToken(token);
+    };
 
-  useEffect(() => generateCaptcha(), []);
+    window.onRecaptchaExpiredModal = () => {
+      setRecaptchaToken(null);
+      toast.warning('reCAPTCHA expired. Please verify again.');
+    };
+
+    // Render reCAPTCHA when script is loaded and modal is open
+    if (recaptchaLoaded && isOpen && window.grecaptcha && window.grecaptcha.render) {
+      const recaptchaContainer = document.getElementById('recaptcha-container-modal');
+      if (recaptchaContainer && !recaptchaContainer.hasChildNodes()) {
+        try {
+          window.grecaptcha.render('recaptcha-container-modal', {
+            sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+            callback: 'onRecaptchaSuccessModal',
+            'expired-callback': 'onRecaptchaExpiredModal',
+            theme: 'light'
+          });
+        } catch (error) {
+          console.error('reCAPTCHA render error:', error);
+        }
+      }
+    }
+
+    return () => {
+      delete window.onRecaptchaSuccessModal;
+      delete window.onRecaptchaExpiredModal;
+    };
+  }, [recaptchaLoaded, isOpen]);
 
   // ======================================================
   // Modal Animation Handling
@@ -123,23 +136,12 @@ function ContactModal({ isOpen, onClose }) {
     else if (!/^[0-9]{10,15}$/.test(cleanedNum))
       newErrors.contactNumber = "Invalid phone number";
 
-    const correct = captchaQuestion.num1 + captchaQuestion.num2;
-    if (formData.captcha !== correct.toString())
-      newErrors.captcha = "Incorrect answer";
+    if (!recaptchaToken) {
+      newErrors.recaptcha = "Please complete the reCAPTCHA verification";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  // ======================================================
-  // reCAPTCHA v3 Execution
-  // ======================================================
-  const getRecaptchaToken = async () => {
-    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
-    if (!window.grecaptcha || !recaptchaReady) return null;
-
-    return await window.grecaptcha.execute(siteKey, { action: "contact_modal" });
   };
 
   // ======================================================
@@ -153,14 +155,6 @@ function ContactModal({ isOpen, onClose }) {
     setIsSubmitting(true);
 
     try {
-      const recaptchaToken = await getRecaptchaToken();
-
-      if (!recaptchaToken) {
-        toast.warn("Security verification failed. Try again.");
-        setIsSubmitting(false);
-        return;
-      }
-
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -184,17 +178,34 @@ function ContactModal({ isOpen, onClose }) {
           email: "",
           projectDescription: "",
           countryCode: "+91",
-          contactNumber: "",
-          captcha: "",
+          contactNumber: ""
         });
-        generateCaptcha();
+        setRecaptchaToken(null);
+        
+        // Reset reCAPTCHA
+        if (window.grecaptcha) {
+          window.grecaptcha.reset();
+        }
+        
         onClose();
       } else {
         toast.error(data.error || "Failed to submit form");
+        
+        // Reset reCAPTCHA on error
+        if (window.grecaptcha) {
+          window.grecaptcha.reset();
+        }
+        setRecaptchaToken(null);
       }
     } catch (err) {
       toast.error("Something went wrong. Try again.");
       console.error(err);
+      
+      // Reset reCAPTCHA on error
+      if (window.grecaptcha) {
+        window.grecaptcha.reset();
+      }
+      setRecaptchaToken(null);
     }
 
     setIsSubmitting(false);
@@ -210,13 +221,13 @@ function ContactModal({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 transition-all duration-300 ${isOpen ? "bg-opacity-50" : "bg-opacity-0"
+      className={`fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-[99999999999] transition-all duration-300 ${isOpen ? "bg-opacity-50" : "bg-opacity-0"
         }`}
       onClick={onClose}
     >
       {/* Modal Container */}
       <div
-        className={`bg-white rounded-2xl max-w-5xl w-full h-[73vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-300 ease-out transform ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
+        className={`bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-300 ease-out transform ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
           }`}
         onClick={(e) => e.stopPropagation()}
         onTransitionEnd={() => !isOpen && setIsAnimating(false)}
@@ -230,7 +241,7 @@ function ContactModal({ isOpen, onClose }) {
         </button>
 
         {/* LEFT SIDE - TESTIMONIALS */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 lg:w-1/2 hidden lg:flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 lg:w-1/2 hidden lg:flex flex-col justify-around">
           <div>
             <h2 className="font-bold text-gray-800 text-lg">Hear from our clients</h2>
             <p className="text-gray-600 text-sm mb-4">Why 3000+ businesses trust us</p>
@@ -306,10 +317,10 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Full name*"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.fullName ? "border-red-500" : "border-gray-300"
+                  className={`w-full text-sm border-b-2 text-gray-600 placeholder:text-gray-500 ${errors.fullName ? "border-red-500" : "border-gray-300"
                     } focus:border-blue-600 outline-none pb-2`}
                 />
-                {errors.fullName && <p className="text-red-500 text-xs">{errors.fullName}</p>}
+                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
               </div>
 
               <div>
@@ -319,10 +330,10 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Email*"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.email ? "border-red-500" : "border-gray-300"
+                  className={`w-full text-sm border-b-2 text-gray-600 placeholder:text-gray-500 ${errors.email ? "border-red-500" : "border-gray-300"
                     } focus:border-blue-600 outline-none pb-2`}
                 />
-                {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </div>
             </div>
 
@@ -333,58 +344,57 @@ function ContactModal({ isOpen, onClose }) {
               placeholder="Describe your project / idea (optional)"
               value={formData.projectDescription}
               onChange={handleInputChange}
-              className="w-full text-sm border-b-2 border-gray-300 pb-2 focus:border-blue-600 outline-none placeholder:text-gray-500"
+              className="w-full text-sm border-b-2 text-gray-600 border-gray-300 pb-2 focus:border-blue-600 outline-none placeholder:text-gray-500"
             />
 
             {/* COUNTRY + PHONE */}
-            <div className="grid grid-cols-3 gap-4">
-              <select
-                name="countryCode"
-                value={formData.countryCode}
-                onChange={handleInputChange}
-                className="border-b-2 text-gray-500 border-gray-300 focus:border-blue-600 pb-2 outline-none placeholder:text-gray-500"
-              >
-                <option className="text-gray-500" value="+91">+91</option>
-                <option className="text-gray-500" value="+1">+1</option>
-                <option className="text-gray-500" value="+44">+44</option>
-                <option className="text-gray-500" value="+61">+61</option>
-              </select>
-
-              <div className="col-span-2">
-                <input
-                  type="tel"
-                  name="contactNumber"
-                  placeholder="Contact number*"
-                  value={formData.contactNumber}
-                  onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.contactNumber ? "border-red-500" : "border-gray-300"
-                    } pb-2 focus:border-blue-600 outline-none`}
-                />
-                {errors.contactNumber && (
-                  <p className="text-red-500 text-xs">{errors.contactNumber}</p>
-                )}
-              </div>
-            </div>
-
-            {/* CAPTCHA */}
             <div>
-              <input
-                name="captcha"
-                type="text"
-                placeholder={`${captchaQuestion.num1} + ${captchaQuestion.num2} = ?`}
-                value={formData.captcha}
-                onChange={handleInputChange}
-                className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.captcha ? "border-red-500" : "border-gray-300"
-                  } pb-2 focus:border-blue-600 outline-none`}
-              />
-              {errors.captcha && <p className="text-red-500 text-xs">{errors.captcha}</p>}
+              <div className="grid grid-cols-3 gap-4">
+                <select
+                  name="countryCode"
+                  value={formData.countryCode}
+                  onChange={handleInputChange}
+                  className="border-b-2 text-gray-500 border-gray-300 focus:border-blue-600 pb-2 outline-none"
+                >
+                  <option className="text-gray-500" value="+91">+91</option>
+                  <option className="text-gray-500" value="+1">+1</option>
+                  <option className="text-gray-500" value="+44">+44</option>
+                  <option className="text-gray-500" value="+61">+61</option>
+                </select>
+
+                <div className="col-span-2">
+                  <input
+                    type="tel"
+                    name="contactNumber"
+                    placeholder="Contact number*"
+                    value={formData.contactNumber}
+                    onChange={handleInputChange}
+                    className={`w-full text-sm border-b-2 text-gray-600 placeholder:text-gray-500 ${errors.contactNumber ? "border-red-500" : "border-gray-300"
+                      } pb-2 focus:border-blue-600 outline-none`}
+                  />
+                </div>
+              </div>
+              {errors.contactNumber && (
+                <p className="text-red-500 text-xs mt-2">{errors.contactNumber}</p>
+              )}
             </div>
+
+            {/* reCAPTCHA v2 CHECKBOX */}
+            <div className="flex justify-center py-2">
+              <div id="recaptcha-container-modal"></div>
+              {!recaptchaLoaded && (
+                <div className="bg-gray-200 rounded p-4 animate-pulse w-[304px] h-[78px]"></div>
+              )}
+            </div>
+            {errors.recaptcha && (
+              <p className="text-red-500 text-xs text-center">{errors.recaptcha}</p>
+            )}
 
             {/* SUBMIT BUTTON */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 disabled:bg-blue-400 text-sm"
+              className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 disabled:bg-blue-400 text-sm w-full cursor-pointer"
             >
               {isSubmitting ? "Submitting..." : "Schedule Free Consultation"}
             </button>

@@ -92,11 +92,9 @@ const ContactFormSchema = new mongoose.Schema({
     type: String,
     default: null
   },
-  recaptchaScore: {
-    type: Number,
-    default: null,
-    min: 0,
-    max: 1
+  recaptchaVerified: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
@@ -108,7 +106,7 @@ ContactFormSchema.index({ status: 1, submittedAt: -1 });
 ContactFormSchema.index({ createdAt: -1 });
 ContactFormSchema.index({ formType: 1, submittedAt: -1 });
 ContactFormSchema.index({ submittedFrom: 1 });
-ContactFormSchema.index({ recaptchaScore: 1 });
+ContactFormSchema.index({ recaptchaVerified: 1 });
 
 // Add a method to format the submission data
 ContactFormSchema.methods.toClientJSON = function() {
@@ -124,7 +122,7 @@ ContactFormSchema.methods.toClientJSON = function() {
     submittedFrom: this.submittedFrom,
     status: this.status,
     submittedAt: this.submittedAt,
-    recaptchaScore: this.recaptchaScore
+    recaptchaVerified: this.recaptchaVerified
   };
 };
 

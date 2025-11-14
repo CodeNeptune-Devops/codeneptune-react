@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 export default function ContactForm() {
     const pathname = usePathname();
     const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     // FORM STATE
     const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ export default function ContactForm() {
     ];
 
     // ============================================================
-    // ✅ LAZY LOAD RECAPTCHA v3 WHEN CONTACT FORM ENTERS VIEWPORT
+    // ✅ LAZY LOAD RECAPTCHA v2 WHEN CONTACT FORM ENTERS VIEWPORT
     // ============================================================
     useEffect(() => {
         const element = document.getElementById("contact-form-container");
@@ -61,10 +62,12 @@ export default function ContactForm() {
 
             const script = document.createElement("script");
             script.id = "recaptcha-script";
-            script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+            script.src = `https://www.google.com/recaptcha/api.js`;
             script.async = true;
             script.defer = true;
-            script.onload = () => setRecaptchaLoaded(true);
+            script.onload = () => {
+                setRecaptchaLoaded(true);
+            };
 
             document.body.appendChild(script);
         };
@@ -87,6 +90,22 @@ export default function ContactForm() {
         return () => observer?.disconnect();
     }, []);
 
+    // Set up reCAPTCHA callback
+    useEffect(() => {
+        window.onRecaptchaSuccess = (token) => {
+            setRecaptchaToken(token);
+        };
+
+        window.onRecaptchaExpired = () => {
+            setRecaptchaToken(null);
+        };
+
+        return () => {
+            delete window.onRecaptchaSuccess;
+            delete window.onRecaptchaExpired;
+        };
+    }, []);
+
     // HANDLERS
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -100,48 +119,48 @@ export default function ContactForm() {
         setFormData(prev => ({ ...prev, foundUs: value }));
     };
 
-    const isFormValid = formData.name && formData.mobile && formData.email && formData.message;
+    const isFormValid = formData.name && formData.mobile && formData.email && formData.message && recaptchaToken;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!recaptchaLoaded) {
-            toast.error('reCAPTCHA not ready. Please wait 1 second and try again.');
+        if (!recaptchaToken) {
+            toast.error('Please complete the reCAPTCHA verification.');
             return;
         }
 
-        try {
-            const token = await window.grecaptcha.execute(
-                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-                { action: 'submit_contact_form' }
-            );
-
-            submitForm(
-                {
-                    ...formData,
-                    formType: 'contact-form',
-                    submittedFrom: pathname || '/',
-                    recaptchaToken: token,
-                },
-                {
-                    onSuccess: (data) => {
-                        toast.success(data.message || "Form submitted successfully!");
-                        setFormData({ name: '', mobile: '', email: '', foundUs: null, message: '' });
-                    },
-                    onError: (error) => {
-                        toast.error(error?.message || "Failed to submit form.");
+        submitForm(
+            {
+                ...formData,
+                formType: 'contact-form',
+                submittedFrom: pathname || '/',
+                recaptchaToken: recaptchaToken,
+            },
+            {
+                onSuccess: (data) => {
+                    toast.success(data.message || "Form submitted successfully!");
+                    setFormData({ name: '', mobile: '', email: '', foundUs: null, message: '' });
+                    setRecaptchaToken(null);
+                    // Reset reCAPTCHA
+                    if (window.grecaptcha) {
+                        window.grecaptcha.reset();
                     }
+                },
+                onError: (error) => {
+                    toast.error(error?.message || "Failed to submit form.");
+                    // Reset reCAPTCHA on error
+                    if (window.grecaptcha) {
+                        window.grecaptcha.reset();
+                    }
+                    setRecaptchaToken(null);
                 }
-            );
-        } catch (error) {
-            toast.error('Failed to verify reCAPTCHA. Please try again.');
-            console.error(error);
-        }
+            }
+        );
     };
 
     return (
         <div
-            id="contact-form"
+            id="contact-form-container"
             className='w-full pt-12 sm:pt-16 md:pt-24 px-4 sm:px-6 lg:px-8'
         >
             <div className='w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-start items-start gap-5 sm:gap-8 lg:gap-5 relative'>
@@ -231,12 +250,24 @@ export default function ContactForm() {
                             className='w-full border-b border-[#BEBEBE] p-2 resize-none focus:outline-none'
                         />
 
+                        {/* reCAPTCHA v2 CHECKBOX */}
+                        {recaptchaLoaded && (
+                            <div className='flex justify-start'>
+                                <div
+                                    className="g-recaptcha"
+                                    data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                    data-callback="onRecaptchaSuccess"
+                                    data-expired-callback="onRecaptchaExpired"
+                                ></div>
+                            </div>
+                        )}
+
                         {/* SUBMIT BUTTON */}
                         <button
                             type="submit"
-                            disabled={!isFormValid || isPending || !recaptchaLoaded}
+                            disabled={!isFormValid || isPending}
                             className={`px-6 py-3 w-60 rounded-lg flex items-center gap-3 text-sm sm:text-base transition-all ${
-                                isFormValid && !isPending && recaptchaLoaded
+                                isFormValid && !isPending
                                     ? 'bg-[#0072FF] text-white hover:bg-blue-600 cursor-pointer'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                             }`}
@@ -245,14 +276,14 @@ export default function ContactForm() {
                             {isPending ? 'Sending...' : 'Send Message'}
                         </button>
 
-                        {/* reCAPTCHA Badge Notice */}
+                        {/* reCAPTCHA Notice */}
                         <p className='text-xs text-gray-500'>
                             This site is protected by reCAPTCHA and the Google{' '}
-                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/privacy" target="_blank">
+                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
                                 Privacy Policy
                             </a>{' '}
                             and{' '}
-                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/terms" target="_blank">
+                            <a className='text-blue-600 hover:underline' href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">
                                 Terms of Service
                             </a>{' '}
                             apply.

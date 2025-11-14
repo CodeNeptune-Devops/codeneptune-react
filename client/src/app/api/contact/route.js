@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import ContactForm from '@/models/ContactForm';
 import { connectDB } from "@/lib/db";
 
-// Verify reCAPTCHA token
+// Verify reCAPTCHA v2 token
 async function verifyRecaptcha(token) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
   
@@ -59,8 +59,8 @@ export async function POST(request) {
       }
     }
 
-    // Verify reCAPTCHA token
-    let recaptchaResult = { success: true, score: 1.0 };
+    // Verify reCAPTCHA token (v2)
+    let recaptchaResult = { success: true };
     
     // Skip reCAPTCHA in development if not configured
     const isDevelopment = process.env.NODE_ENV === 'development';
@@ -69,7 +69,7 @@ export async function POST(request) {
     if (!isDevelopment || hasRecaptchaKey) {
       if (!recaptchaToken) {
         return NextResponse.json(
-          { error: 'reCAPTCHA verification failed' },
+          { error: 'Please complete the reCAPTCHA verification' },
           { status: 400 }
         );
       }
@@ -77,18 +77,9 @@ export async function POST(request) {
       recaptchaResult = await verifyRecaptcha(recaptchaToken);
       
       if (!recaptchaResult.success) {
-        console.error('reCAPTCHA verification failed:', recaptchaResult);
+        console.error('reCAPTCHA verification failed:', recaptchaResult['error-codes']);
         return NextResponse.json(
           { error: 'reCAPTCHA verification failed. Please try again.' },
-          { status: 400 }
-        );
-      }
-
-      // Optional: Check reCAPTCHA score (for v3, score ranges from 0.0 to 1.0)
-      if (recaptchaResult.score < 0.5) {
-        console.warn('Low reCAPTCHA score:', recaptchaResult.score);
-        return NextResponse.json(
-          { error: 'Suspicious activity detected. Please try again.' },
           { status: 400 }
         );
       }
@@ -130,7 +121,7 @@ export async function POST(request) {
       status: 'new',
       userAgent,
       referrer: referer,
-      recaptchaScore: recaptchaResult.score,
+      recaptchaVerified: recaptchaResult.success,
     };
 
     // Add optional fields only if they exist
@@ -147,7 +138,7 @@ export async function POST(request) {
       id: contactSubmission._id,
       formType: contactSubmission.formType,
       submittedFrom: contactSubmission.submittedFrom,
-      recaptchaScore: recaptchaResult.score
+      recaptchaVerified: recaptchaResult.success
     });
 
     return NextResponse.json(
