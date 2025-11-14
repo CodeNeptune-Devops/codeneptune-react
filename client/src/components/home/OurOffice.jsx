@@ -2,16 +2,12 @@
 
 import React, { useState } from "react";
 import { MessageCircle } from "lucide-react";
-import img1 from '../../assets/roi/img-1.webp'
+import img1 from '../../assets/our-team/img1.webp'
+import img2 from '../../assets/our-team/img2.webp'
+import img3 from '../../assets/our-team/img3.webp'
 import Image from "next/image";
+import ContactModal from "@/modals/ContactModal";
 
-const images = [
-  { id: 1, url: img1 },
-  { id: 2, url: img1 },
-  { id: 3, url: img1 },
-  { id: 4,url: img1 },
-  { id: 5, url: img1 },
-];
 
 // Simple blur text animation component
 function BlurText({ text, delay, onAnimationComplete, className }) {
@@ -31,6 +27,7 @@ function BlurText({ text, delay, onAnimationComplete, className }) {
 
 function OurOffice() {
   const [animationStarted, setAnimationStarted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAnimationComplete = () => {
     setAnimationStarted(true);
@@ -56,11 +53,10 @@ function OurOffice() {
 
               <div className="space-y-2 sm:space-y-3 text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-8xl">
                 <div
-                  className={`transition-all duration-700 ${
-                    animationStarted
+                  className={`transition-all duration-700 ${animationStarted
                       ? "translate-y-0 opacity-100"
                       : "translate-y-10 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "200ms",
                     willChange: "transform, opacity",
@@ -73,11 +69,10 @@ function OurOffice() {
                   and
                 </div>
                 <div
-                  className={`transition-all duration-700 ${
-                    animationStarted
+                  className={`transition-all duration-700 ${animationStarted
                       ? "translate-y-0 opacity-100"
                       : "translate-y-10 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "400ms",
                     willChange: "transform, opacity",
@@ -97,18 +92,17 @@ function OurOffice() {
               {/* Large left box */}
               <div className="sm:col-span-2 lg:col-span-4 lg:row-span-2">
                 <div
-                  className={`relative w-full h-64 sm:h-80 lg:h-[620px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
-                    animationStarted
+                  className={`relative w-full h-64 sm:h-80 lg:h-[620px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${animationStarted
                       ? "translate-x-0 opacity-100"
                       : "-translate-x-20 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "600ms",
                     willChange: "transform, opacity",
                   }}
                 >
                   <Image
-                    src={images[0].url}
+                    src={img3}
                     alt="Office space"
                     loading="lazy"
                     height={200}
@@ -121,18 +115,17 @@ function OurOffice() {
               {/* Middle column */}
               <div className="sm:col-span-2 lg:col-span-4 space-y-3 sm:space-y-4">
                 <div
-                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
-                    animationStarted
+                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${animationStarted
                       ? "translate-y-0 opacity-100"
                       : "-translate-y-20 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "800ms",
                     willChange: "transform, opacity",
                   }}
                 >
-                   <Image
-                    src={images[0].url}
+                  <Image
+                    src={img1}
                     alt="Office space"
                     loading="lazy"
                     height={200}
@@ -142,18 +135,17 @@ function OurOffice() {
                 </div>
 
                 <div
-                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
-                    animationStarted
+                  className={`relative w-full h-48 sm:h-56 lg:h-[250px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${animationStarted
                       ? "translate-y-0 opacity-100"
                       : "translate-y-20 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "1000ms",
                     willChange: "transform, opacity",
                   }}
                 >
                   <Image
-                    src={images[0].url}
+                    src={img2}
                     alt="Office space"
                     loading="lazy"
                     height={200}
@@ -163,17 +155,16 @@ function OurOffice() {
                 </div>
 
                 <div
-                  className={`flex justify-center pt-2 sm:pt-3 transition-all duration-700 ${
-                    animationStarted
+                  className={`flex justify-center pt-2 sm:pt-3 transition-all duration-700 ${animationStarted
                       ? "scale-100 opacity-100"
                       : "scale-90 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "1200ms",
                     willChange: "transform, opacity",
                   }}
                 >
-                  <button className="hidden lg:flex items-center gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
+                  <button onClick={() => setIsModalOpen(true)} className="hidden cursor-pointer lg:flex items-center gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
                     <MessageCircle size={18} className="sm:w-[22px] sm:h-[22px]" />
                     <span>Reach Out, We're Ready</span>
                   </button>
@@ -183,18 +174,17 @@ function OurOffice() {
               {/* Right column */}
               <div className="sm:col-span-2 lg:col-span-4 space-y-3 sm:space-y-4">
                 <div
-                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
-                    animationStarted
+                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${animationStarted
                       ? "translate-x-0 opacity-100"
                       : "translate-x-20 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "1400ms",
                     willChange: "transform, opacity",
                   }}
                 >
-                   <Image
-                    src={images[0].url}
+                  <Image
+                    src={img3}
                     alt="Office space"
                     loading="lazy"
                     height={200}
@@ -204,18 +194,17 @@ function OurOffice() {
                 </div>
 
                 <div
-                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${
-                    animationStarted
+                  className={`relative w-full h-48 sm:h-56 lg:h-[300px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 hover:scale-[1.02] ${animationStarted
                       ? "translate-x-0 opacity-100"
                       : "translate-x-20 opacity-0"
-                  }`}
+                    }`}
                   style={{
                     transitionDelay: "1600ms",
                     willChange: "transform, opacity",
                   }}
                 >
-                   <Image
-                    src={images[0].url}
+                  <Image
+                    src={img3}
                     alt="Office space"
                     loading="lazy"
                     height={200}
@@ -227,12 +216,16 @@ function OurOffice() {
             </div>
           </div>
 
-           <button className="flex lg:hidden items-center justify-center w-full gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
-                    <MessageCircle size={18} className="sm:w-[22px] sm:h-[22px]" />
-                    <span>Reach Out, We're Ready</span>
-                  </button>
+          <button onClick={() => setIsModalOpen(true)} className="flex lg:hidden cursor-pointer items-center justify-center w-full gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base">
+            <MessageCircle size={18} className="sm:w-[22px] sm:h-[22px]" />
+            <span>Reach Out, We're Ready</span>
+          </button>
         </div>
       </div>
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

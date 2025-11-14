@@ -1,3 +1,5 @@
+'use client'
+
 import ASmallTeamWithABigFocus from '@/components/about/ASmallTeamWithABigFocus'
 import MeetTheTeam from '@/components/about/MeetTheTeam'
 import OurMissionVisionTeam from '@/components/about/OurMissionVisionTeam'
@@ -8,9 +10,12 @@ import Faqs from '@/components/Faqs'
 import ContactForm from '@/components/forms/ContactForm'
 import Hero from '@/components/Hero'
 import Location from '@/components/Location'
-import React from 'react'
+import ContactModal from '@/modals/ContactModal'
+import React, { useState } from 'react'
 
 function page() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   const staticfaqs = [
     {
@@ -99,11 +104,15 @@ function page() {
       {/* <MeetTheTeam /> */}
       <ASmallTeamWithABigFocus />
       <WhatDrivesUs />
-      <WhatWeBuild />
+      <WhatWeBuild isOpen={() => setIsModalOpen(true)}/>
       <WhyClientChooseUs />
       <Faqs faqs={staticfaqs} />
       <ContactForm />
       <Location />
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

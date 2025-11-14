@@ -1,11 +1,13 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Rocket, ShoppingCart, LayoutDashboard, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
 function WebsiteSolutionsForEveryNeed() {
     const scrollRef = useRef(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const solutions = [
         {
@@ -122,11 +124,15 @@ function WebsiteSolutionsForEveryNeed() {
 
                 {/* CTA Button */}
                 <div className="text-center">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-3 rounded-full text-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 transform hover:scale-105 uppercase cursor-pointer">
+                    <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-3 rounded-full text-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 transform hover:scale-105 uppercase cursor-pointer">
                         Start Your Project
                     </button>
                 </div>
             </div>
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

@@ -1,9 +1,15 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Paintbrush, Code, Package, Hourglass } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
 import Image from 'next/image'
+import ContactModal from '@/modals/ContactModal'
 
 function WhyChooseCNForFlutterDevelopment() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const reasons = [
     {
       icon: <Paintbrush className="w-8 h-8" />,
@@ -52,7 +58,7 @@ function WhyChooseCNForFlutterDevelopment() {
             />
 
             {/* CTA Button */}
-            <button className='border-2 cursor-pointer border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 uppercase tracking-wide'>
+            <button onClick={() => setIsModalOpen(true)} className='border-2 cursor-pointer border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 uppercase tracking-wide'>
               Talk to Our Experts Today
             </button>
           </div>
@@ -83,6 +89,10 @@ function WhyChooseCNForFlutterDevelopment() {
           </div>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

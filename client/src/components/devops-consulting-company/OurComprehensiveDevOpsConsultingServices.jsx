@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import SectionTitle from '../titles/SectionTitle';
 import Image from 'next/image';
+import ContactModal from '@/modals/ContactModal';
+import Link from 'next/link';
 
 const servicesData = [
   {
@@ -77,6 +79,7 @@ function OurComprehensiveDevOpsConsultingServices() {
   const [activeTab, setActiveTab] = useState(1);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
   
   const visibleServices = 5;
   const maxScroll = Math.max(0, servicesData.length - visibleServices);
@@ -182,7 +185,7 @@ function OurComprehensiveDevOpsConsultingServices() {
                 <p className="text-gray-300 text-lg leading-relaxed mb-8 transition-all duration-500">
                   {activeService.description}
                 </p>
-                <button className="px-6 py-3 cursor-pointer border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-500 font-semibold transform hover:scale-105 hover:shadow-xl">
+                <button onClick={() => setIsModalOpen(true)} className="px-6 py-3 cursor-pointer border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-500 font-semibold transform hover:scale-105 hover:shadow-xl">
                   Contact Us
                 </button>
               </div>
@@ -198,11 +201,15 @@ function OurComprehensiveDevOpsConsultingServices() {
           <p className="text-lg text-gray-600 mb-8 max-w-4xl mx-auto">
             Design tailored strategies that align with your business goals. From assessment to implementation, we ensure faster cycles, cost efficiency, and improved collaboration.
           </p>
-          <button className="px-6 py-3 cursor-pointer bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors font-semibold text-lg shadow-lg">
+          <Link href={'#contact-form'} className="px-6 py-3 cursor-pointer bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors font-semibold text-lg shadow-lg">
             CONTACT US
-          </button>
+          </Link>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

@@ -1,6 +1,9 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import SectionTitle from './titles/SectionTitle';
 import Image from 'next/image';
+import ContactModal from '@/modals/ContactModal';
 
 function OurProvenDevelopmentProcess({
   title="Add A Title",
@@ -8,6 +11,8 @@ function OurProvenDevelopmentProcess({
   data,
   padding=""
 }) {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   const stepsList = [
     {
@@ -96,7 +101,7 @@ function OurProvenDevelopmentProcess({
         </div>
 
         {/* CTA Button */}
-        <div className="text-center mb-8">
+        <div onClick={() => setIsModalOpen(true)} className="text-center mb-8">
           <button className="bg-white text-black hover:bg-gray-200 font-semibold px-6 py-3 rounded-full text-lg transition-all duration-300 hover:shadow-lg transform hover:scale-105 cursor-pointer">
             READY TO GET STARTED?
           </button>
@@ -106,13 +111,17 @@ function OurProvenDevelopmentProcess({
         <div className="text-center">
           <p className="text-base sm:text-md text-gray-400">
             Let's Build Your Website Together. Fill out the{' '}
-            <a href="#contact" className="text-white hover:text-gray-300 font-semibold underline">
+            <a href="#contact-form" className="text-white hover:text-gray-300 font-semibold underline">
               contact form
             </a>
             {' '}and let's bring your vision to life today.
           </p>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

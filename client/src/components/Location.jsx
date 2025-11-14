@@ -38,7 +38,7 @@ function Location() {
   const formatPhoneForHref = (num) => num.replace(/\s+/g, "");
 
   return (
-    <div className="w-full pt-12 sm:pt-16 md:pt-20 lg:pt-24 px-4 sm:px-6 lg:px-8">
+    <div id="locations" className="w-full pt-12 sm:pt-16 md:pt-20 lg:pt-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-start items-stretch lg:justify-center gap-5 lg:gap-8">
         {/* LEFT SIDE */}
         <div className="w-full lg:w-[50%] flex flex-col justify-start lg:justify-center items-start gap-2 text-xs sm:text-sm">

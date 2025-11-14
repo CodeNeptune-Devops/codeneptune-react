@@ -11,9 +11,11 @@ import img4 from '../../assets/android-app-development/img4.webp';
 import img5 from '../../assets/android-app-development/img5.webp';
 import img6 from '../../assets/android-app-development/img6.webp';
 import Image from 'next/image';
+import ContactModal from '@/modals/ContactModal';
 
 function AndroidAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
+    const [isModalOpen,setIsModalOpen] = useState(false);
 
     const services = [
         {
@@ -202,7 +204,7 @@ function AndroidAppDevelopmentServices() {
                                     {services[activeService].additionalText}
                                 </p> */}
 
-                                <button className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+                                <button onClick={() => setIsModalOpen(true)} className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
                                     <ShinyText
                                         text="Lets Build Together"
                                         disabled={false}
@@ -215,6 +217,10 @@ function AndroidAppDevelopmentServices() {
                     </div>
                 </div>
             </div>
+            <ContactModal 
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

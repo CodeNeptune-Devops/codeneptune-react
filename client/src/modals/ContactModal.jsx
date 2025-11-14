@@ -27,26 +27,23 @@ function ContactModal({ isOpen, onClose }) {
 
   const testimonials = [
     {
-      name: "Bela Gupta D'Souza",
-      role: "Founder, Edamama",
-      image:
-        "https://ui-avatars.com/api/?name=Bela+Gupta&background=E91E63&color=fff&size=120",
+      name: "Karthick Marimuthu",
+      role: "Managing Director ER Civil Planners",
+      color: 'bg-[#e81e61]',
       quote:
-        "We took a big leap of faith with Appinventiv who helped us translate our vision into reality with the perfectly comprehensive Edamama eCommerce solution."
+        "“Code Neptune transformed the way we present our company online.Our new website reflects the quality and reliability we stand for in the construction industry.I recommend code neptune for website development“"
     },
     {
-      name: "John Smith",
-      role: "CEO, TechCorp",
-      image:
-        "https://ui-avatars.com/api/?name=John+Smith&background=2196F3&color=fff&size=120",
-      quote: "Outstanding service. The team delivered beyond expectations!"
+      name: "Ayyappan Ramesh",
+      role: "Founder Shoptune",
+      color: 'bg-[#2196f3]',
+      quote: "“We needed an online store, and Code Neptune delivered that as we expected. The checkout flow, product filters, and mobile experience were all good in terms of design. Sales have noticeably improved since the revamp.”"
     },
     {
-      name: "Sarah Johnson",
-      role: "Product Manager, InnovateLab",
-      image:
-        "https://ui-avatars.com/api/?name=Sarah+Johnson&background=4CAF50&color=fff&size=120",
-      quote: "Professional, efficient and always available!"
+      name: "Amelia Harper",
+      role: "Founder Harper Glow Studio",
+      color: 'bg-[#4caf50]',
+      quote: "“I was looking for a salon booking platform that looked premium and worked flawlessly on mobile. Code Neptune delivered a stunning website that reflects our brand’s personality and makes appointment scheduling super easy for our clients.”"
     }
   ];
 
@@ -213,16 +210,14 @@ function ContactModal({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 transition-all duration-300 ${
-        isOpen ? "bg-opacity-50" : "bg-opacity-0"
-      }`}
+      className={`fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 transition-all duration-300 ${isOpen ? "bg-opacity-50" : "bg-opacity-0"
+        }`}
       onClick={onClose}
     >
       {/* Modal Container */}
       <div
-        className={`bg-white rounded-2xl max-w-5xl w-full h-[73vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-300 ease-out transform ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
-        }`}
+        className={`bg-white rounded-2xl max-w-5xl w-full h-[73vh] overflow-hidden shadow-2xl relative flex flex-col lg:flex-row transition-all duration-300 ease-out transform ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
         onClick={(e) => e.stopPropagation()}
         onTransitionEnd={() => !isOpen && setIsAnimating(false)}
       >
@@ -245,9 +240,8 @@ function ContactModal({ isOpen, onClose }) {
                 <button
                   key={index}
                   onClick={() => setCurrentTestimonial(index)}
-                  className={`h-3 rounded-full transition-all cursor-pointer ${
-                    index === currentTestimonial ? "bg-blue-600 w-8" : "bg-blue-300 w-3"
-                  }`}
+                  className={`h-3 rounded-full transition-all cursor-pointer ${index === currentTestimonial ? "bg-blue-600 w-8" : "bg-blue-300 w-3"
+                    }`}
                 />
               ))}
             </div>
@@ -260,7 +254,7 @@ function ContactModal({ isOpen, onClose }) {
                   prev === 0 ? testimonials.length - 1 : prev - 1
                 )
               }
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white p-2 rounded-full shadow cursor-pointer hover:bg-gray-50"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 text-gray-500 bg-white p-2 rounded-full shadow cursor-pointer hover:bg-gray-50"
             >
               <ChevronLeft />
             </button>
@@ -271,16 +265,21 @@ function ContactModal({ isOpen, onClose }) {
                   prev === testimonials.length - 1 ? 0 : prev + 1
                 )
               }
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white p-2 rounded-full shadow cursor-pointer hover:bg-gray-50"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white text-gray-500 p-2 rounded-full shadow cursor-pointer hover:bg-gray-50"
             >
               <ChevronRight />
             </button>
 
             <div className="text-center">
-              <img
-                src={testimonials[currentTestimonial].image}
-                className="w-10 h-10 rounded-full mx-auto mb-3"
-              />
+
+              <div className={`w-10 h-10 rounded-full mx-auto  flex justify-center items-center mb-3 text-white ${testimonials[currentTestimonial].color}`}>
+                {testimonials[currentTestimonial].name
+                  .split(" ")
+                  .map(word => word[0])
+                  .join("")
+                  .toUpperCase()}
+              </div>
+
 
               <h3 className="font-bold text-gray-800">{testimonials[currentTestimonial].name}</h3>
               <p className="text-gray-500 text-sm italic">
@@ -307,9 +306,8 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Full name*"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 ${
-                    errors.fullName ? "border-red-500" : "border-gray-300"
-                  } focus:border-blue-600 outline-none pb-2`}
+                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.fullName ? "border-red-500" : "border-gray-300"
+                    } focus:border-blue-600 outline-none pb-2`}
                 />
                 {errors.fullName && <p className="text-red-500 text-xs">{errors.fullName}</p>}
               </div>
@@ -321,9 +319,8 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Email*"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  } focus:border-blue-600 outline-none pb-2`}
+                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.email ? "border-red-500" : "border-gray-300"
+                    } focus:border-blue-600 outline-none pb-2`}
                 />
                 {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
               </div>
@@ -336,7 +333,7 @@ function ContactModal({ isOpen, onClose }) {
               placeholder="Describe your project / idea (optional)"
               value={formData.projectDescription}
               onChange={handleInputChange}
-              className="w-full text-sm border-b-2 border-gray-300 pb-2 focus:border-blue-600 outline-none"
+              className="w-full text-sm border-b-2 border-gray-300 pb-2 focus:border-blue-600 outline-none placeholder:text-gray-500"
             />
 
             {/* COUNTRY + PHONE */}
@@ -345,12 +342,12 @@ function ContactModal({ isOpen, onClose }) {
                 name="countryCode"
                 value={formData.countryCode}
                 onChange={handleInputChange}
-                className="border-b-2 border-gray-300 focus:border-blue-600 pb-2 outline-none"
+                className="border-b-2 text-gray-500 border-gray-300 focus:border-blue-600 pb-2 outline-none placeholder:text-gray-500"
               >
-                <option value="+91">+91</option>
-                <option value="+1">+1</option>
-                <option value="+44">+44</option>
-                <option value="+61">+61</option>
+                <option className="text-gray-500" value="+91">+91</option>
+                <option className="text-gray-500" value="+1">+1</option>
+                <option className="text-gray-500" value="+44">+44</option>
+                <option className="text-gray-500" value="+61">+61</option>
               </select>
 
               <div className="col-span-2">
@@ -360,9 +357,8 @@ function ContactModal({ isOpen, onClose }) {
                   placeholder="Contact number*"
                   value={formData.contactNumber}
                   onChange={handleInputChange}
-                  className={`w-full text-sm border-b-2 ${
-                    errors.contactNumber ? "border-red-500" : "border-gray-300"
-                  } pb-2 focus:border-blue-600 outline-none`}
+                  className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.contactNumber ? "border-red-500" : "border-gray-300"
+                    } pb-2 focus:border-blue-600 outline-none`}
                 />
                 {errors.contactNumber && (
                   <p className="text-red-500 text-xs">{errors.contactNumber}</p>
@@ -378,9 +374,8 @@ function ContactModal({ isOpen, onClose }) {
                 placeholder={`${captchaQuestion.num1} + ${captchaQuestion.num2} = ?`}
                 value={formData.captcha}
                 onChange={handleInputChange}
-                className={`w-full text-sm border-b-2 ${
-                  errors.captcha ? "border-red-500" : "border-gray-300"
-                } pb-2 focus:border-blue-600 outline-none`}
+                className={`w-full text-sm border-b-2 placeholder:text-gray-500 ${errors.captcha ? "border-red-500" : "border-gray-300"
+                  } pb-2 focus:border-blue-600 outline-none`}
               />
               {errors.captcha && <p className="text-red-500 text-xs">{errors.captcha}</p>}
             </div>

@@ -1,7 +1,13 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import SectionTitle from '../titles/SectionTitle'
+import ContactModal from '@/modals/ContactModal';
 
 function OurFlutterAppDevelopmentServices() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const services = [
     {
       title: 'Cross Platform App Development',
@@ -53,7 +59,7 @@ function OurFlutterAppDevelopmentServices() {
               </p>
 
               {/* Button */}
-              <button className='border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 self-start cursor-pointer'>
+              <button onClick={() => setIsModalOpen(true)} className='border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 self-start cursor-pointer'>
                 {service.buttonText}
               </button>
             </div>
@@ -65,11 +71,15 @@ function OurFlutterAppDevelopmentServices() {
           <p className="text-gray-200 text-lg leading-relaxed mb-8">
             Flutter's single codebase enables faster development, consistent user experiences across platforms, and significant cost savings. Imagine your app delighting users on every device while accelerating your time-to-market.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl uppercase tracking-wide">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer font-bold px-6 py-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl uppercase tracking-wide">
             Book Your Free Consultation
           </button>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

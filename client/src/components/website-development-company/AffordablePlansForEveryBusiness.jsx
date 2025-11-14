@@ -1,7 +1,13 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
 function AffordablePlansForEveryBusiness() {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const plans = [
         {
             title: "Starter Website",
@@ -68,13 +74,17 @@ function AffordablePlansForEveryBusiness() {
                             </p>
 
                             {/* CTA Button */}
-                            <button className="w-full py-3 px-6 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-blue-600 hover:text-blue-600 transition-all duration-300 hover:shadow-md cursor-pointer">
+                            <button onClick={() => setIsModalOpen(true)} className="w-full py-3 px-6 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-blue-600 hover:text-blue-600 transition-all duration-300 hover:shadow-md cursor-pointer">
                                 {plan.buttonText}
                             </button>
                         </div>
                     ))}
                 </div>
             </div>
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

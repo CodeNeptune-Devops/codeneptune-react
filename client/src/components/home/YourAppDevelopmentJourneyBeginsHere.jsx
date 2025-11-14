@@ -1,12 +1,17 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import img1 from '../../assets/home/dev-journey-1.webp'
 import img2 from '../../assets/home/dev-journey-2.webp'
 import img3 from '../../assets/home/dev-journey-3.webp'
 import Image from 'next/image';
 import SectionTitle from '../titles/SectionTitle';
-import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import ContactModal from '@/modals/ContactModal';
 
 function YourAppDevelopmentJourneyBeginsHere() {
+
+    const [isModalOpen,setIsModalOpen] = useState(false);
+
     const services = [
         {
             id: 1,
@@ -59,8 +64,7 @@ function YourAppDevelopmentJourneyBeginsHere() {
 
                 <SectionTitle
                     title='Your App Development Journey Begins Here'
-                    description='No matter where you stand, from concept to scale or optimization, we turn your ideas into intelligent, high-performing digital experiences. Every stage is powered by AI, automation, and engineering precision to deliver real impact.
-'
+                    description='No matter where you stand, from concept to scale or optimization, we turn your ideas into intelligent, high-performing digital experiences. Every stage is powered by AI, automation, and engineering precision to deliver real impact.'
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
@@ -108,10 +112,18 @@ function YourAppDevelopmentJourneyBeginsHere() {
                             </div>
 
                             {/* Button */}
-                            <button className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer">
+                            <button 
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer"
+                            >
                                 
                                 {service.buttonText}
                             </button>
+
+                            <ContactModal 
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            />
                         </div>
                     ))}
                 </div>

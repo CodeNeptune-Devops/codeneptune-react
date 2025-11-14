@@ -121,6 +121,10 @@
   }
 }
 
+html{
+  scroll-behavior: smooth !important;
+}
+
 /* Existing body scrollbar hiding */
 body {
   -ms-overflow-style: none;

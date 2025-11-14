@@ -16,16 +16,17 @@ function Footer() {
     { label: 'About Us', href: '/about' },
     { label: 'Blog', href: '/about' },
     { label: 'Privacy Policy', href: '/about' },
+    { label: 'Contact Us', href: '/contact' },
   ];
 
   const services = [
     { label: 'Mobile App Development', href: '/mobile-app-development-company' },
-    { label: 'Android App Development', href: '/mobile-app-development-company' },
-    { label: 'Flutter App Development', href: '/mobile-app-development-company' },
-    { label: 'Web Development', href: '/mobile-app-development-company' },
-    { label: 'UI UX', href: '/mobile-app-development-company' },
-    { label: 'Ecommerce Web Development', href: '/mobile-app-development-company' },
-    { label: 'Devops', href: '/mobile-app-development-company' },
+    { label: 'Android App Development', href: '/android-app-development-company-in-chennai' },
+    { label: 'Flutter App Development', href: '/flutter-app-development-company-in-india' },
+    { label: 'Web Development', href: '/website-development-company' },
+    { label: 'UI UX', href: '/ui-ux-design-services' },
+    { label: 'Ecommerce Web Development', href: '/ecommerce-website-development-company' },
+    { label: 'Devops', href: '/devops-consulting-company' },
     
   ];
   const educationData = [
@@ -80,15 +81,6 @@ function Footer() {
                 <p className='text-sm'>
                   Code Neptune is a leading web and mobile app development company in Chennai offering UI/UX design, DevOps, eCommerce, and digital transformation services.
                 </p>
-
-                <button className="flex flex-col sm:flex-row items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
-                  <ShinyText
-                    text="Get Free Consultation"
-                    disabled={false}
-                    speed={3}
-                    className='custom-class'
-                  />
-                </button>
 
               </div>
               {/* <div className="flex justify-start items-center gap-1">

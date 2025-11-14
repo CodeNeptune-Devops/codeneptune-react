@@ -25,11 +25,11 @@ function Testimonials() {
     const testimonials = [
         {
             id: 1,
-            text: "TCode Neptune transformed the way we present our company online.Our new website reflects the quality and reliability we stand for in the construction industry.I recommend code neptune for website development",
+            text: "Code Neptune transformed the way we present our company online.Our new website reflects the quality and reliability we stand for in the construction industry.I recommend code neptune for website development.",
             name: "Karthick Marimuthu",
             position: "Managing Director",
             company: "ER Civil Planners",
-            logo: '/client-logo/logo-1.svg',
+            logo: '/testimonials/er.svg',
             image: avatar1
         },
         {
@@ -38,16 +38,16 @@ function Testimonials() {
             name: "Ayyappan Ramesh",
             position: "Founder ",
             company: "Shoptune",
-            logo: '/client-logo/logo-2.svg',
+            logo: '/testimonials/shoptune.svg',
             image: avatar1
         },
         {
             id: 3,
-            text: "I was looking for a salon booking platform that looked premium and worked flawlessly on mobile. Code Neptune delivered a stunning website that reflects our brand's personality and makes appointment scheduling super easy for our clients.",
+            text: "I was looking for a salon booking platform that looked premium and worked flawlessly on mobile. Code Neptune delivered a stunning website that reflects our brand’s personality and makes appointment scheduling super easy for our clients.",
             name: "Amelia Harper",
             position: "Founder",
             company: "Harper Glow Studio",
-            logo: '/client-logo/logo-3.svg',
+            logo: '/testimonials/harper.svg',
             image: avatar2
         }
     ];

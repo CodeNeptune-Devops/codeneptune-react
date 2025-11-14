@@ -1,8 +1,14 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { Zap, Shield, TrendingUp, Clock } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
 function WhyChooseOurDevopsConsultingSolutions() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const benefits = [
     {
       icon: Clock,
@@ -90,13 +96,17 @@ function WhyChooseOurDevopsConsultingSolutions() {
             <p className="text-slate-400 mb-8 text-lg">
               Get Your Free DevOps Audit
             </p>
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/50 hover:scale-105 cursor-pointer">
+            <button onClick={() => setIsModalOpen(true)} className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/50 hover:scale-105 cursor-pointer">
               <span className="relative z-10">CONTACT US</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
         </div>
       </div>
+      <ContactModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

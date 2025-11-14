@@ -1,8 +1,14 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { Figma, Smile, Layers, Eye, MapPin, GitBranch, ArrowRight } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
 function DesigningServicesWeOffer() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const services = [
     {
       icon: Figma,
@@ -75,7 +81,7 @@ function DesigningServicesWeOffer() {
                   {service.description}
                 </p>
                 
-                <button className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all duration-300 cursor-pointer">
+                <button onClick={() => setIsModalOpen(true)} className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all duration-300 cursor-pointer">
                   Contact Us
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -84,6 +90,10 @@ function DesigningServicesWeOffer() {
           })}
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

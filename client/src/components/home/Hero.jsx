@@ -95,7 +95,7 @@ export default function Hero() {
 
         {/* Heading */}
         <div className="flex flex-col items-center justify-center  gap-4 mt-0 min-h-[120px] sm:min-h-[200px]  w-[13rem] sm:w-full">
-          <div className="flex flex-col w-full justify-center items-center gap-2 sm:gap-2">
+          <div className="flex flex-col w-full justify-center items-center gap-8 sm:gap-2">
             <h2
               className={`hidden sm:block text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
                 !headingFadeComplete
@@ -135,7 +135,7 @@ export default function Hero() {
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className={`text-lg md:text-4xl lg:text-5xl text-center justify-center leading-relaxed text-white font-extrabold ${bebas_neue.className}`}
+                  className={`text-2xl md:text-4xl lg:text-5xl text-center justify-center  text-white font-extrabold ${bebas_neue.className}`}
                 />
               </div>
             </h2>
@@ -157,7 +157,7 @@ export default function Hero() {
             </h2>
 
             <h2
-              className={`block sm:hidden text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
+              className={`block sm:hidden text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${bebas_neue.className} ${
                 isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ willChange: "transform, opacity" }}
@@ -166,7 +166,7 @@ export default function Hero() {
                 colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                 animationSpeed={3}
                 showBorder={false}
-                className={`text-xl md:text-5xl lg:text-5xl uppercase ${bebas_neue.className}`}
+                className={`text-2xl md:text-5xl lg:text-5xl uppercase ${bebas_neue.className}`}
               >
                 AI Agents That Redefine Possibility
               </GradientText>
@@ -230,13 +230,13 @@ export default function Hero() {
           ].map((item, index) => (
             <div
               key={index}
-              className="flex flex-1  flex-col justify-start items-start sm:flex-row sm:items-center gap-3 px-2 sm:px-6 py-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+              className="flex flex-1  flex-col justify-start items-start sm:flex-row sm:items-center gap-3 px-2 sm:px-6 py-2 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300"
               style={{
                 transitionDelay: `${250 + index * 100}ms`,
                 willChange: "transform, opacity",
               }}
             >
-              <div className="flex-shrink-0 w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                 <Image src={item.icon} alt={item.text1} height={24} width={24} />
               </div>
               <div className="text-white/90">

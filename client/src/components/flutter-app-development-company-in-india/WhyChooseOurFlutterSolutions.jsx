@@ -1,8 +1,14 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Code, Palette, Zap } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
+import ContactModal from '@/modals/ContactModal';
 
 function WhyChooseOurFlutterSolutions() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const features = [
     {
       icon: <Code className="w-8 h-8" />,
@@ -62,11 +68,16 @@ function WhyChooseOurFlutterSolutions() {
           <p className="text-gray-900 text-lg font-medium mb-6">
             Ready to Build an App That Scales Your Business? Get Your Free Flutter App Audit.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-3 cursor-pointer rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl uppercase tracking-wide">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-3 cursor-pointer rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl uppercase tracking-wide">
             Contact Us
           </button>
         </div>
       </div>
+
+      <ContactModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

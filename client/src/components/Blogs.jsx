@@ -103,10 +103,10 @@ function Blogs() {
 
         {/* View More Button */}
         <div className="text-center">
-          <button className="inline-flex items-center gap-2 bg-white text-blue-600 font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-xl hover:bg-blue-50 transition-all duration-300 border border-blue-200">
+          <Link href={'/blog'} className="inline-flex items-center gap-2 bg-white text-blue-600 font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-xl hover:bg-blue-50 transition-all duration-300 border border-blue-200">
             VIEW MORE ARTICLES
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

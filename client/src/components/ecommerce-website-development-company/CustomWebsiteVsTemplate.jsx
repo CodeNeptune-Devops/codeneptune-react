@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import { Check, X, AlertTriangle, Shield } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
 function CustomWebsiteVsTemplate() {
   const [activeTab, setActiveTab] = useState('grid');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   const handleTabChange = (tab) => {
     if (tab !== activeTab) {
@@ -170,11 +172,15 @@ function CustomWebsiteVsTemplate() {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 cursor-pointer rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 cursor-pointer rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
             READY TO GET STARTED?
           </button>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

@@ -1,8 +1,14 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Target, Lock, Settings , SplinePointer , CodeXml } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
+import ContactModal from '@/modals/ContactModal';
 
 function OurApproach() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const steps = [
     {
       icon: <Target className="w-8 h-8" />,
@@ -97,11 +103,15 @@ function OurApproach() {
           <p className="text-gray-900 text-xl font-semibold mb-6">
             Ready to bring your Android app idea to life?
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
             CONTACT US
           </button>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

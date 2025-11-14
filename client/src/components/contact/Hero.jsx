@@ -7,10 +7,12 @@ import TextareaInput from '../inputs/TextAreaInput';
 import { useContactForm } from '@/hooks/useContactForm';
 import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
+import ContactModal from '@/modals/ContactModal';
 
 function Hero() {
   const pathname = usePathname();
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -180,9 +182,7 @@ function Hero() {
               Whether you have an idea or need expert advice, we are here to help. Contact us and let's create something extraordinary!
             </p>
             <button
-              onClick={() =>
-                document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })
-              }
+              onClick={() => setIsModalOpen(true)}
               className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
             >
               TRANSFORM MY BUSINESS
@@ -297,6 +297,10 @@ function Hero() {
 
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

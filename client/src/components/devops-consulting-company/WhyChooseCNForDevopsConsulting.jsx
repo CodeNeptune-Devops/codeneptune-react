@@ -1,18 +1,24 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import SectionTitle from '../titles/SectionTitle'
+import ContactModal from '@/modals/ContactModal';
 
 function WhyChooseCNForDevopsConsulting() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className='w-full py-16 bg-black text-white'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Header Section */}
         <div className='text-center mb-16'>
 
-          <SectionTitle 
-          textColor='text-white'
-          descriptionColor='text-white'
-          title='Why Choose Code Neptune for DevOps Consulting'
-          description='Because you deserve more than just a setup. You deserve a growth focused solution from a trusted DevOps consulting company.'
+          <SectionTitle
+            textColor='text-white'
+            descriptionColor='text-white'
+            title='Why Choose Code Neptune for DevOps Consulting'
+            description='Because you deserve more than just a setup. You deserve a growth focused solution from a trusted DevOps consulting company.'
           />
         </div>
 
@@ -73,11 +79,15 @@ function WhyChooseCNForDevopsConsulting() {
 
         {/* CTA Button */}
         <div className='flex justify-center'>
-          <button className='px-6 py-3 cursor-pointer border-2 border-white rounded-full text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105'>
+          <button onClick={() => setIsModalOpen(true)} className='px-6 py-3 cursor-pointer border-2 border-white rounded-full text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105'>
             TALK TO OUR EXPERTS TODAY
           </button>
         </div>
       </div>
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

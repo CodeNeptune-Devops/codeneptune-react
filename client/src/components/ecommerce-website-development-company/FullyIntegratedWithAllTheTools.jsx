@@ -1,30 +1,35 @@
-import React from 'react'
-import SectionTitle from '../titles/SectionTitle'
+'use client'
+
+import React, { useState } from 'react'
 import top from '../../assets/e-commerce-development/top.webp';
 import bottom from '../../assets/e-commerce-development/bottom.webp';
 import Image from 'next/image';
+import ContactModal from '@/modals/ContactModal';
 
 function FullyIntegratedWithAllTheTools() {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <div className='w-full pt-48 pb-60'>
             <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-5 relative'>
 
 
                 <div className='absolute -top-40 left-auto right-auto'>
-                    <Image 
-                    src={top}
-                    alt='Top'
-                    height={200}
-                    width={600}
+                    <Image
+                        src={top}
+                        alt='Top'
+                        height={200}
+                        width={600}
                     />
                 </div>
 
-                 <div className='absolute -bottom-48 left-auto right-auto'>
-                    <Image 
-                    src={bottom}
-                    alt='Bottom'
-                    height={200}
-                    width={600}
+                <div className='absolute -bottom-48 left-auto right-auto z-10'>
+                    <Image
+                        src={bottom}
+                        alt='Bottom'
+                        height={200}
+                        width={600}
                     />
                 </div>
 
@@ -42,11 +47,15 @@ function FullyIntegratedWithAllTheTools() {
                             We connect your online store with trusted tools for payments, shipping, messaging, and <br className='hidden md:block' /> more — based on what your business needs.
                         </p>
                     </div>
-                    <button className='px-6 py-3 bg-[#27b39b] text-white uppercase font-medium rounded-full'>
+                    <button onClick={() => setIsModalOpen(true)} className='px-6 py-3 z-20 cursor-pointer bg-[#27b39b] text-white uppercase font-medium rounded-full'>
                         Explore integrations
                     </button>
                 </div>
             </div>
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     )
 }

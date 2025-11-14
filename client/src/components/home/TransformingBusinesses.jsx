@@ -1,11 +1,15 @@
-import MagicBento from '@/animatedComponents/MagicBento'
+'use client'
+
 import SpotlightCard from '@/animatedComponents/SpotLightCard';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import ContactModal from '@/modals/ContactModal';
 import Image from 'next/image';
-import React from 'react'
+import React, { useState } from 'react'
 import { SiCodemagic } from 'react-icons/si';
 
 function TransformingBusinesses() {
+
+    const [isModalOpen,setIsModalOpen] = useState(false);
 
     const data = [
         {
@@ -93,7 +97,9 @@ function TransformingBusinesses() {
 
                 <div className='w-full flex justify-center items-center '>
 
-                    <button className="flex flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+                    <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
                         <ShinyText
                             text="Let’s Collaborate"
                             disabled={false}
@@ -107,6 +113,11 @@ function TransformingBusinesses() {
 
 
             </div>
+
+            <ContactModal 
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            />
         </div>
     )
 }

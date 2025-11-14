@@ -22,6 +22,7 @@ function Header() {
     const dropdownRef = useRef(null);
     const mobileMenuRef = useRef(null);
 
+
     const navLinks = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
@@ -81,6 +82,11 @@ function Header() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const closeDropdown = () => {
+        setIsServicesOpen(false);
+        setIsClickedOpen(false);
+    };
 
     // Determine if we should use "scrolled" color styles (white bg, black text)
     const shouldUseScrolledColors = isUIUXPage || isScrolled;
@@ -147,7 +153,7 @@ function Header() {
                                             <p className="text-gray-600 text-sm mb-4">
                                                 Our aim is to make products that bring people closer through digital.
                                             </p>
-                                            <button className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
+                                            <button onClick={() => setIsModalOpen(true)} className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
                                                 Work with us
                                                 <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-1 transition-transform" />
                                             </button>
@@ -161,10 +167,10 @@ function Header() {
                                             <p className="text-gray-600 text-sm mb-4">
                                                 Serving clients in India, UK, USA
                                             </p>
-                                            <button className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
+                                            <Link onClick={closeDropdown} href={'#locations'} className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all group cursor-pointer">
                                                 View Locations
                                                 <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-1 transition-transform" />
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
 
@@ -178,9 +184,9 @@ function Header() {
                                                 <ul className="space-y-2">
                                                     {appDevelopment.map((item, index) => (
                                                         <li key={index}>
-                                                            <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                            <Link onClick={closeDropdown} href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -192,9 +198,9 @@ function Header() {
                                                 <ul className="space-y-2">
                                                     {creativeCloud.map((item, index) => (
                                                         <li key={index}>
-                                                            <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                            <Link onClick={closeDropdown} href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
                                                                 {item.name}
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -207,9 +213,9 @@ function Header() {
                                             <ul className="space-y-2">
                                                 {webDevelopment.map((item, index) => (
                                                     <li key={index}>
-                                                        <a href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
+                                                        <Link onClick={closeDropdown} href={item.href} className="text-gray-700 text-sm hover:text-blue-600 hover:translate-x-1 inline-block transition-all">
                                                             {item.name}
-                                                        </a>
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -243,7 +249,7 @@ function Header() {
                                         </div>
 
                                         {/* CTA Button */}
-                                        <button className="bg-white text-purple-600 font-semibold px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:gap-3 transition-all hover:shadow-lg group mx-auto cursor-pointer">
+                                        <button onClick={() => setIsModalOpen(true)} className="bg-white text-purple-600 font-semibold px-6 py-2 rounded-full flex items-center justify-center gap-2 hover:gap-3 transition-all hover:shadow-lg group mx-auto cursor-pointer">
                                             Connect with us
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
@@ -260,10 +266,10 @@ function Header() {
                     <Link href='/contact' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Contact Us</Link>
                 </nav>
 
-                <ContactButton 
-                isScrolled={shouldUseScrolledColors} 
-                isModalOpen={isModalOpen}
-                setIsModalOpen={setIsModalOpen}
+                <ContactButton
+                    isScrolled={shouldUseScrolledColors}
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
                 />
 
                 {/* Mobile Hamburger Menu */}
@@ -304,9 +310,9 @@ function Header() {
                 creativeCloud={creativeCloud}
             />
 
-            <ContactModal 
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
             />
         </header>
     )

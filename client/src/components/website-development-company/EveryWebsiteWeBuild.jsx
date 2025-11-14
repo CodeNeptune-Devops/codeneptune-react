@@ -1,6 +1,12 @@
-import React from 'react';
+'use client'
+
+import ContactModal from '@/modals/ContactModal';
+import React, { useState } from 'react';
 
 function EveryWebsiteWeBuild() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const features = [
     { name: "Mobile-Friendly Design", position: "right" },
     { name: "Custom Homepage & Inner Pages", position: "right" },
@@ -39,7 +45,7 @@ function EveryWebsiteWeBuild() {
 
               {/* CTA Button */}
               <div className='px-8'>
-                <button className="bg-white  text-blue-600 font-semibold px-6 py-3 rounded-full text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-lg transform hover:scale-105 cursor-pointer">
+                <button onClick={() => setIsModalOpen(true)} className="bg-white  text-blue-600 font-semibold px-6 py-3 rounded-full text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-lg transform hover:scale-105 cursor-pointer">
                   Start Your Project
                 </button>
               </div>
@@ -60,6 +66,10 @@ function EveryWebsiteWeBuild() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-700 rounded-full blur-3xl opacity-30"></div>
         </div>
       </div>
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

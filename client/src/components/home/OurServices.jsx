@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight, Bot, BrainCircuit, Globe, Smartphone, Layers, Zap, BarChart3, Code2, Cloud } from 'lucide-react';
+import ContactModal from '@/modals/ContactModal';
 
 const dataSet = [
     {
@@ -54,8 +55,7 @@ const dataSet = [
 function OurServices({ data = dataSet }) {
     const containerRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
-
-
+    const [isModalOpen,setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -102,7 +102,9 @@ function OurServices({ data = dataSet }) {
                                 <p className="text-sm sm:text-base text-gray-300 mb-6 leading-relaxed">
                                     We merge artificial intelligence, full-stack development, and automation to build transformative digital experiences that redefine how businesses innovate and scale.
                                 </p>
-                                <button className="w-full sm:w-auto px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer text-sm sm:text-base font-medium">
+                                <button 
+                                onClick={() => setIsModalOpen(true)}
+                                className="w-full sm:w-auto px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer text-sm sm:text-base font-medium">
                                     Innovate with us
                                 </button>
                             </div>
@@ -148,6 +150,10 @@ function OurServices({ data = dataSet }) {
                     </div>
                 </div>
             </div>
+            <ContactModal 
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

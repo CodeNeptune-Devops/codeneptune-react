@@ -23,7 +23,7 @@ function Sidebar({
             {/* Fixed Header with Close Button */}
             <div className={`flex justify-between items-center px-4 py-5 border-b flex-shrink-0 border-gray-200`}>
 
-                 <Link href='/'>
+                 <Link  onClick={() => setIsMobileMenuOpen(false)} href='/'>
                     <Image
                         className={`h-auto transition-all duration-300 w-20 lg:w-28`}
                         src={`/cn-logo.svg`}
@@ -57,8 +57,8 @@ function Sidebar({
 
             {/* Scrollable Navigation Links */}
             <nav className='flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
-                <Link href='/' className='hover:text-blue-500 py-2 block'>Home</Link>
-                <Link href='/about' className='hover:text-blue-500 py-2 block'>About</Link>
+                <Link  onClick={() => setIsMobileMenuOpen(false)} href='/' className='hover:text-blue-500 py-2 block'>Home</Link>
+                <Link  onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>About</Link>
 
                 {/* Mobile Services Dropdown */}
                 <div className='flex flex-col'>
@@ -85,7 +85,7 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>App Development</h4>
                             {appDevelopment.map((service) => (
-                                <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
                                     {service.name}
                                 </Link>
                             ))}
@@ -93,7 +93,7 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Web Development</h4>
                             {webDevelopment.map((service) => (
-                                <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
                                     {service.name}
                                 </Link>
                             ))}
@@ -101,7 +101,7 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Creative & Cloud</h4>
                             {creativeCloud.map((service) => (
-                                <Link key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
                                     {service.name}
                                 </Link>
                             ))}
@@ -110,8 +110,8 @@ function Sidebar({
                 </div>
 
                 {/* <Link href='/about' className='hover:text-blue-500 py-2 block'>Solutions</Link> */}
-                <Link href='/about' className='hover:text-blue-500 py-2 block'>Blog</Link>
-                <Link href='/about' className='hover:text-blue-500 py-2 block'>Contact Us</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>Blog</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>Contact Us</Link>
             </nav>
 
             {/* Fixed Footer with Contact Button */}

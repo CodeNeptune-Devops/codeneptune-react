@@ -59,7 +59,7 @@ function BusinessTransformation() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-blue-500 mb-4 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300">
                       {feature.title}
                     </h3>
 

@@ -1,6 +1,12 @@
-import React from 'react';
+'use client'
+
+import ContactModal from '@/modals/ContactModal';
+import React, { useState } from 'react';
 
 function Hero() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen  flex items-center justify-center overflow-hidden px-4">
       <style>
@@ -177,11 +183,15 @@ function Hero() {
           </p>
           
           {/* CTA Button */}
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 cursor-pointer rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 cursor-pointer rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
             BOOK A FREE DESIGN CONSULTATION
           </button>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

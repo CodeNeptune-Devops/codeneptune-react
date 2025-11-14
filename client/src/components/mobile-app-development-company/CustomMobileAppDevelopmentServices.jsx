@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { CheckCheck } from 'lucide-react';
 import ShinyText from '@/animatedTexts/ShinyText/ShinyText';
+import ContactModal from '@/modals/ContactModal';
 
 function CustomMobileAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
+    const [isModalOpen,setIsModalOpen] = useState(false);
 
     const services = [
         {
@@ -188,7 +190,7 @@ function CustomMobileAppDevelopmentServices() {
                                     {services[activeService].additionalText}
                                 </p>
 
-                                <button className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+                                <button onClick={() => setIsModalOpen(true)} className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
                                     <ShinyText
                                         text="Lets Build Together"
                                         disabled={false}
@@ -201,6 +203,10 @@ function CustomMobileAppDevelopmentServices() {
                     </div>
                 </div>
             </div>
+            <ContactModal 
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }
