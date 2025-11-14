@@ -110,8 +110,8 @@ function Sidebar({
                 </div>
 
                 {/* <Link href='/about' className='hover:text-blue-500 py-2 block'>Solutions</Link> */}
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>Blog</Link>
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>Contact Us</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/blog' className='hover:text-blue-500 py-2 block'>Blog</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/contact' className='hover:text-blue-500 py-2 block'>Contact Us</Link>
             </nav>
 
             {/* Fixed Footer with Contact Button */}

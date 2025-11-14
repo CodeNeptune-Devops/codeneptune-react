@@ -9,6 +9,7 @@ import {
   IconRouteAltLeft,
   IconTerminal2,
 } from "@tabler/icons-react";
+import { Cpu,ChartLine } from "lucide-react";
 
 export function FeaturesSectionWithHoverEffects({ data }) {
   const intialFeatures = [
@@ -47,6 +48,18 @@ export function FeaturesSectionWithHoverEffects({ data }) {
       description:
         "We offer post-launch support, regular updates, and performance monitoring to keep your app running smoothly.",
       icon: <IconHelp />,
+    },
+    {
+      title: "Integration with Modern Technologies",
+      description:
+        "We integrate advanced technologies such as cloud services, analytics, automation tools, and third-party APIs to enhance your app’s functionality and create a smarter digital experience.",
+      icon: <Cpu />,
+    },
+    {
+      title: "Proven Track Record of Delivering Results",
+      description:
+        "Our experience across multiple industries allows us to build solutions that deliver measurable results. We focus on quality, transparency, and reliable delivery that helps your business grow with confidence.",
+      icon: <ChartLine />,
     },
   ];
 

@@ -1,21 +1,34 @@
-'use client'
-
 import ASmallTeamWithABigFocus from '@/components/about/ASmallTeamWithABigFocus'
 import MeetTheTeam from '@/components/about/MeetTheTeam'
 import OurMissionVisionTeam from '@/components/about/OurMissionVisionTeam'
 import WhatDrivesUs from '@/components/about/WhatDrivesUs'
 import WhatWeBuild from '@/components/about/WhatWeBuild'
 import WhyClientChooseUs from '@/components/about/WhyClientChooseUs'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import Faqs from '@/components/Faqs'
 import ContactForm from '@/components/forms/ContactForm'
 import Hero from '@/components/Hero'
 import Location from '@/components/Location'
 import ContactModal from '@/modals/ContactModal'
-import React, { useState } from 'react'
+import React from 'react'
 
-function page() {
+// SERVER METADATA → REQUIRED FOR SITELINKS
+export const metadata = {
+  title: "About Us | Code Neptune",
+  description:
+    "Learn about Code Neptune, a leading web and mobile app development company in Chennai delivering innovative digital solutions, UI UX design, and scalable tech products.",
+  alternates: {
+    canonical: "https://www.codeneptune.com/about",
+  },
+};
 
-  const [isModalOpen,setIsModalOpen] = useState(false);
+// PAGE MUST BE A SERVER COMPONENT
+export default function AboutPage() {
+  return <AboutContent />;
+}
+
+// MOVE CLIENT LOGIC TO A CHILD CLIENT COMPONENT
+function AboutContent() {
 
   const staticfaqs = [
     {
@@ -92,30 +105,36 @@ function page() {
     },
   ];
 
-
   return (
     <div>
-      <Hero
-        text1='Websites That Work, Built'
-        text2='by People Who Care'
-        description='We’re Code Neptune. A team of thinkers, designers, and developers who believe great websites don’t need to be complicated or expensive. We keep things simple, personal, and results-driven.'
-        buttonText='Get A Free Quote'
+
+      {/* Breadcrumb JSON-LD for sitelinks */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.codeneptune.com" },
+          { name: "About", url: "https://www.codeneptune.com/about" },
+        ]}
       />
+
+      <Hero
+        text1="Websites That Work, Built"
+        text2="by People Who Care"
+        description="We’re Code Neptune. A team of thinkers, designers, and developers who believe great websites don’t need to be complicated or expensive. We keep things simple, personal, and results-driven."
+        buttonText="Get A Free Quote"
+      />
+
       <OurMissionVisionTeam />
-      {/* <MeetTheTeam /> */}
       <ASmallTeamWithABigFocus />
       <WhatDrivesUs />
-      <WhatWeBuild isOpen={() => setIsModalOpen(true)}/>
+      <WhatWeBuild />
       <WhyClientChooseUs />
+
       <Faqs faqs={staticfaqs} />
+
       <ContactForm />
       <Location />
-      <ContactModal 
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      />
-    </div>
-  )
-}
 
-export default page
+
+    </div>
+  );
+}

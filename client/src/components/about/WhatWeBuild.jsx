@@ -1,8 +1,14 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { Briefcase, ShoppingCart, FileText, Zap, Code } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
+import ContactModal from '@/modals/ContactModal';
 
-function WhatWeBuild({isOpen}) {
+function WhatWeBuild() {
+
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
   const reasons = [
     {
       icon: Briefcase,
@@ -111,11 +117,15 @@ function WhatWeBuild({isOpen}) {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button onClick={isOpen} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 cursor-pointer rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+          <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 cursor-pointer rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
             Get a Free Quote →
           </button>
         </div>
       </div>
+      <ContactModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

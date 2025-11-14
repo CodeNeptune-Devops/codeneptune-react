@@ -211,10 +211,13 @@ function page() {
                 <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
                     Our Services
                 </p>
-                <SectionTitle
+                <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
+                    <SectionTitle
                     title='Flutter App Development Across Industries'
                     description='At Code Neptune, our Flutter expertise spans multiple industries, delivering customized solutions that address real business challenges and deliver measurable impact.'
                 />
+                </div>
+                
                 <FeaturesSectionWithHoverEffects data={data} />
             </div>
             <OurProvenDevelopmentProcess

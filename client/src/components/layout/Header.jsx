@@ -72,16 +72,21 @@ function Header() {
 
     // Handle scroll detection
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            setIsScrolled(scrollTop > 50);
-        };
+    const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        setIsScrolled(scrollTop > 50);
+    };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    window.addEventListener('scroll', handleScroll);
+
+    // 🔥 FIX: Run once on mount (for refresh mid-scroll)
+    handleScroll();
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, []);
+
 
     const closeDropdown = () => {
         setIsServicesOpen(false);
@@ -262,7 +267,7 @@ function Header() {
                     </div>
 
                     {/* <Link href='/about' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Solutions</Link> */}
-                    <Link href='https://www.codeneptune.com/blog/' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
+                    <Link href='/blog' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Blog</Link>
                     <Link href='/contact' className='hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent'>Contact Us</Link>
                 </nav>
 
