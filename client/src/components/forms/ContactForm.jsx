@@ -7,6 +7,9 @@ import { FaRegStar } from "react-icons/fa";
 import { useContactForm } from '@/hooks/useContactForm';
 import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { Bebas_Neue } from 'next/font/google';
+
+const bebas_neue = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 
 export default function ContactForm() {
     const pathname = usePathname();
@@ -296,7 +299,7 @@ export default function ContactForm() {
 
                     {/* STEPS */}
                     <div className='flex flex-col sm:flex-row w-full bg-black text-white px-4 sm:px-6 gap-3'>
-                        <div className='flex flex-col w-full sm:w-[60%] gap-7 py-6'>
+                        <div className='flex flex-col w-full sm:w-[70%] gap-7 py-6'>
                             {aboutUs.map((item, index) => (
                                 <div key={index} className='flex gap-3'>
                                     <p className='text-4xl md:text-5xl font-medium text-[#0072FF]'>0{index + 1}</p>
@@ -308,10 +311,10 @@ export default function ContactForm() {
                             ))}
                         </div>
 
-                        <div className='flex w-full sm:w-[40%] justify-end py-4'>
-                            <div className='flex flex-col text-[#0072FF] gap-1 ps-5'>
+                        <div className='flex w-full sm:w-[30%] justify-start py-4'>
+                            <div className={`flex flex-col text-[#0072FF] gap-1 ps-5 ${bebas_neue.className}`}>
                                 <FaRegStar size={45} />
-                                <h2 className='text-5xl font-extrabold uppercase leading-tight'>
+                                <h2 className='text-5xl font-extrabold uppercase '>
                                     We<br />keep<br />things<br />simple
                                 </h2>
                             </div>

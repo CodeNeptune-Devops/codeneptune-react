@@ -77,7 +77,7 @@ export default function Hero({
       </div>
 
       {/* Foreground content */}
-      <div className="relative z-20 max-w-7xl mx-auto w-full flex flex-col items-center gap-3 px-2 py-12">
+      <div className="relative z-20 max-w-7xl mx-auto w-full flex flex-col items-center gap-8 md:gap-4 px-2 py-12">
         {/* Badge */}
         <div
           className={`transition-all duration-700 ease-out flex justify-center items-center w-full ${
@@ -85,7 +85,7 @@ export default function Hero({
           }`}
           style={{ willChange: "transform, opacity" }}
         >
-          <button className="flex flex-row justify-center items-center gap-1 sm:gap-2 px-0 sm:px-6 py-3 rounded-full sm:border sm:border-white/20 sm:bg-white/5 sm:backdrop-blur-sm hover:bg-white/10 transition-colors">
+          <button className="flex flex-row justify-center items-center gap-1 sm:gap-2 px-0 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
             <Image
               src="/home/hero-icon-1.svg"
               alt="icon"
@@ -141,7 +141,7 @@ export default function Hero({
                   delay={150}
                   animateBy="words"
                   direction="top"
-                  className={`text-2xl md:text-4xl lg:text-5xl text-center justify-center  text-white font-extrabold ${bebas_neue.className}`}
+                  className={`text-3xl md:text-4xl lg:text-5xl text-center justify-center  text-white font-extrabold ${bebas_neue.className}`}
                 />
               </div>
             </h2>
@@ -163,7 +163,7 @@ export default function Hero({
             </h2>
 
             <h2
-              className={`block sm:hidden text-2xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${bebas_neue.className} ${
+              className={`block sm:hidden text-3xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${bebas_neue.className} ${
                 isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ willChange: "transform, opacity" }}

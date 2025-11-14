@@ -1,4 +1,5 @@
 import Blogs from '@/components/Blogs'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import Faqs from '@/components/Faqs'
 import FeaturedCaseStudy from '@/components/FeaturedCaseStudy'
 import ContactForm from '@/components/forms/ContactForm'
@@ -19,98 +20,121 @@ import YourReliableWebDevelopmentPartner from '@/components/website-development-
 import WorkWithUs from '@/components/WorkWithUs'
 import React from 'react'
 
-function page() {
+// -------------------------------
+// SEO Metadata + Canonical + Sitelinks
+// -------------------------------
+export const metadata = {
+  title: "Website Development Company | Custom Business Websites ",
+  description:
+    "We build fast, responsive, and SEO-friendly websites tailored for businesses, startups, eCommerce, and enterprises. Code Neptune delivers high-converting, fully customized websites.",
+  alternates: {
+    canonical: "https://www.codeneptune.com/website-development-company",
+  },
+};
+
+function Page() {
 
   const websiteFaqs = [
     {
       id: 1,
       question: "I already use social media. Do I still need a website?",
       answer:
-        "Yes. A website gives your business a permanent online presence. Unlike social media, you have full control, and it helps you look more professional and trustworthy.",
+        "Yes. A website gives your business a permanent online presence and makes you look trustworthy and professional.",
     },
     {
       id: 2,
       question: "What if I want changes after the website goes live?",
       answer:
-        "We make websites that are easy to update. You can make changes yourself, or you can ask us for support anytime you need updates or improvements.",
+        "We build flexible websites. You can update them or we can handle updates for you anytime.",
     },
     {
       id: 3,
-      question: "How much does it cost to develop a website for my business?",
+      question: "How much does it cost to build a website?",
       answer:
-        "The cost depends on the features and design you need. At Code Neptune, we offer affordable website development services for startups, small businesses, and growing companies.",
+        "Cost depends on features and complexity. We provide affordable plans for small businesses and startups.",
     },
     {
       id: 4,
-      question: "Can you create a website that looks different from others?",
+      question: "Can you design a unique website for my business?",
       answer:
-        "Yes. We offer custom web development. That means we design your website based on your brand, your ideas, and what makes your business unique.",
+        "Yes, we offer custom website development tailored to your brand identity and goals.",
     },
     {
       id: 5,
-      question: "Will my website work on phones, tablets, and desktops?",
+      question: "Will my website be mobile-friendly?",
       answer:
-        "Yes. Every website we build is fully responsive. That means your site will look and work great on all screen sizes and devices.",
+        "Yes. Every website we build works perfectly on mobiles, tablets, and desktops.",
     },
     {
       id: 6,
-      question: "Will my website be ready for search engines like Google?",
+      question: "Is the website SEO-friendly?",
       answer:
-        "Yes. All websites we build are SEO friendly. We set up the right structure, and speed to help your site show up on search engines.",
+        "Yes. We follow SEO best practices to help your website rank better on Google.",
     },
     {
       id: 7,
-      question: "I don’t know anything about websites. Can you help me?",
+      question: "I don’t know anything about websites. Can you help?",
       answer:
-        "Yes. We guide you through the full process. You do not need any technical skills. We handle the design, development, setup, and support.",
+        "Of course. We handle everything from design to development and ongoing support.",
     },
     {
       id: 8,
-      question: "How long will it take to build my website?",
+      question: "How long does it take to build a website?",
       answer:
-        "A standard business website usually takes 2 to 3 weeks. If you need more features, it may take a little more time. We always deliver on time and keep you updated.",
+        "A standard business website takes 2–3 weeks. More advanced websites may take longer.",
     },
   ];
 
   return (
     <div>
-      <Hero />
-      <WhyYourWebsite />
-      <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
-        {/* <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
-          More Than Apps, We Build Success
-        </p> */}
-        <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
 
+      {/* Breadcrumb Schema for Google Sitelinks */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.codeneptune.com" },
+          { name: "Website Development", url: "https://www.codeneptune.com/website-development-company" },
+        ]}
+      />
+
+      <Hero />
+
+      <WhyYourWebsite />
+
+      <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
+        <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
           <SectionTitle
             title='Custom Website Design & Development Services'
             description='From business websites to online stores, we build fast, responsive, and SEO-ready websites tailored to your goals.'
           />
-
         </div>
 
         <FeaturesSectionWithHoverEffects />
       </div>
+
       <OurProvenDevelopmentProcess
         title='Our Proven 5-Step Development Process'
-        description='Building your dream website is faster and easier than you might think. Our proven 5-step process takes your site from concept to launch seamlessly, without the stress.'
+        description='Our 5-step web development process takes your website from idea to launch—smoothly and stress-free.'
       />
+
       <YourReliableWebDevelopmentPartner />
       <WebsiteSolutionsForEveryNeed />
       <AffordablePlansForEveryBusiness />
       <SkilledWebDevelopmentTeam />
       <EveryWebsiteWeBuild />
       <WorkWithUs />
+
       <IndustriesWeServe padding='pb-16' />
       <TechStack />
       <HowWeWorkOurEcommerceDevelopment />
       <FeaturedCaseStudy />
-      <Faqs faqs={websiteFaqs}/>
+
+      <Faqs faqs={websiteFaqs} />
+
       <Blogs />
       <ContactForm />
       <Location />
-    </div >
+    </div>
   )
 }
 
-export default page
+export default Page;

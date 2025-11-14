@@ -27,8 +27,21 @@ import Blogs from '@/components/Blogs'
 import ContactForm from '@/components/forms/ContactForm'
 import Location from '@/components/Location'
 import Hero from '@/components/Hero'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 
-function page() {
+// -------------------------------
+// SEO Metadata + Canonical + Sitelinks
+// -------------------------------
+export const metadata = {
+    title: "Flutter App Development Company in India ",
+    description:
+        "We build high-performance, cross-platform Flutter apps for startups and enterprises. Code Neptune delivers native-like performance across iOS, Android, Web, and Desktop using a single codebase.",
+    alternates: {
+        canonical: "https://www.codeneptune.com/flutter-app-development-company-in-india",
+    },
+};
+
+function Page() {
 
     const data = [
         {
@@ -40,43 +53,43 @@ function page() {
         {
             title: "Healthcare",
             description:
-                "Our HIPAA compliant solutions include patient management systems, virtual consultations, and wearable integrations, enhancing care and accessibility.",
+                "HIPAA compliant patient management systems, virtual consultations, and wearable integrations.",
             icon: <HeartPulse />,
         },
         {
             title: "Education",
             description:
-                "We create mobile-first learning platforms, interactive eLearning apps, and assessment tools for engaging, effective digital education.",
+                "Mobile-first learning platforms, interactive eLearning apps, and assessment tools.",
             icon: <School />,
         },
         {
             title: "Retail & eCommerce",
             description:
-                "Our apps offer real-time inventory, secure payments, personalized shopping, and loyalty programs to boost engagement and sales.",
+                "Real-time inventory, secure payments, personalized shopping & loyalty programs.",
             icon: <ShoppingBag />,
         },
         {
             title: "Logistics & Transportation",
             description:
-                "We deliver GPS-enabled fleet tracking, route optimization, and automated dispatch systems for faster, cost-efficient logistics.",
+                "GPS-enabled fleet tracking, route optimization, and automated dispatch systems.",
             icon: <Truck />,
         },
         {
             title: "Entertainment",
             description:
-                "Our Flutter-based apps include OTT platforms, music players, and social video tools, optimized for engagement and scalability.",
+                "OTT platforms, music players, and social video apps built using Flutter.",
             icon: <Clapperboard />,
         },
         {
             title: "Travel & Hospitality",
             description:
-                "We build booking platforms, itinerary planners, and digital check-in apps for seamless travel experiences.",
+                "Booking apps, itinerary planners, and digital check-in apps.",
             icon: <Plane />,
         },
         {
             title: "Government & Public Services",
             description:
-                "We create grievance systems, digital identity solutions, and utility management tools for efficient service delivery.",
+                "Grievance systems, digital identity apps & utility management tools.",
             icon: <Landmark />,
         },
     ];
@@ -87,7 +100,7 @@ function page() {
             icon: '/proven-development-process/e-1.svg',
             title: "Discovery & User Journey",
             description:
-                "We start with workshops, analyze goals, and define personas to design a strategic user journey aligned with business objectives.",
+                "Workshops + persona development to map user journeys and goals.",
             bgColor: "bg-slate-700",
         },
         {
@@ -95,7 +108,7 @@ function page() {
             icon: '/proven-development-process/e-2.svg',
             title: "Design & Prototyping",
             description:
-                "Our UI/UX team creates a custom design system and interactive prototypes to ensure smooth navigation and high user engagement.",
+                "Custom UI system + prototypes to validate experience & navigation.",
             bgColor: "bg-indigo-500",
         },
         {
@@ -103,7 +116,7 @@ function page() {
             icon: '/proven-development-process/f-1.svg',
             title: "Agile Development",
             description:
-                "Using Flutter’s single codebase, we build cross-platform apps quickly, maintaining top performance, security, and continuous feedback throughout development.",
+                "Single codebase Flutter development with performance and security.",
             bgColor: "bg-emerald-500",
         },
         {
@@ -111,7 +124,7 @@ function page() {
             icon: '/proven-development-process/f-2.svg',
             title: "Integration & Features",
             description:
-                "We integrate APIs, payments, chat, and AI features to deliver a future-ready app with real-time updates and smart functionality.",
+                "API integrations, payments, chat, real-time updates & AI features.",
             bgColor: "bg-amber-400",
         },
         {
@@ -119,7 +132,7 @@ function page() {
             icon: '/proven-development-process/f-3.svg',
             title: "Launch & Optimization",
             description:
-                "From app store submission to post-launch monitoring, we provide updates, feature enhancements, and ongoing support for continuous growth.",
+                "App Store submission + ongoing monitoring + updates & enhancements.",
             bgColor: "bg-neutral-800",
         },
     ];
@@ -127,79 +140,78 @@ function page() {
     const flutterFaqs = [
         {
             id: 1,
-            question: "What is Flutter app development and why is it popular?",
+            question: "What is Flutter and why is it popular?",
             answer:
-                "Flutter is Google’s UI framework that allows developers to build high-performance apps for multiple platforms using a single codebase. It’s popular because it reduces development time, lowers costs, and delivers a native-like experience.",
+                "Flutter is Google’s cross-platform UI toolkit used to develop apps for iOS, Android, Web, and Desktop with a single codebase.",
         },
         {
             id: 2,
-            question:
-                "Which industries benefit the most from Flutter app development?",
+            question: "Which industries use Flutter?",
             answer:
-                "Industries like fintech, healthcare, education, e-commerce, logistics, entertainment, and travel leverage Flutter for scalable, engaging apps.",
+                "Fintech, healthcare, education, logistics, eCommerce, entertainment & more.",
         },
         {
             id: 3,
-            question: "How does Flutter app development benefit businesses?",
+            question: "How does Flutter benefit businesses?",
             answer:
-                "Flutter enables faster deployment, consistent design across platforms, and smooth performance. This makes it ideal for businesses aiming for quick market entry and better ROI.",
+                "Faster development, fewer bugs, lower cost, high performance & native UI feel.",
         },
         {
             id: 4,
-            question:
-                "Does Flutter support advanced features like AI or real-time data?",
+            question: "Can Flutter integrate AI & real-time systems?",
             answer:
-                "Absolutely. Flutter integrates with AI tools, chat systems, live tracking, payment gateways, and analytics, enabling feature-rich applications.",
+                "Yes — AI, chat, payments, maps, analytics, live tracking & more.",
         },
         {
             id: 5,
-            question: "How much does it cost to develop a Flutter app?",
+            question: "How much does Flutter development cost?",
             answer:
-                "The cost varies based on complexity, features, and integrations. At Code Neptune, we offer custom quotes to match your business goals and budget.",
+                "Cost depends on features and complexity. We offer custom pricing.",
         },
         {
             id: 6,
-            question:
-                "How does Code Neptune ensure great UI and UX in Flutter apps?",
+            question: "Does Code Neptune provide post-launch support?",
             answer:
-                "Our design-first approach focuses on interactive prototypes, user journey mapping, and responsive designs, ensuring every app looks stunning and performs flawlessly.",
+                "Yes — maintenance, monitoring, updates & feature scaling.",
         },
         {
             id: 7,
-            question: "How long does it take to build a Flutter app?",
+            question: "Is Flutter good for enterprise apps?",
             answer:
-                "A basic app can take 8 to 12 weeks, while more complex apps may require additional time. Our agile process ensures speed without sacrificing quality.",
+                "Yes — Flutter supports advanced architecture, security, and scaling.",
         },
         {
             id: 8,
-            question:
-                "Does Code Neptune provide post-launch Flutter app maintenance?",
+            question: "How long does it take to build a Flutter app?",
             answer:
-                "Yes. We offer end-to-end support, including bug fixes, performance monitoring, feature updates, and scalability planning.",
+                "Basic apps take 8–12 weeks; complex apps may take longer.",
         },
         {
             id: 9,
-            question: "Can Flutter be used for enterprise-grade applications?",
+            question: "Can I start my Flutter project with Code Neptune?",
             answer:
-                "Yes. Flutter supports advanced architectures and integrations, making it suitable for large-scale enterprise applications across finance, healthcare, retail, and more.",
-        },
-        {
-            id: 10,
-            question:
-                "How can I start my Flutter app development project with Code Neptune?",
-            answer:
-                "Simply book a free consultation with our experts. We’ll discuss your goals, share insights, and create a tailored roadmap for your app development journey.",
+                "Yes — book a free consultation with our Flutter experts.",
         },
     ];
 
     return (
         <div>
+
+            {/* Breadcrumb Schema for Google Sitelinks */}
+            <BreadcrumbSchema
+                items={[
+                    { name: "Home", url: "https://www.codeneptune.com" },
+                    { name: "Flutter App Development", url: "https://www.codeneptune.com/flutter-app-development-company-in-india" },
+                ]}
+            />
+
             <Hero
                 text1='Build High Quality,'
                 text2='Multi-Platform Apps with Flutter'
-                description='We are a leading Flutter app development company based in India, specializing in end to end Flutter solutions that combine exceptional UI and UX with measurable business impact. Our mission is clear: to deliver stunning apps that provide a native like experience on iOS, Android, web, and desktops.'
+                description='We are a leading Flutter app development company in India, specializing in end-to-end solutions that combine stunning UI, lightning performance, and measurable business results.'
                 buttonText='Start Your Project'
             />
+
             <WhyChooseOurFlutterSolutions />
             <DesignedForGrowthAndConversion />
             <OurFlutterAppDevelopmentServices />
@@ -207,34 +219,38 @@ function page() {
             <FlutterDevelopmentTechStack />
             <WorkWithUs />
             <FeaturedCaseStudy />
+
             <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
                 <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
                     Our Services
                 </p>
+
                 <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
                     <SectionTitle
-                    title='Flutter App Development Across Industries'
-                    description='At Code Neptune, our Flutter expertise spans multiple industries, delivering customized solutions that address real business challenges and deliver measurable impact.'
-                />
+                        title='Flutter App Development Across Industries'
+                        description='We deliver Flutter solutions tailored to different industries, solving real business problems with high-performance apps.'
+                    />
                 </div>
-                
+
                 <FeaturesSectionWithHoverEffects data={data} />
             </div>
+
             <OurProvenDevelopmentProcess
                 title='Our Flutter App Development Process'
-                description='We follow a design-led, agile methodology that ensures your Flutter app is not just functional but engaging, scalable, and business-ready from day one.'
+                description='A design-led, agile workflow that ensures your Flutter app is scalable, fast, and business-ready.'
                 data={stepsList}
                 padding='pb-16'
             />
+
             <Testimonials />
             <IndustriesWeServe padding='pb-16' />
             <TechStack />
-            <Faqs faqs={flutterFaqs}/>
+            <Faqs faqs={flutterFaqs} />
             <Blogs />
             <ContactForm />
             <Location />
         </div>
-    )
+    );
 }
 
-export default page
+export default Page;

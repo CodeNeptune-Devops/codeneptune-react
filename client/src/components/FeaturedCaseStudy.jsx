@@ -65,6 +65,7 @@ function FeaturedCaseStudy() {
       userServed: '500K+ Translations/month',
       industry: 'Language & Communication',
       bgImage: '/featured-case-study/bg-6.webp',
+      mobBgImg:'/featured-case-study/bg-6-mob.webp'
     },
     {
       logo: 'client-logo/logo-3.svg',
@@ -76,6 +77,7 @@ function FeaturedCaseStudy() {
       userServed: '10K+ Agency',
       industry: 'Staffing Agency',
       bgImage: '/featured-case-study/bg-7.webp',
+       mobBgImg:'/featured-case-study/bg-7-mob.webp'
     },
     {
       logo: 'client-logo/logo-4.svg',
@@ -87,6 +89,7 @@ function FeaturedCaseStudy() {
       userServed: '50K+ Downloads',
       industry: 'AI Based Personal Data Assistance',
       bgImage: '/featured-case-study/bg-3.webp',
+       mobBgImg:'/featured-case-study/bg-3-mob.webp'
     },
   ];
 
@@ -127,7 +130,7 @@ function FeaturedCaseStudy() {
               <div className="max-w-7xl mx-auto h-full">
                 <div
                   ref={cardsRef}
-                  className="flex gap-4 sm:gap-6 transition-transform duration-100 ease-out"
+                  className="hidden sm:flex gap-4 sm:gap-6 transition-transform duration-100 ease-out"
                   style={{
                     transform: `translateX(-${horizontalOffset}%)`,
                   }}
@@ -135,10 +138,81 @@ function FeaturedCaseStudy() {
                   {caseStudies.map((study, index) => (
                     <div
                       key={index}
-                      className="flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden"
+                      className=" flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden"
                       style={{
                         backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 100%), url('${study.bgImage}')`,
                         backgroundSize: '100% 100%',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat'
+                      }}
+                    >
+                      {/* Content directly on background */}
+                      <div className="absolute inset-0 p-4 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-start max-w-2xl overflow-y-auto">
+                        <div className='h-auto w-28 sm:w-36 md:w-40 mb-4 flex-shrink-0'>
+                          <Image
+                            src={study.logo}
+                            alt={study.title}
+                            height={200}
+                            width={200}
+                            className='w-full h-full'
+                          />
+                        </div>
+                        <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-3">{study.title}</h3>
+
+                        <p className="text-white/90 text-sm sm:text-base md:text-lg mb-5 sm:mb-6 leading-relaxed max-w-xl">
+                          {study.description}
+                        </p>
+
+                        {/* Project info */}
+                        <div className="grid grid-cols-2 gap-4 sm:gap-4 mb-5 sm:mb-6 max-w-xl">
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Industry</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.industry}</p>
+                          </div>
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Platform</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.platform}</p>
+                          </div>
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Regions Covered</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.location}</p>
+                          </div>
+                          <div>
+                            <p className="text-white/60 text-xs sm:text-sm mb-1">Users Served</p>
+                            <p className="text-white font-semibold text-xs sm:text-sm md:text-base">{study.userServed}</p>
+                          </div>
+                        </div>
+
+                        {/* Tech stack */}
+                        <div className="flex flex-wrap gap-2 sm:gap-2.5 max-w-xl">
+                          {study.tech.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="px-3 sm:px-3 md:px-4 py-1.5 sm:py-1.5 md:py-2 rounded-full border border-white/30 text-white text-xs sm:text-sm font-medium backdrop-blur-sm bg-white/10"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div
+                  ref={cardsRef}
+                  className="flex sm:hidden gap-4 sm:gap-6 transition-transform duration-100 ease-out"
+                  style={{
+                    transform: `translateX(-${horizontalOffset}%)`,
+                  }}
+                >
+                  {caseStudies.map((study, index) => (
+                    <div
+                      key={index}
+                      className=" flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden"
+                      style={{
+                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 100%), url('${study.bgImage}')`,
+                        backgroundSize: '90% 100%',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat'
                       }}

@@ -84,14 +84,14 @@ function OurImpactInNumbers() {
     return (
         <div className="bg-white text-black min-h-screen px-6 pt-16 md:px-12 lg:px-24" ref={sectionRef}>
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col justify-start items-center gap-2  mb-10">
+                <div className="flex flex-col justify-start items-start sm:items-center gap-2  mb-10">
                     <div>
                         <h3 className="text-2xl md:text-4xl lg:text-4xl font-medium leading-tight">
                             Our Impact in Numbers
                         </h3>
                     </div>
                     <div className="flex items-center">
-                        <p className="text-base md:text-lg text-gray-500 leading-relaxed">
+                        <p className="text-base md:text-lg text-start sm:text-center text-gray-500 leading-relaxed">
                             Delivering intelligent digital transformation through innovation, scalability, and measurable results.
                         </p>
                     </div>

@@ -10,21 +10,33 @@ import Image from 'next/image';
 
 const bebas = Bebas_Neue({
   subsets: ['latin'],
-  weight: '400', // Bebas Neue only has 400 weight
+  weight: '400',
 });
 
 function OurMissionVisionTeam() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
 
-  // 3D Card Component with full background image
-  const TeamCard3D = ({ firstName, lastName, title, imagePath , href }) => {
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // 3D Card Component with mobile optimizations
+  const TeamCard3D = ({ firstName, lastName, title, imagePath, href }) => {
     const cardRef = useRef(null);
     const [rotateX, setRotateX] = useState(0);
     const [rotateY, setRotateY] = useState(0);
 
     const handleMouseMove = (e) => {
-      if (!cardRef.current) return;
+      if (!cardRef.current || isMobile) return;
       const card = cardRef.current;
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -43,12 +55,36 @@ function OurMissionVisionTeam() {
       setRotateY(0);
     };
 
+    // Mobile touch handlers
+    const handleTouchMove = (e) => {
+      if (!cardRef.current || !isMobile) return;
+      const card = cardRef.current;
+      const rect = card.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateXValue = (y - centerY) / 15; // Less intense on mobile
+      const rotateYValue = (centerX - x) / 15;
+
+      setRotateX(rotateXValue);
+      setRotateY(rotateYValue);
+    };
+
+    const handleTouchEnd = () => {
+      setRotateX(0);
+      setRotateY(0);
+    };
+
     return (
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative w-64 h-80 md:w-80 md:h-96"
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full  sm:w-64 md:w-80 h-52 sm:h-80 md:h-96 mx-auto "
         style={{
           perspective: '1000px',
           transformStyle: 'preserve-3d'
@@ -69,34 +105,28 @@ function OurMissionVisionTeam() {
               backgroundSize: 'contain',
               backgroundPosition: 'center',
             }}
-          >
-            {/* Overlay gradient for better text readability */}
-
-          </div>
+          />
 
           {/* Card Content Overlay */}
-          <div className="relative w-full h-full flex flex-col items-start justify-end px-8 pb-5 z-10">
-
+          <div className="relative w-full h-full flex flex-col items-start justify-end px-4 sm:px-6 md:px-8 pb-4 sm:pb-5 z-10">
             {/* White Bottom Overlay */}
             <div
-              className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/60 rounded-b-2xl"
+              className="absolute bottom-0 left-0 right-0 h-40 sm:h-48 bg-gradient-to-b from-transparent via-black/30 to-black/60 rounded-b-2xl"
               style={{ transform: 'translateZ(20px)' }}
             />
 
-
-
-            <div className='flex justify-between items-end gap-3 w-full '>
+            <div className='flex justify-between items-end gap-2 sm:gap-3 w-full'>
               <div>
                 {/* Name */}
                 <div className={`flex flex-col justify-start items-start text-white ${bebas.className}`}>
                   <h3
-                    className={`text-2xl md:text-4xl font-bold text-start `}
+                    className="text-xl sm:text-2xl md:text-4xl font-bold text-start"
                     style={{ transform: 'translateZ(40px)' }}
                   >
                     {firstName}
                   </h3>
                   <h5
-                    className={`text-2xl md:text-4xl font-bold text-start `}
+                    className="text-xl sm:text-2xl md:text-4xl font-bold text-start"
                     style={{ transform: 'translateZ(40px)' }}
                   >
                     {lastName}
@@ -105,17 +135,16 @@ function OurMissionVisionTeam() {
 
                 {/* Title */}
                 <p
-                  className="text-base md:text-lg text-white/90 drop-shadow-md mb-1 text-start"
+                  className="text-sm sm:text-base md:text-lg text-white/90 drop-shadow-md mb-1 text-start"
                   style={{ transform: 'translateZ(30px)' }}
                 >
                   {title}
                 </p>
               </div>
-              <Link target='_blank' className='cursor-pointer z-[99999]' href={href}>
-                <ImLinkedin size={40}/>
+              <Link target='_blank' className='cursor-pointer z-[99999] touch-none' href={href}>
+                <ImLinkedin size={isMobile ? 30 : 40} className="text-white hover:text-blue-400 transition-colors"/>
               </Link>
             </div>
-
           </div>
 
           {/* 3D Shine Effect */}
@@ -138,14 +167,14 @@ function OurMissionVisionTeam() {
       lastName: 'Muthu',
       title: 'Co-Founder',
       imagePath: '/our-team/member-1.webp',
-      href:'https://www.linkedin.com/in/karthick09/'
+      href: 'https://www.linkedin.com/in/karthick09/'
     },
     {
       firstName: 'Vivek',
       lastName: 'Swaminathan',
       title: 'Co-Founder',
       imagePath: '/our-team/member-2.webp',
-      href:'https://www.linkedin.com/in/vivek-swaminathan-374891a6/'
+      href: 'https://www.linkedin.com/in/vivek-swaminathan-374891a6/'
     }
   ];
 
@@ -185,7 +214,7 @@ function OurMissionVisionTeam() {
       setScrollProgress(progress);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
@@ -215,14 +244,14 @@ function OurMissionVisionTeam() {
   return (
     <div ref={containerRef} className='w-full min-h-[400vh] relative bg-black text-white'>
       <div className='sticky top-0 h-screen flex items-center justify-center overflow-hidden'>
-        <div className='max-w-6xl mx-auto w-full px-8 relative'>
+        <div className='max-w-6xl mx-auto w-full px-4 sm:px-6 md:px-8 relative'>
           {sections.map((section, index) => {
             const { translateY, opacity, scale } = getSectionTransform(index);
 
             return (
               <div
                 key={index}
-                className='absolute inset-0 flex flex-col items-center justify-center text-center px-8'
+                className='absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8'
                 style={{
                   opacity,
                   transform: `translateY(${translateY}%) scale(${scale})`,
@@ -232,20 +261,22 @@ function OurMissionVisionTeam() {
               >
                 {/* Quote */}
                 <div
-                  className='mb-8 max-w-4xl'
+                  className='mb-4 sm:mb-6 md:mb-8 max-w-4xl px-2'
                   style={{
                     opacity: opacity * 0.8,
                     transform: `translateY(${translateY * 0.3}%)`
                   }}
                 >
-                  <p className='text-gray-400 text-base md:text-lg lg:text-xl leading-relaxed italic'>
+                  <p className='text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed italic'>
                     "{section.quote}"
                   </p>
                 </div>
 
                 {/* Title */}
                 <h2
-                  className={`text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold  mb-12 tracking-wider ${section.title === 'THE DUO' ? 'text-white' : 'text-blue-500'}`}
+                  className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 sm:mb-8 md:mb-12 tracking-wider ${
+                    section.title === 'THE DUO' ? 'text-white' : 'text-blue-500'
+                  }`}
                   style={{
                     textShadow: '0 4px 20px rgba(251, 191, 36, 0.3)'
                   }}
@@ -255,7 +286,9 @@ function OurMissionVisionTeam() {
 
                 {/* 3D Model or Cards */}
                 <div
-                  className={`relative mb-8 ${section.title === 'THE DUO' ? 'mt-0' : '-mt-28'}`}
+                  className={`relative mb-4 sm:mb-6 md:mb-8 w-full ${
+                    section.title === 'THE DUO' ? 'mt-0' : '-mt-12 sm:-mt-20 md:-mt-28'
+                  }`}
                   style={{
                     transform: section.type === 'emoji'
                       ? `translateY(${translateY * 0.2}%) rotateY(${scrollProgress * 180}deg) rotateX(${Math.sin(scrollProgress * Math.PI * 4) * 10}deg)`
@@ -266,13 +299,13 @@ function OurMissionVisionTeam() {
                 >
                   {section.type === 'emoji' ? (
                     <>
-                      <div className='text-7xl md:text-8xl lg:text-9xl filter drop-shadow-2xl'>
-                        <Image 
-                        src={section.model}
-                        alt={section.title}
-                        height={200}
-                        width={200}
-                        
+                      <div className='flex justify-center items-center'>
+                        <Image
+                          src={section.model}
+                          alt={section.title}
+                          height={isMobile ? 120 : 200}
+                          width={isMobile ? 120 : 200}
+                          className="filter drop-shadow-2xl"
                         />
                       </div>
 
@@ -280,15 +313,16 @@ function OurMissionVisionTeam() {
                       <div
                         className='absolute inset-0 blur-3xl opacity-40'
                         style={{
-                          background: `radial-gradient(circle, ${index === 0 ? '#fbbf24' : index === 1 ? '#60a5fa' : '#f472b6'
-                            } 0%, transparent 70%)`,
+                          background: `radial-gradient(circle, ${
+                            index === 0 ? '#fbbf24' : index === 1 ? '#60a5fa' : '#f472b6'
+                          } 0%, transparent 70%)`,
                           transform: 'translateZ(-50px)'
                         }}
                       />
                     </>
                   ) : (
                     /* Two Cards Side by Side */
-                    <div className='flex flex-wrap justify-center items-center gap-6 md:gap-8'>
+                    <div className='flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 w-full max-w-xs sm:max-w-none mx-auto'>
                       {teamMembers.map((member, idx) => (
                         <TeamCard3D
                           key={idx}
@@ -302,22 +336,6 @@ function OurMissionVisionTeam() {
                     </div>
                   )}
                 </div>
-
-                {/* Progress indicator */}
-                {/* <div className='flex gap-3 mt-8'>
-                  {sections.map((_, i) => (
-                    <div
-                      key={i}
-                      className='h-2 rounded-full transition-all duration-300'
-                      style={{
-                        width: Math.abs(i - scrollProgress * (sections.length - 1)) < 0.5 ? '48px' : '8px',
-                        backgroundColor: Math.abs(i - scrollProgress * (sections.length - 1)) < 0.5
-                          ? '#fbbf24'
-                          : '#4b5563'
-                      }}
-                    />
-                  ))}
-                </div> */}
               </div>
             );
           })}
@@ -325,8 +343,8 @@ function OurMissionVisionTeam() {
 
         {/* Scroll indicator */}
         {scrollProgress < 0.2 && (
-          <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 animate-bounce'>
-            <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <div className='absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 animate-bounce'>
+            <svg className='w-5 h-5 sm:w-6 sm:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
               <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
             </svg>
             <p className='text-xs mt-2'>Scroll</p>

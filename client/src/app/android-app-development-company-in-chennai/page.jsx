@@ -4,6 +4,7 @@ import MobileAsTheCoreOfModernBusiness from '@/components/android-app-developmen
 import OurAndroidDevelopmentCompany from '@/components/android-app-development-company-in-chennai/OurAndroidDevelopmentCompany'
 import OurApproach from '@/components/android-app-development-company-in-chennai/OurApproach'
 import Blogs from '@/components/Blogs'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import Faqs from '@/components/Faqs'
 import ContactForm from '@/components/forms/ContactForm'
 import Hero from '@/components/Hero'
@@ -12,84 +13,101 @@ import IndustriesWeServe from '@/components/IndustriesWeServe'
 import Location from '@/components/Location'
 import React from 'react'
 
-function page() {
+export const metadata = {
+  title: "Android App Development Company in Chennai ",
+  description:
+    "Code Neptune is a top Android app development company in Chennai offering custom Android app development, UI/UX design, performance optimization, and scalable mobile solutions.",
+  alternates: {
+    canonical: "https://www.codeneptune.com/android-app-development-company-in-chennai",
+  },
+};
+
+function Page() {
 
   const androidFaqs = [
     {
       id: 1,
       question: "What are Android app development services?",
       answer:
-        "Android app development services cover designing, building, and maintaining apps for the Android platform. They ensure your app works seamlessly across devices, meets business needs, and provides a great user experience.",
+        "Android app development includes designing, building, testing, and maintaining mobile apps for Android devices.",
     },
     {
       id: 2,
       question: "How do Android app development services ensure security?",
       answer:
-        "Developers follow best practices like encrypted APIs, secure coding, and regular updates to reduce vulnerabilities, keeping your Android app safe from breaches.",
+        "Industry-best practices, secure coding, encrypted APIs, and regular updates ensure high security.",
     },
     {
       id: 3,
-      question:
-        "Why should I choose custom Android app development over ready-made solutions?",
+      question: "Why choose custom Android app development?",
       answer:
-        "Custom Android app development is tailored to your business model, ensuring unique features, scalability, and long-term flexibility compared to off-the-shelf apps.",
+        "Custom apps provide unique features, scalability, and branding tailored to your business goals.",
     },
     {
       id: 4,
-      question:
-        "Can existing apps be upgraded through Android app development services?",
+      question: "Can existing apps be upgraded?",
       answer:
-        "Yes, existing apps can be redesigned, optimized, or migrated with new features and tech support through professional Android app development services.",
+        "Yes, we redesign, optimize, and migrate apps with advanced features and improvements.",
     },
     {
       id: 5,
-      question: "How long does it take to develop an Android app?",
+      question: "How long does Android app development take?",
       answer:
-        "The timeline depends on complexity, features, and integrations. A simple app may take weeks, while advanced Android app development services for enterprise apps may take a few months.",
+        "Simple apps take a few weeks, while enterprise-grade apps may take a few months.",
     },
     {
       id: 6,
-      question: "What is the cost of custom Android app development?",
+      question: "What is the cost of Android app development?",
       answer:
-        "The cost depends on features, complexity, and integrations. Custom Android app development may be higher initially but delivers better ROI over time.",
+        "Cost depends on the features, complexity, and integrations required.",
     },
     {
       id: 7,
-      question:
-        "What industries benefit most from custom Android app development?",
+      question: "Which industries benefit most?",
       answer:
-        "Custom Android app development works well across industries like e-commerce, healthcare, education, finance, and logistics, as apps are built to match specific business goals.",
+        "E-commerce, healthcare, finance, logistics, education, and more benefit from Android apps.",
     },
     {
       id: 8,
-      question: "Do you provide post-launch support for Android apps?",
+      question: "Do you provide post-launch support?",
       answer:
-        "Yes, reliable Android app development services include maintenance, bug fixing, and updates to keep apps functional and market-ready after launch.",
-    }
+        "Yes, we offer maintenance, bug fixes, updates, and feature enhancements.",
+    },
   ];
-
 
   return (
     <div>
+
+      {/* Breadcrumb Schema for Google Sitelinks */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.codeneptune.com" },
+          { name: "Android App Development", url: "https://www.codeneptune.com/android-app-development-company-in-chennai" },
+        ]}
+      />
+
       <Hero
         text1={'Turning Concepts into'}
-        text2={'Market Ready Apps'}
-        description={'We are a leading Android app development company in Chennai, helping businesses build fast, secure, and user-friendly mobile apps. Our expert Android app developers create solutions that combine great design with powerful performance to deliver real business impact.'}
+        text2={'Market Ready Android Apps'}
+        description={
+          'We are a leading Android app development company in Chennai, helping businesses build fast, secure, and user-friendly mobile apps. Our expert Android developers create robust solutions designed for performance and long-term growth.'
+        }
         buttonText='Lets Build Together'
       />
+
       <OurAndroidDevelopmentCompany />
       <AndroidAppDevelopmentServices />
       <MobileAsTheCoreOfModernBusiness />
       <OurApproach />
       <BreakingDownTheBarriers />
-      <IndustriesWeServe padding='pb-16' />
+      <IndustriesWeServe padding="pb-16" />
       <HowWeBuildIntelligentSolutions />
       <Faqs faqs={androidFaqs} />
       <Blogs />
       <ContactForm />
       <Location />
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;

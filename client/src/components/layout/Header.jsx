@@ -105,8 +105,8 @@ function Header() {
                 <Link href='/'>
                     <Image
                         className={`h-auto transition-all duration-300 ${isScrolled
-                            ? 'w-20 lg:w-28'
-                            : 'w-24 lg:w-40'
+                            ? 'w-24 lg:w-28'
+                            : 'w-28 lg:w-40'
                             }`}
                         src={`${shouldUseScrolledColors ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
                         alt="Code Neptune Logo"

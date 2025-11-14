@@ -10,7 +10,7 @@ import ContactModal from '@/modals/ContactModal';
 
 function YourAppDevelopmentJourneyBeginsHere() {
 
-    const [isModalOpen,setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const services = [
         {
@@ -112,23 +112,24 @@ function YourAppDevelopmentJourneyBeginsHere() {
                             </div>
 
                             {/* Button */}
-                            <button 
-                            onClick={() => setIsModalOpen(true)}
-                            className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer"
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="w-full py-3 px-6 border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-blue-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer"
                             >
-                                
+
                                 {service.buttonText}
                             </button>
 
-                            <ContactModal 
-                            isOpen={isModalOpen}
-                            onClose={() => setIsModalOpen(false)}
-                            />
+
                         </div>
                     ))}
                 </div>
 
             </div>
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

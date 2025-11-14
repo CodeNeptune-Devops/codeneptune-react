@@ -424,7 +424,7 @@ function Testimonials() {
                     </div>
 
                     {/* Navigation Buttons - Mobile */}
-                    <div className="flex lg:hidden justify-center gap-3 mt-6">
+                    {/* <div className="flex lg:hidden justify-center gap-3 mt-6">
                         <button
                             onClick={prevTestimonial}
                             disabled={isTransitioning}
@@ -440,7 +440,7 @@ function Testimonials() {
                         >
                             <ChevronRight className="w-6 h-6" />
                         </button>
-                    </div>
+                    </div> */}
 
                     {/* Pagination Dots */}
                     <div className="flex justify-center gap-2 mt-8">
