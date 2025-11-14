@@ -35,7 +35,7 @@ export default function Home() {
       <IndustriesWeServe />
       <Testimonials />
       <TechStack /> 
-      <OurOffice /> 
+      {/* <OurOffice />  */}
       <Faqs />
       <ContactForm /> 
       <Location /> 

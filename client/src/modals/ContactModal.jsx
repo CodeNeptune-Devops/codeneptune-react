@@ -380,7 +380,7 @@ function ContactModal({ isOpen, onClose }) {
             </div>
 
             {/* reCAPTCHA v2 CHECKBOX */}
-            <div className="flex justify-center py-2">
+            <div className="flex justify-start py-2">
               <div id="recaptcha-container-modal"></div>
               {!recaptchaLoaded && (
                 <div className="bg-gray-200 rounded p-4 animate-pulse w-[304px] h-[78px]"></div>
