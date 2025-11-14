@@ -2,10 +2,9 @@ import ContactButton from '@/animatedComponents/button/GlowButton';
 import Image from 'next/image';
 import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
-import { GrLinkUp } from "react-icons/gr"
-import { IoIosArrowDown } from "react-icons/io"
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Star } from 'lucide-react';
+import ArrowRight from "lucide-react/dist/esm/icons/arrow-right";
+import ChevronDown from "lucide-react/dist/esm/icons/chevron-down";
 import Sidebar from './Sidebar';
 import ContactModal from '@/modals/ContactModal';
 
@@ -137,7 +136,7 @@ function Header() {
                             }}
                         >
                             Services
-                            <IoIosArrowDown className={`w-4 h-4 transition-transform duration-200 ${shouldUseScrolledColors ? 'text-black' : 'text-white'} ${isServicesOpen ? 'rotate-180' : ''}`} />
+                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${shouldUseScrolledColors ? 'text-black' : 'text-white'} ${isServicesOpen ? 'rotate-180' : ''}`} />
                         </button>
 
                         {/* Dropdown Menu - Centered */}
