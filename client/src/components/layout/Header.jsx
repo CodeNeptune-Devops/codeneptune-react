@@ -7,18 +7,18 @@ import ChevronDown from "lucide-react/dist/esm/icons/chevron-down";
 import dynamic from 'next/dynamic';
 
 const Sidebar = dynamic(() => import('./Sidebar'), {
-  ssr: false,
-  loading: () => null, // optional
+    ssr: false,
+    loading: () => null, // optional
 });
 
 const ContactModal = dynamic(() => import('@/modals/ContactModal'), {
-  ssr: false,
-  loading: () => null, // optional
+    ssr: false,
+    loading: () => null, // optional
 });
 
 const ServicesDropdown = dynamic(() => import('./ServicesDropDown'), {
-  ssr: false,
-  loading: () => null, // optional
+    ssr: false,
+    loading: () => null, // optional
 });
 
 function Header() {
@@ -120,12 +120,15 @@ function Header() {
                             ? 'w-24 lg:w-28'
                             : 'w-28 lg:w-40'
                             }`}
-                        src={`${shouldUseScrolledColors ? '/cn-logo.svg' : '/cn-footer-logo.svg'}`}
+                        src={shouldUseScrolledColors ? '/cn-logo.svg' : '/cn-footer-logo.svg'}
                         alt="Code Neptune Logo"
                         height={200}
                         width={200}
+                        priority        // <--- IMPORTANT
+                        fetchPriority="high"   // <--- IMPORTANT for Chrome
                     />
                 </Link>
+
 
                 {/* Desktop Navigation */}
                 <nav className='hidden lg:flex justify-center items-center gap-5 md:gap-10'>
@@ -153,14 +156,14 @@ function Header() {
                         </button>
 
                         {/* Dropdown Menu - Centered */}
-                         <ServicesDropdown 
-                        isScrolled={isScrolled}
-                        isServicesOpen={isServicesOpen}
-                        setIsModalOpen={setIsModalOpen}
-                        closeDropdown={closeDropdown}
-                        appDevelopment={appDevelopment}
-                        webDevelopment={webDevelopment}
-                        creativeCloud={creativeCloud}
+                        <ServicesDropdown
+                            isScrolled={isScrolled}
+                            isServicesOpen={isServicesOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            closeDropdown={closeDropdown}
+                            appDevelopment={appDevelopment}
+                            webDevelopment={webDevelopment}
+                            creativeCloud={creativeCloud}
                         />
                     </div>
 
