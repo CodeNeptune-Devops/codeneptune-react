@@ -18,7 +18,8 @@ function ContactModal({ isOpen, onClose }) {
     email: '',
     projectDescription: '',
     countryCode: '+91',
-    contactNumber: ''
+    contactNumber: '',
+    foundUs: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -136,6 +137,10 @@ function ContactModal({ isOpen, onClose }) {
     else if (!/^[0-9]{10,15}$/.test(cleanedNum))
       newErrors.contactNumber = "Invalid phone number";
 
+    if (!formData.foundUs) {
+      newErrors.foundUs = "Please select how you found us";
+    }
+
     if (!recaptchaToken) {
       newErrors.recaptcha = "Please complete the reCAPTCHA verification";
     }
@@ -163,6 +168,7 @@ function ContactModal({ isOpen, onClose }) {
           email: formData.email,
           mobile: `${formData.countryCode}${formData.contactNumber}`,
           message: formData.projectDescription || "No message provided",
+          foundUs: formData.foundUs || "not_specified",
           formType: "contact-modal",
           submittedFrom: window.location.pathname,
           recaptchaToken,
@@ -178,7 +184,8 @@ function ContactModal({ isOpen, onClose }) {
           email: "",
           projectDescription: "",
           countryCode: "+91",
-          contactNumber: ""
+          contactNumber: "",
+          foundUs: ""
         });
         setRecaptchaToken(null);
         
@@ -306,7 +313,7 @@ function ContactModal({ isOpen, onClose }) {
 
         {/* RIGHT SIDE - FORM */}
         <div className="p-8 w-full lg:w-1/2 overflow-y-auto">
-          <form onSubmit={handleSubmit} className="space-y-5 mt-6">
+          <div className="space-y-5 mt-6">
 
             {/* NAME + EMAIL */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -379,6 +386,42 @@ function ContactModal({ isOpen, onClose }) {
               )}
             </div>
 
+            {/* WHERE DID YOU FIND US */}
+            <div>
+              <label className="block text-sm text-gray-700 mb-3 font-medium">
+                Where did you find us?*
+              </label>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { label: 'Google', value: 'google' },
+                  { label: 'Social Media', value: 'social_media' },
+                  { label: 'Friends', value: 'friends' },
+                  { label: 'Referral', value: 'referral' },
+                  { label: 'Others', value: 'others' }
+                ].map((option) => (
+                  <label
+                    key={option.value}
+                    className="flex items-center gap-2 cursor-pointer group"
+                  >
+                    <input
+                      type="radio"
+                      name="foundUs"
+                      value={option.value}
+                      checked={formData.foundUs === option.value}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 accent-blue-600 cursor-pointer"
+                    />
+                    <span className="text-sm text-gray-600 group-hover:text-blue-600 transition-colors">
+                      {option.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {errors.foundUs && (
+                <p className="text-red-500 text-xs mt-2">{errors.foundUs}</p>
+              )}
+            </div>
+
             {/* reCAPTCHA v2 CHECKBOX */}
             <div className="flex justify-start py-2">
               <div id="recaptcha-container-modal"></div>
@@ -392,7 +435,7 @@ function ContactModal({ isOpen, onClose }) {
 
             {/* SUBMIT BUTTON */}
             <button
-              type="submit"
+              onClick={handleSubmit}
               disabled={isSubmitting}
               className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 disabled:bg-blue-400 text-sm w-full cursor-pointer"
             >
@@ -403,7 +446,7 @@ function ContactModal({ isOpen, onClose }) {
               <p>• You will receive a response within <b>2 minutes</b></p>
               <p>• Your idea is protected under our <b>NDA policy</b></p>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
