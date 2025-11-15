@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { usePathname } from "next/navigation";
 import { Suspense } from "react";
 import Loader from "../loader/Loader";
+import WhatsappPopUp from "../WhatsappPopUp";
 
 const Header = dynamic(() => import("../layout/Header"), {
   loading: () => <Loader />,
@@ -33,6 +34,8 @@ export default function Layout({ children }) {
           {!isAdminRoute && <Header />}
 
           <main className="flex-1 w-full bg-white text-black">{children}</main>
+
+          {!isAdminRoute && <WhatsappPopUp />}
 
           {!isAdminRoute && <Footer />}
         </>
