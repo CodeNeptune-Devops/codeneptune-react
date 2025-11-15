@@ -344,15 +344,7 @@ function ContactModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* MESSAGE */}
-            <textarea
-              name="projectDescription"
-              rows={3}
-              placeholder="Describe your project / idea (optional)"
-              value={formData.projectDescription}
-              onChange={handleInputChange}
-              className="w-full text-sm border-b-2 text-gray-600 border-gray-300 pb-2 focus:border-blue-600 outline-none placeholder:text-gray-500"
-            />
+            
 
             {/* COUNTRY + PHONE */}
             <div>
@@ -385,6 +377,16 @@ function ContactModal({ isOpen, onClose }) {
                 <p className="text-red-500 text-xs mt-2">{errors.contactNumber}</p>
               )}
             </div>
+
+            {/* MESSAGE */}
+            <textarea
+              name="projectDescription"
+              rows={3}
+              placeholder="Describe your project / idea (optional)"
+              value={formData.projectDescription}
+              onChange={handleInputChange}
+              className="w-full text-sm border-b-2 text-gray-600 border-gray-300 pb-2 focus:border-blue-600 outline-none placeholder:text-gray-500"
+            />
 
             {/* WHERE DID YOU FIND US */}
             <div>
@@ -439,7 +441,7 @@ function ContactModal({ isOpen, onClose }) {
               disabled={isSubmitting}
               className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 disabled:bg-blue-400 text-sm w-full cursor-pointer"
             >
-              {isSubmitting ? "Submitting..." : "Schedule Free Consultation"}
+              {isSubmitting ? "Submitting..." : "Talk To Us"}
             </button>
 
             <div className="text-xs text-gray-500 space-y-1">

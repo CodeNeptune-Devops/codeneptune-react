@@ -350,9 +350,7 @@ export default function ContactForm() {
                                 <div className='w-full border-b border-[#BEBEBE] pb-2'>
                                     <p className='uppercase font-medium'>Enquiry</p>
                                     <div className='flex gap-2 text-xs'>
-                                        <a href="tel:+916382958105">+91 63829 58105</a>
-                                        <span>|</span>
-                                        <a href="tel:+919363640633">+91 93636 40633</a>
+                                        <a href="tel:+919790274711">+91 97902 74711</a>
                                     </div>
                                 </div>
 

@@ -26,7 +26,7 @@ function WorkWithUs({ padding }) {
                     onClick={() => setIsModalOpen(true)}
                     className="flex flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
                         <ShinyText
-                            text="Work With Us"
+                            text="Start Your Success Journey"
                             disabled={false}
                             speed={3}
                             className="custom-class"

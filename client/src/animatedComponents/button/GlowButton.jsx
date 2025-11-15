@@ -52,17 +52,17 @@ const ContactButton = ({isScrolled, isModalOpen, setIsModalOpen}) => {
                     ))}
                     <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[70.8%] h-[42.85%] rounded-full filter blur-[15px] bg-[#006]"></span>
                 </div>
-                <button
-                    onClick={() => setIsModalOpen(true)}
+                <Link
+                    href={'tel:+919790274711'}
                     className="absolute inset-0 rounded-full bg-transparent cursor-pointer"
                     aria-label="Contact Us"
                     type="button"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}>
-                    <span className="flex items-center justify-center gap-2 rounded-full text-md text-white font-semibold tracking-wide whitespace-nowrap">
-                        <span className="">Contact Us</span>
+                    <span className="flex items-center justify-center gap-2 rounded-full text-md h-full text-white font-semibold tracking-wide whitespace-nowrap">
+                        <span className="">Call Us</span>
                     </span>
-                </button>
+                </Link>
             </div>
             
         </div>

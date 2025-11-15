@@ -151,8 +151,8 @@ function Footer() {
                     info@codeneptune.com
                   </Link>
 
-                  <Link className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent" href="tel:+916382958105">
-                    +91 63829 58105
+                  <Link className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent" href="tel:+919790274711">
+                    +91 97902 74711
                   </Link>
                   <Link className="text-sm hover:bg-gradient-to-r hover:from-[#4A3AFF] hover:to-[#744EDF] hover:bg-clip-text hover:text-transparent" href="tel:+919841600980">
                     +91 98416 00980

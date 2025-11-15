@@ -19,9 +19,9 @@ const GradientText = dynamic(
   () => import("@/animatedTexts/gradientText/GradientText"),
   { ssr: false }
 );
-const ShinyText = dynamic(() => import("@/animatedTexts/ShinyText/ShinyText"), {
-  ssr: false,
-});
+// const ShinyText = dynamic(() => import("@/animatedTexts/ShinyText/ShinyText"), {
+//   ssr: false,
+// });
 
 export default function Hero({
   text1="Crafting Websites, Mobile Apps &",
@@ -198,9 +198,9 @@ export default function Hero({
             {buttonText}
           </button>
 
-          <Link href={'tel:+916382958105'} className="flex items-center gap-2 px-3 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+          {/* <Link href={'tel:+916382958105'} className="flex items-center gap-2 px-3 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
             <ShinyText text="Call Us Now" speed={3} className="text-md sm:text-lg" />
-          </Link>
+          </Link> */}
         </div>
 
         {/* Labels */}

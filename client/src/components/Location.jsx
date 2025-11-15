@@ -14,7 +14,7 @@ function Location() {
       label: "India",
       addressLine:
         "No. 624, 3rd Floor – S2, Khivraj Building, Anna Salai, Chennai – 600 006",
-      numbers: ["+91 63829 58105", "+91 98416 00980"],
+      numbers: ["+91 97902 74711", "+91 98416 00980"],
       jobs: "careers@codeneptune.com",
       image: india,
     },
