@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { CheckCircle, Puzzle, Users } from 'lucide-react'
 import SectionTitle from '../titles/SectionTitle'
+import '../../styles/flutterTechStack.css'
 
 function FlutterDevelopmentTechStack() {
   const [activeTab, setActiveTab] = useState(0)
@@ -201,18 +202,6 @@ function FlutterDevelopmentTechStack() {
 
   return (
     <div className='w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50'>
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
 
       <div className='max-w-7xl mx-auto'>
         {/* Title Section */}

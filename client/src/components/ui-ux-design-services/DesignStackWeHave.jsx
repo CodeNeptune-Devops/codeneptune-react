@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Layout, Shuffle, Code, Workflow } from 'lucide-react';
 import SectionTitle from '../titles/SectionTitle';
 import Image from 'next/image';
+import '../../styles/designStack.css'
 
 function DesignStackWeHave() {
   const [activeCategory, setActiveCategory] = useState('Interface Design');
@@ -51,23 +52,7 @@ function DesignStackWeHave() {
 
   return (
     <div className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <style>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
+      
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

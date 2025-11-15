@@ -47,20 +47,7 @@ function TransformingBusinesses() {
 
     return (
         <div className='w-full py-16 bg-black'>
-            {/* <div className='w-full max-w-7xl mx-auto'>
-            <MagicBento
-                textAutoHide={true}
-                enableStars={true}
-                enableSpotlight={true}
-                enableBorderGlow={true}
-                enableTilt={true}
-                enableMagnetism={true}
-                clickEffect={true}
-                spotlightRadius={300}
-                particleCount={12}
-                glowColor="132, 0, 255"
-            />
-        </div> */}
+            
             <div className='max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-10 text-white px-4'>
 
               

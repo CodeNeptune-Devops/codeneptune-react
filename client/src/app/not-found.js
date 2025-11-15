@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import '../styles/notFound.css';
 
 export default function NotFound() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -153,73 +154,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-          }
-          50% {
-            transform: translateY(-20px) translateX(10px);
-          }
-        }
-
-        @keyframes float-slow {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-30px);
-          }
-        }
-
-        @keyframes bounce-slow {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-
-        @keyframes glitch {
-          0%, 100% {
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-          }
-          25% {
-            text-shadow: -2px 0 20px rgba(168, 85, 247, 0.7), 2px 2px 20px rgba(236, 72, 153, 0.7);
-          }
-          50% {
-            text-shadow: 2px 0 20px rgba(236, 72, 153, 0.7), -2px -2px 20px rgba(168, 85, 247, 0.7);
-          }
-          75% {
-            text-shadow: 0 2px 20px rgba(168, 85, 247, 0.7), 0 -2px 20px rgba(236, 72, 153, 0.7);
-          }
-        }
-
-        @keyframes gradient {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

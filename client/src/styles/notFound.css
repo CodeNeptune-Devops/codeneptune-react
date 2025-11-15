@@ -1,0 +1,73 @@
+/* Floating particle animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+/* Slow float for robot */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+/* Slow bounce for 404 text */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  }
+  25% {
+    text-shadow: -2px 0 20px rgba(168, 85, 247, 0.7),
+                 2px 2px 20px rgba(236, 72, 153, 0.7);
+  }
+  50% {
+    text-shadow: 2px 0 20px rgba(236, 72, 153, 0.7),
+                 -2px -2px 20px rgba(168, 85, 247, 0.7);
+  }
+  75% {
+    text-shadow: 0 2px 20px rgba(168, 85, 247, 0.7),
+                 0 -2px 20px rgba(236, 72, 153, 0.7);
+  }
+}
+
+/* Moving gradient text */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
