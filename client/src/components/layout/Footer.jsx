@@ -14,8 +14,9 @@ function Footer() {
 
   const quickLinks = [
     { label: 'About Us', href: '/about' },
-    { label: 'Blog', href: '/about' },
-    { label: 'Privacy Policy', href: '/about' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms & Conditions', href: '/terms-and-conditions' },
     { label: 'Contact Us', href: '/contact' },
   ];
 

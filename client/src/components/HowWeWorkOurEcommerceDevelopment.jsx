@@ -1,11 +1,36 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Target, Package, TestTube, Rocket, Headphones, ChevronLeft, ChevronRight } from 'lucide-react';
-import SectionTitle from './titles/SectionTitle';
+
+function SectionTitle({ textColor, title, description }) {
+  return (
+    <div className="mb-8">
+      <h2 className={`text-3xl md:text-4xl font-bold ${textColor} mb-4`}>{title}</h2>
+      <p className="text-gray-400 text-lg">{description}</p>
+    </div>
+  );
+}
 
 function HowWeWorkOurEcommerceDevelopment() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCardsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const processes = [
     {
@@ -88,12 +113,18 @@ function HowWeWorkOurEcommerceDevelopment() {
     }
   ];
 
+  const maxIndex = processes.length - cardsPerView;
+
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? processes.length - 3 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= processes.length - 3 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  const getTranslatePercentage = () => {
+    return (currentIndex * 100) / cardsPerView;
   };
 
   return (
@@ -104,7 +135,7 @@ function HowWeWorkOurEcommerceDevelopment() {
           <SectionTitle
             textColor='text-white'
             title='How We Work: Our Ecommerce Development Process'
-            description='From Idea to Execution – AStreamlined Approach for Success'
+            description='From Idea to Execution – A Streamlined Approach for Success'
           />
         </div>
 
@@ -132,7 +163,7 @@ function HowWeWorkOurEcommerceDevelopment() {
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(-${currentIndex * (100 / 3)}%)`
+                transform: `translateX(-${getTranslatePercentage()}%)`
               }}
             >
               {processes.map((process, index) => (
@@ -181,14 +212,15 @@ function HowWeWorkOurEcommerceDevelopment() {
 
           {/* Dots Indicator */}
           <div className="flex justify-center mt-8 gap-2">
-            {Array.from({ length: processes.length - 2 }).map((_, index) => (
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === index
+                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                  currentIndex === index
                     ? 'bg-blue-600 w-8'
                     : 'bg-gray-600 hover:bg-gray-500'
-                  }`}
+                }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}

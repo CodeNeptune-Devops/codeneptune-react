@@ -126,7 +126,7 @@ function MobileAppDevelopmentCompany() {
 
       <div className='pt-16 max-w-7xl mx-auto w-full flex flex-col justify-start items-center gap-4'>
         <div className='-mb-12 flex flex-col justify-start items-center gap-3'>
-          <p className='uppercase text-md text-blue-500 font-bold leading-relaxed [letter-spacing:4px]'>
+          <p className='uppercase text-md text-blue-500 font-bold text-center leading-relaxed [letter-spacing:4px]'>
             More Than Apps, We Build Success
           </p>
           <SectionTitle

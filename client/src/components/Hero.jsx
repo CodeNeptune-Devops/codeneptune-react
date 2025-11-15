@@ -85,7 +85,7 @@ export default function Hero({
           }`}
           style={{ willChange: "transform, opacity" }}
         >
-          <button className="flex flex-row justify-center items-center gap-1 sm:gap-2 px-0 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
+          <button className="flex flex-row justify-center items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
             <Image
               src="/home/hero-icon-1.svg"
               alt="icon"
@@ -194,7 +194,7 @@ export default function Hero({
         >
           <button 
           onClick={() => setIsModalOpen(true)}
-          className="px-2 sm:px-6 py-3 rounded-full text-md sm:text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-40 sm:w-fit hover:bg-white transition-colors cursor-pointer">
+          className="px-2 sm:px-6 py-3 rounded-full text-md sm:text-lg font-semibold bg-[#B8BBBF] text-[#0F1116] w-fit sm:w-fit hover:bg-white transition-colors cursor-pointer">
             {buttonText}
           </button>
 

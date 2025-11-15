@@ -3,6 +3,7 @@ import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import Faqs from '@/components/Faqs'
 import FeaturedCaseStudy from '@/components/FeaturedCaseStudy'
 import ContactForm from '@/components/forms/ContactForm'
+import Hero from '@/components/Hero'
 import HowWeWorkOurEcommerceDevelopment from '@/components/HowWeWorkOurEcommerceDevelopment'
 import IndustriesWeServe from '@/components/IndustriesWeServe'
 import Location from '@/components/Location'
@@ -12,7 +13,6 @@ import SectionTitle from '@/components/titles/SectionTitle'
 import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects'
 import AffordablePlansForEveryBusiness from '@/components/website-development-company/AffordablePlansForEveryBusiness'
 import EveryWebsiteWeBuild from '@/components/website-development-company/EveryWebsiteWeBuild'
-import Hero from '@/components/website-development-company/Hero'
 import SkilledWebDevelopmentTeam from '@/components/website-development-company/SkilledWebDevelopmentTeam'
 import WebsiteSolutionsForEveryNeed from '@/components/website-development-company/WebisteSolutionsForEveryNeed'
 import WhyYourWebsite from '@/components/website-development-company/WhyYourWebsite'
@@ -96,7 +96,11 @@ function Page() {
         ]}
       />
 
-      <Hero />
+      <Hero 
+      text1='Websites That Work.'
+      text2='Designs That Win.'
+      description="At Code Neptune, we don’t just build websites — we create digital experiences that drive growth. Our expert team blends custom design with smart development to deliver stunning, high-performance websites that turn visitors into loyal customers."
+      />
 
       <WhyYourWebsite />
 

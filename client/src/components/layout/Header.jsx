@@ -10,7 +10,9 @@ import ContactModal from '@/modals/ContactModal';
 
 function Header() {
     const pathname = usePathname();
-    const isUIUXPage = pathname === '/ui-ux-design-services';
+    const specialPages = ['/ui-ux-design-services', '/privacy-policy', '/terms-and-conditions'];
+    const isUIUXPage = specialPages.includes(pathname);
+
 
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
@@ -71,20 +73,20 @@ function Header() {
 
     // Handle scroll detection
     useEffect(() => {
-    const handleScroll = () => {
-        const scrollTop = window.scrollY;
-        setIsScrolled(scrollTop > 50);
-    };
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50);
+        };
 
-    window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll);
 
-    // 🔥 FIX: Run once on mount (for refresh mid-scroll)
-    handleScroll();
+        // 🔥 FIX: Run once on mount (for refresh mid-scroll)
+        handleScroll();
 
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-    };
-}, []);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
 
     const closeDropdown = () => {

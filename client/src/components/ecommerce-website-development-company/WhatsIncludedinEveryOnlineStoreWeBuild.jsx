@@ -38,7 +38,7 @@ function WhatsIncludedinEveryOnlineStoreWeBuild() {
   ];
 
   return (
-    <div className='w-full py-16 bg-slate-800'>
+    <div className='w-full py-16 bg-slate-800 overflow-x-hidden'>
       <div className='max-w-7xl mx-auto w-full'>
         <SectionTitle 
         textColor='text-white'
@@ -46,7 +46,7 @@ function WhatsIncludedinEveryOnlineStoreWeBuild() {
         title='What’s Included in Every Online Store We Build'
         description='We keep it practical and focused — no bloated add-ons, no tech overload. Just what you need to start selling online with confidence.'
         />
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 gap-6'>
           {features.map((feature, index) => (
             <div 
               key={index}

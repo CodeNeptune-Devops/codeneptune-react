@@ -108,7 +108,7 @@ function WebsiteSolutionsForEveryNeed() {
 
                                 <div className="relative z-10">
                                     {/* Title */}
-                                    <h3 className="text-xl sm:text-2xl font-bold mb-4 leading-tight pr-32">
+                                    <h3 className="text-xl sm:text-2xl font-bold mb-4 leading-tight pr-0 pt-5 sm:pt-0 md:pr-32">
                                         {solution.title}
                                     </h3>
 
