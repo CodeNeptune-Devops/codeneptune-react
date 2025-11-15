@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TiTick } from "react-icons/ti";
 import { IoArrowForwardCircle } from 'react-icons/io5';
 import { FaRegStar } from "react-icons/fa";
@@ -15,6 +15,8 @@ export default function ContactForm() {
     const pathname = usePathname();
     const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
     const [recaptchaToken, setRecaptchaToken] = useState(null);
+    const recaptchaRef = useRef(null);
+    const widgetIdRef = useRef(null);
 
     // FORM STATE
     const [formData, setFormData] = useState({
@@ -51,7 +53,7 @@ export default function ContactForm() {
     ];
 
     // ============================================================
-    // ✅ LAZY LOAD RECAPTCHA v2 WHEN CONTACT FORM ENTERS VIEWPORT
+    // ✅ LOAD RECAPTCHA WHEN FORM ENTERS VIEWPORT
     // ============================================================
     useEffect(() => {
         const element = document.getElementById("contact-form-container");
@@ -59,18 +61,16 @@ export default function ContactForm() {
 
         const loadRecaptcha = () => {
             if (window.grecaptcha || document.getElementById("recaptcha-script")) {
+                // Script already exists, just set loaded state
                 setRecaptchaLoaded(true);
                 return;
             }
 
             const script = document.createElement("script");
             script.id = "recaptcha-script";
-            script.src = `https://www.google.com/recaptcha/api.js`;
+            script.src = `https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoadCallback&render=explicit`;
             script.async = true;
             script.defer = true;
-            script.onload = () => {
-                setRecaptchaLoaded(true);
-            };
 
             document.body.appendChild(script);
         };
@@ -84,7 +84,7 @@ export default function ContactForm() {
                         observer.disconnect();
                     }
                 },
-                { threshold: 0.2 }
+                { threshold: 0.1 }
             );
 
             observer.observe(element);
@@ -93,21 +93,48 @@ export default function ContactForm() {
         return () => observer?.disconnect();
     }, []);
 
-    // Set up reCAPTCHA callback
+    // ============================================================
+    // ✅ RENDER RECAPTCHA WIDGET AFTER SCRIPT LOADS
+    // ============================================================
     useEffect(() => {
+        // Global callback when reCAPTCHA script loads
+        window.onRecaptchaLoadCallback = () => {
+            setRecaptchaLoaded(true);
+        };
+
+        // Callback when user completes reCAPTCHA
         window.onRecaptchaSuccess = (token) => {
             setRecaptchaToken(token);
         };
 
+        // Callback when reCAPTCHA expires
         window.onRecaptchaExpired = () => {
             setRecaptchaToken(null);
         };
 
         return () => {
+            delete window.onRecaptchaLoadCallback;
             delete window.onRecaptchaSuccess;
             delete window.onRecaptchaExpired;
         };
     }, []);
+
+    // ============================================================
+    // ✅ EXPLICITLY RENDER RECAPTCHA WIDGET
+    // ============================================================
+    useEffect(() => {
+        if (recaptchaLoaded && recaptchaRef.current && window.grecaptcha && !widgetIdRef.current) {
+            try {
+                widgetIdRef.current = window.grecaptcha.render(recaptchaRef.current, {
+                    sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+                    callback: window.onRecaptchaSuccess,
+                    'expired-callback': window.onRecaptchaExpired,
+                });
+            } catch (error) {
+                console.error('Error rendering reCAPTCHA:', error);
+            }
+        }
+    }, [recaptchaLoaded]);
 
     // HANDLERS
     const handleInputChange = (e) => {
@@ -145,15 +172,15 @@ export default function ContactForm() {
                     setFormData({ name: '', mobile: '', email: '', foundUs: null, message: '' });
                     setRecaptchaToken(null);
                     // Reset reCAPTCHA
-                    if (window.grecaptcha) {
-                        window.grecaptcha.reset();
+                    if (window.grecaptcha && widgetIdRef.current !== null) {
+                        window.grecaptcha.reset(widgetIdRef.current);
                     }
                 },
                 onError: (error) => {
                     toast.error(error?.message || "Failed to submit form.");
                     // Reset reCAPTCHA on error
-                    if (window.grecaptcha) {
-                        window.grecaptcha.reset();
+                    if (window.grecaptcha && widgetIdRef.current !== null) {
+                        window.grecaptcha.reset(widgetIdRef.current);
                     }
                     setRecaptchaToken(null);
                 }
@@ -253,17 +280,10 @@ export default function ContactForm() {
                             className='w-full border-b border-[#BEBEBE] p-2 resize-none focus:outline-none'
                         />
 
-                        {/* reCAPTCHA v2 CHECKBOX */}
-                        {recaptchaLoaded && (
-                            <div className='flex justify-start'>
-                                <div
-                                    className="g-recaptcha"
-                                    data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                                    data-callback="onRecaptchaSuccess"
-                                    data-expired-callback="onRecaptchaExpired"
-                                ></div>
-                            </div>
-                        )}
+                        {/* reCAPTCHA v2 CHECKBOX - Using ref for explicit rendering */}
+                        <div className='flex justify-start'>
+                            <div ref={recaptchaRef}></div>
+                        </div>
 
                         {/* SUBMIT BUTTON */}
                         <button
