@@ -25,8 +25,6 @@ function Header() {
     const pathname = usePathname();
     const specialPages = ['/ui-ux-design-services', '/privacy-policy', '/terms-and-conditions'];
     const isUIUXPage = specialPages.includes(pathname);
-
-
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
