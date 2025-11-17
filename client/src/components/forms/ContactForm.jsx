@@ -104,11 +104,13 @@ export default function ContactForm() {
 
         // Callback when user completes reCAPTCHA
         window.onRecaptchaSuccess = (token) => {
+            console.log('✅ reCAPTCHA completed successfully');
             setRecaptchaToken(token);
         };
 
         // Callback when reCAPTCHA expires
         window.onRecaptchaExpired = () => {
+            console.warn('⚠️ reCAPTCHA expired');
             setRecaptchaToken(null);
         };
 
@@ -130,8 +132,9 @@ export default function ContactForm() {
                     callback: window.onRecaptchaSuccess,
                     'expired-callback': window.onRecaptchaExpired,
                 });
+                console.log('✅ reCAPTCHA widget rendered');
             } catch (error) {
-                console.error('Error rendering reCAPTCHA:', error);
+                console.error('❌ Error rendering reCAPTCHA:', error);
             }
         }
     }, [recaptchaLoaded]);
@@ -154,7 +157,11 @@ export default function ContactForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log('🚀 Form submission initiated');
+        console.log('📝 Form data:', { ...formData, recaptchaToken: recaptchaToken ? 'Present' : 'Missing' });
+
         if (!recaptchaToken) {
+            console.error('❌ No reCAPTCHA token');
             toast.error('Please complete the reCAPTCHA verification.');
             return;
         }
@@ -168,6 +175,7 @@ export default function ContactForm() {
             },
             {
                 onSuccess: (data) => {
+                    console.log('✅ Form submitted successfully:', data);
                     toast.success(data.message || "Form submitted successfully!");
                     setFormData({ name: '', mobile: '', email: '', foundUs: null, message: '' });
                     setRecaptchaToken(null);
@@ -177,7 +185,8 @@ export default function ContactForm() {
                     }
                 },
                 onError: (error) => {
-                    toast.error(error?.message || "Failed to submit form.");
+                    console.error('❌ Form submission error:', error);
+                    toast.error(error?.message || "Failed to submit form. Please try again.");
                     // Reset reCAPTCHA on error
                     if (window.grecaptcha && widgetIdRef.current !== null) {
                         window.grecaptcha.reset(widgetIdRef.current);

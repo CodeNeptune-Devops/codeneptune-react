@@ -11,16 +11,16 @@ const fetchContacts = async () => {
     throw new Error('Failed to fetch contacts');
   }
   const data = await response.json();
-  
+
   // Handle different response structures
   // If data is wrapped in an object with a contacts/data/submissions property
   if (data.contacts) return data.contacts;
   if (data.data) return data.data;
   if (data.submissions) return data.submissions;
-  
+
   // If data is already an array
   if (Array.isArray(data)) return data;
-  
+
   // Otherwise return empty array
   console.log('Unexpected API response format:', data);
   return [];
@@ -50,7 +50,7 @@ export default function ContactAnalyticsDashboard() {
   // Analytics calculations
   const contactsArray = Array.isArray(contacts) ? contacts : [];
   const totalSubmissions = contactsArray.length;
-  
+
   const statusData = contactsArray.reduce((acc, contact) => {
     const status = contact.status !== undefined ? contact.status : 1; // Default to 'new' (1)
     const label = statusLabels[status] || 'Unknown';
@@ -113,8 +113,8 @@ export default function ContactAnalyticsDashboard() {
 
   const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
 
-  const conversionRate = totalSubmissions > 0 
-    ? ((statusData['Converted Lead'] || 0) / totalSubmissions * 100).toFixed(1) 
+  const conversionRate = totalSubmissions > 0
+    ? ((statusData['Converted Lead'] || 0) / totalSubmissions * 100).toFixed(1)
     : 0;
   const responseRate = totalSubmissions > 0
     ? (((statusData['Contacted'] || 0) + (statusData['Converted Lead'] || 0)) / totalSubmissions * 100).toFixed(1)
@@ -224,7 +224,7 @@ export default function ContactAnalyticsDashboard() {
                   <span className="text-sm text-gray-600 w-24">{item.date}</span>
                   <div className="flex-1 mx-4">
                     <div className="bg-gray-200 rounded-full h-3">
-                      <div 
+                      <div
                         className="bg-blue-500 h-3 rounded-full flex items-center justify-end px-2"
                         style={{ width: `${(item.submissions / Math.max(...trendData.map(d => d.submissions))) * 100}%` }}
                       >
@@ -253,9 +253,9 @@ export default function ContactAnalyticsDashboard() {
                       <span className="text-sm font-semibold text-gray-900">{item.value} ({percentage}%)</span>
                     </div>
                     <div className="bg-gray-200 rounded-full h-3">
-                      <div 
+                      <div
                         className="h-3 rounded-full"
-                        style={{ 
+                        style={{
                           width: `${percentage}%`,
                           backgroundColor: COLORS[index % COLORS.length]
                         }}
@@ -281,7 +281,7 @@ export default function ContactAnalyticsDashboard() {
                     <span className="text-sm text-gray-600 w-32 truncate">{item.name}</span>
                     <div className="flex-1 mx-4">
                       <div className="bg-gray-200 rounded-full h-3">
-                        <div 
+                        <div
                           className="bg-green-500 h-3 rounded-full flex items-center justify-end px-2"
                           style={{ width: `${(item.count / maxCount) * 100}%` }}
                         >
@@ -311,9 +311,9 @@ export default function ContactAnalyticsDashboard() {
                       <span className="text-sm font-semibold text-gray-900">{item.value} ({percentage}%)</span>
                     </div>
                     <div className="bg-gray-200 rounded-full h-3">
-                      <div 
+                      <div
                         className="h-3 rounded-full"
-                        style={{ 
+                        style={{
                           width: `${percentage}%`,
                           backgroundColor: COLORS[index % COLORS.length]
                         }}
@@ -340,7 +340,7 @@ export default function ContactAnalyticsDashboard() {
                   <span className="text-sm text-gray-600 w-32">{item.name}</span>
                   <div className="flex-1 mx-4">
                     <div className="bg-gray-200 rounded-full h-6">
-                      <div 
+                      <div
                         className="bg-purple-500 h-6 rounded-full flex items-center justify-end px-2"
                         style={{ width: `${(item.count / maxCount) * 100}%` }}
                       >
@@ -387,15 +387,20 @@ export default function ContactAnalyticsDashboard() {
                   <tr key={contact._id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-medium text-gray-900">{contact.name}</td>
                     <td className="px-4 py-3 text-sm text-gray-600">{contact.email}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600 capitalize">{contact.service.replace(/-/g, ' ')}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600 capitalize">{contact.foundUs.replace(/_/g, ' ')}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 capitalize">
+                      {(contact.service || "other").replace(/-/g, ' ')}
+                    </td>
+
+                    <td className="px-4 py-3 text-sm text-gray-600 capitalize">
+                      {(contact.foundUs || "unknown").replace(/_/g, ' ')}
+                    </td>
+
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
-                        contact.status === 1 ? 'bg-blue-100 text-blue-800' :
-                        contact.status === 2 ? 'bg-yellow-100 text-yellow-800' :
-                        contact.status === 3 ? 'bg-green-100 text-green-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
+                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${contact.status === 1 ? 'bg-blue-100 text-blue-800' :
+                          contact.status === 2 ? 'bg-yellow-100 text-yellow-800' :
+                            contact.status === 3 ? 'bg-green-100 text-green-800' :
+                              'bg-red-100 text-red-800'
+                        }`}>
                         {contact.status === 3 && <CheckCircle className="w-3 h-3 mr-1" />}
                         {contact.status === 1 && <Clock className="w-3 h-3 mr-1" />}
                         {statusLabels[contact.status] || 'Unknown'}
