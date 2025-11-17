@@ -6,54 +6,77 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
+  timeout: 10000,
 });
 
-// Request interceptor to add access token
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // Access token will be added from Redux state
-    // This is handled in the component level
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// Simplified token refresh state
+let isRefreshing = false;
+let failedQueue = [];
 
-// Response interceptor to handle token refresh
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  
+  failedQueue = [];
+};
+
+// Response interceptor - simplified
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // If error is 401 and we haven't retried yet
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        // Queue the request
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then(token => {
+          originalRequest.headers['Authorization'] = `Bearer ${token}`;
+          return axiosInstance(originalRequest);
+        }).catch(err => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        // Try to refresh the token
-        const response = await axios.post('/api/auth/refresh', {}, {
-          withCredentials: true,
-        });
+        const { data } = await axiosInstance.post('/auth/refresh');
+        const { accessToken } = data;
 
-        const { accessToken } = response.data;
-
-        if (accessToken) {
-          // Store new access token (handled by Redux)
-          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-          return axiosInstance(originalRequest);
-        }
-      } catch (refreshError) {
-        // Refresh failed, redirect to login
+        processQueue(null, accessToken);
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        
+        return axiosInstance(originalRequest);
+      } catch (err) {
+        processQueue(err, null);
+        
         if (typeof window !== 'undefined') {
           window.location.href = '/admin/login';
         }
-        return Promise.reject(refreshError);
+        
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
 
     return Promise.reject(error);
   }
 );
+
+// Simplified cancellation helper
+export const createCancellableRequest = () => {
+  const controller = new AbortController();
+  return {
+    signal: controller.signal,
+    cancel: () => controller.abort()
+  };
+};
 
 export default axiosInstance;

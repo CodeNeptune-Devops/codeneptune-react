@@ -3,40 +3,40 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials, logout, setLoading } from '@/store/slices/authSlice';
-import axios from 'axios';
+import { setCredentials, logout } from '@/store/slices/authSlice';
+import axiosInstance from '@/lib/axios'; // Use axiosInstance, not axios
 
 export default function ProtectedRoute({ children, allowedRoles = [] }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
     const verifyAuth = async () => {
+      if (isAuthenticated && user) {
+        // Already authenticated, just check roles
+        if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+          router.push('/admin/login');
+        }
+        setChecking(false);
+        return;
+      }
+
       try {
-        // Try to refresh token (this will verify the refresh token cookie)
-        const response = await axios.post('/api/auth/refresh', {}, {
-          withCredentials: true,
-        });
+        const { data } = await axiosInstance.post('/auth/refresh');
         
-        if (response.data.success) {
-          dispatch(
-            setCredentials({
-              user: response.data.user,
-              accessToken: response.data.accessToken,
-            })
-          );
+        if (data.success) {
+          dispatch(setCredentials({
+            user: data.user,
+            accessToken: data.accessToken,
+          }));
           
-          // Check role permissions
-          if (allowedRoles.length > 0 && !allowedRoles.includes(response.data.user.role)) {
+          if (allowedRoles.length > 0 && !allowedRoles.includes(data.user.role)) {
             router.push('/admin/login');
           }
-        } else {
-          throw new Error('Auth failed');
         }
       } catch (error) {
-        console.error('Auth verification failed:', error);
         dispatch(logout());
         router.push('/admin/login');
       } finally {
@@ -44,18 +44,10 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
       }
     };
 
-    if (!isAuthenticated) {
-      verifyAuth();
-    } else {
-      // Already authenticated, just check roles
-      if (allowedRoles.length > 0 && user && !allowedRoles.includes(user.role)) {
-        router.push('/admin/login');
-      }
-      setChecking(false);
-    }
-  }, []);
+    verifyAuth();
+  }, [isAuthenticated, user?.role]); // Add dependencies
 
-  if (checking || loading) {
+  if (checking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
@@ -66,9 +58,5 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
     );
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  return <>{children}</>;
+  return isAuthenticated ? children : null;
 }

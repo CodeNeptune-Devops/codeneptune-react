@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '@/store/slices/authSlice';
-import axiosInstance from '@/lib/axios';
+import axiosInstance, { createCancellableRequest } from '@/lib/axios';
 
 export default function LoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [isPending, startTransition] = useTransition();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,37 +17,61 @@ export default function LoginForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      // Cancel any pending requests
+      setLoading(false);
+    };
+  }, []);
+
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
     setError('');
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
+    const { signal, cancel } = createCancellableRequest();
+
     try {
-      const response = await axiosInstance.post('/auth/login', formData);
+      const response = await axiosInstance.post('/auth/login', formData, {
+        signal,
+      });
 
       if (response.data.success) {
-        dispatch(
-          setCredentials({
-            user: response.data.user,
-            accessToken: response.data.accessToken,
-          })
-        );
-        router.push('/admin/dashboard');
+        // Use startTransition to avoid blocking
+        startTransition(() => {
+          dispatch(
+            setCredentials({
+              user: response.data.user,
+              accessToken: response.data.accessToken,
+            })
+          );
+        });
+
+        // Defer navigation slightly to allow state update
+        requestAnimationFrame(() => {
+          router.push('/admin/dashboard');
+        });
       }
     } catch (err) {
+      if (err.name === 'CanceledError') {
+        return; // Request was cancelled, ignore
+      }
       setError(
         err.response?.data?.message || 'Login failed. Please try again.'
       );
     } finally {
       setLoading(false);
+      cancel();
     }
   };
 
@@ -99,10 +124,10 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || isPending}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading || isPending ? 'Signing in...' : 'Sign In'}
           </button>
 
           <div className="text-center">
