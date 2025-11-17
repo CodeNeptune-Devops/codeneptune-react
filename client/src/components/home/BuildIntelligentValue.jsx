@@ -10,7 +10,7 @@ function BuildIntelligentValue() {
                 baseOpacity={100}
                 enableBlur={true}
                 baseRotation={5}
-                blurStrength={150}
+                blurStrength={20}
                 containerClassName=''
             >
                 

@@ -34,19 +34,20 @@ function WhatsappPopUp() {
         />
       )}
 
-      <div className="fixed bottom-6 right-6 z-[999999999]">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[999999999]">
         {/* Popup */}
         <div
-          className={`absolute bottom-20 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out ${isOpen
+          className={`absolute bottom-16 sm:bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-80 md:w-96 max-w-96 bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out ${
+            isOpen
               ? 'opacity-100 translate-y-0 scale-100'
               : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
-            }`}
+          }`}
           onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside popup
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-green-500 to-green-600 p-4 rounded-t-2xl flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 p-3 sm:p-4 rounded-t-2xl flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                 <Image
                   src={'/our-team/whatsappImg.webp'}
                   alt='Vivek Swaminathan'
@@ -56,8 +57,8 @@ function WhatsappPopUp() {
                 />
               </div>
               <div>
-                <h3 className="text-white font-semibold text-lg">Vivek Swaminathan</h3>
-                <p className="text-green-100 text-sm">We're online!</p>
+                <h3 className="text-white font-semibold text-base sm:text-lg">Vivek Swaminathan</h3>
+                <p className="text-green-100 text-xs sm:text-sm">We're online!</p>
               </div>
             </div>
             <button
@@ -71,9 +72,9 @@ function WhatsappPopUp() {
           </div>
 
           {/* Body */}
-          <div className="p-4 max-h-96 overflow-y-auto">
-            <div className="mb-4">
-              <p className="text-gray-600 text-sm mb-3">
+          <div className="p-3 sm:p-4 max-h-[60vh] sm:max-h-96 overflow-y-auto">
+            <div className="mb-3 sm:mb-4">
+              <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
                 Hi there! 👋 How can we help you today?
               </p>
               <div className="space-y-2">
@@ -114,15 +115,16 @@ function WhatsappPopUp() {
         {/* WhatsApp Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer relative bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 group"
+          className="cursor-pointer relative bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 group"
         >
           {/* Pulse Animation */}
           <span className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-75"></span>
 
           {/* Icon */}
           <svg
-            className={`relative w-8 h-8 transition-transform duration-300 ${isOpen ? 'rotate-90 scale-0' : 'rotate-0 scale-100'
-              }`}
+            className={`relative w-7 h-7 sm:w-8 sm:h-8 transition-transform duration-300 ${
+              isOpen ? 'rotate-90 scale-0' : 'rotate-0 scale-100'
+            }`}
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -131,8 +133,9 @@ function WhatsappPopUp() {
 
           {/* Close Icon */}
           <svg
-            className={`absolute w-8 h-8 transition-transform duration-300 ${isOpen ? 'rotate-0 scale-100' : '-rotate-90 scale-0'
-              }`}
+            className={`absolute w-7 h-7 sm:w-8 sm:h-8 transition-transform duration-300 ${
+              isOpen ? 'rotate-0 scale-100' : '-rotate-90 scale-0'
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -152,4 +155,4 @@ function WhatsappPopUp() {
   );
 }
 
-export default WhatsappPopUp
+export default WhatsappPopUp;

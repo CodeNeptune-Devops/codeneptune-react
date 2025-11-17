@@ -88,7 +88,7 @@ function OurServices({ data = dataSet }) {
                     {/* Left Side - Sticky Content */}
                     <div className="lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center py-8 sm:py-12 lg:py-20">
                         <div className="space-y-6 sm:space-y-8">
-                            <h2 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-start leading-tight'>
+                            <h2 className="text-2xl md:text-4xl lg:text-4xl font-medium leading-tight mb-6">
                                 Engineering the Future with AI Innovation.
                             </h2>
 

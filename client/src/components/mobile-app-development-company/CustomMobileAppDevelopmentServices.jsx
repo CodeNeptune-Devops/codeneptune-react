@@ -7,7 +7,8 @@ import ContactModal from '@/modals/ContactModal';
 
 function CustomMobileAppDevelopmentServices() {
     const [activeService, setActiveService] = useState(0);
-    const [isModalOpen,setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     const services = [
         {
@@ -24,9 +25,8 @@ function CustomMobileAppDevelopmentServices() {
                 "We leverage Kotlin and Java to build native Android apps, ensuring they are fast, responsive, and tailored to your business needs. From MVPs to enterprise solutions, our Android apps are built to engage users and drive growth.",
             bgGradient: "from-blue-500 via-blue-600 to-blue-800",
             contentGradient: "from-blue-700 to-blue-900",
+            textColor: "text-blue-600"
         },
-
-        // 2. iOS – rewritten exactly like screenshot
         {
             id: 2,
             title: "iOS Application Development",
@@ -35,15 +35,14 @@ function CustomMobileAppDevelopmentServices() {
             features: [
                 "Optimized for iPhones, iPads, Apple Watches, and Apple TVs.",
                 "Built with clean, scalable code for smooth performance.",
-                "Follows Apple’s strict design and security guidelines.",
+                "Follows Apple's strict design and security guidelines.",
             ],
             additionalText:
-                "Whether it’s a startup MVP or a full-featured enterprise solution, our iOS app development services help you reach Apple users with confidence. Let’s build your iOS app.",
+                "Whether it's a startup MVP or a full-featured enterprise solution, our iOS app development services help you reach Apple users with confidence. Let's build your iOS app.",
             bgGradient: "from-purple-500 via-purple-600 to-purple-800",
             contentGradient: "from-purple-700 to-purple-900",
+            textColor: "text-purple-600"
         },
-
-        // 3. Flutter – rewritten exactly like screenshot
         {
             id: 3,
             title: "Flutter Application Development",
@@ -55,12 +54,11 @@ function CustomMobileAppDevelopmentServices() {
                 "Scalable for MVPs and enterprise-level apps.",
             ],
             additionalText:
-                "As a trusted mobile app development company, we help you save time and money with cross-platform Flutter development. Let’s turn your idea into a Flutter-powered app.",
+                "As a trusted mobile app development company, we help you save time and money with cross-platform Flutter development. Let's turn your idea into a Flutter-powered app.",
             bgGradient: "from-cyan-500 via-cyan-600 to-cyan-800",
             contentGradient: "from-cyan-700 to-cyan-900",
+            textColor: "text-cyan-600"
         },
-
-        // 4. React Native – rewritten exactly like screenshot
         {
             id: 4,
             title: "React Native Application Development",
@@ -72,29 +70,27 @@ function CustomMobileAppDevelopmentServices() {
                 "Lower development cost, quicker launch time.",
             ],
             additionalText:
-                "If you’re looking for a reliable mobile app development company to build scalable cross-platform apps, React Native is a top choice. Build a powerful app with React Native.",
+                "If you're looking for a reliable mobile app development company to build scalable cross-platform apps, React Native is a top choice. Build a powerful app with React Native.",
             bgGradient: "from-indigo-500 via-indigo-600 to-indigo-800",
             contentGradient: "from-indigo-700 to-indigo-900",
+            textColor: "text-indigo-600"
         },
-
-        // 5. Custom Apps – rewritten exactly like screenshot
         {
             id: 5,
             title: "Custom Application Development",
             description:
-                "Your business is unique—your app should be too. We offer custom app development services to match your exact business goals, whether it’s a new startup or an existing brand going mobile.",
+                "Your business is unique—your app should be too. We offer custom app development services to match your exact business goals, whether it's a new startup or an existing brand going mobile.",
             features: [
                 "Built for your unique needs, not one-size-fits-all.",
                 "Designed with users and scalability in mind.",
                 "Integration-ready with your existing tools and systems.",
             ],
             additionalText:
-                "Code Neptune is the mobile app development company you can trust to build tailor-made digital products that grow with your business. Let’s customize your app to success.",
+                "Code Neptune is the mobile app development company you can trust to build tailor-made digital products that grow with your business. Let's customize your app to success.",
             bgGradient: "from-emerald-500 via-emerald-600 to-emerald-800",
             contentGradient: "from-emerald-700 to-emerald-900",
+            textColor: "text-emerald-600"
         },
-
-        // 6. eCommerce Apps – rewritten exactly like screenshot
         {
             id: 6,
             title: "eCommerce App Development",
@@ -109,9 +105,9 @@ function CustomMobileAppDevelopmentServices() {
                 "As a top-rated mobile app development company, we know how to design apps that grow your online business. Start your eCommerce app journey with us.",
             bgGradient: "from-orange-500 via-orange-600 to-orange-800",
             contentGradient: "from-orange-700 to-orange-900",
+            textColor: "text-orange-600"
         },
     ];
-
 
     const menuItems = [
         'Android Application Development',
@@ -122,8 +118,18 @@ function CustomMobileAppDevelopmentServices() {
         'eCommerce App Development'
     ];
 
+    const handleServiceChange = (index) => {
+        if (index !== activeService) {
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setActiveService(index);
+                setIsTransitioning(false);
+            }, 300); // Half of the transition duration for smooth effect
+        }
+    };
+
     return (
-        <div className={`min-h-screen bg-gradient-to-br ${services[activeService].bgGradient} p-4 md:p-8 lg:p-12 transition-all duration-700`}>
+        <div className={`min-h-screen bg-gradient-to-br ${services[activeService].bgGradient} p-4 md:p-8 lg:p-12 transition-all duration-1000 ease-in-out`}>
             <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 mb-10 text-white">
                 <div className='space-y-2'>
                     <p className='uppercase text-md text-white font-bold leading-relaxed [letter-spacing:4px]'>
@@ -140,18 +146,19 @@ function CustomMobileAppDevelopmentServices() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto">
-                <div className="  overflow-hidden">
+                <div className="overflow-hidden">
                     <div className="flex flex-col lg:flex-row">
                         {/* Sidebar Navigation */}
                         <div className="lg:w-2/5 p-6 md:p-8 lg:p-10 space-y-3">
                             {menuItems.map((item, index) => (
                                 <button
                                     key={index}
-                                    onClick={() => setActiveService(index)}
-                                    className={`w-full text-left px-6 py-4 rounded-xl transition-all duration-300 cursor-pointer ${activeService === index
-                                        ? 'bg-white text-blue-600 shadow-lg transform scale-105'
-                                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                                        }`}
+                                    onClick={() => handleServiceChange(index)}
+                                    className={`w-full text-left px-6 py-4 rounded-xl transition-all duration-500 ease-in-out cursor-pointer ${
+                                        activeService === index
+                                            ? `bg-white ${services[index].textColor} shadow-lg transform scale-105`
+                                            : 'text-white/70 hover:text-white hover:bg-white/10 hover:scale-102'
+                                    }`}
                                 >
                                     <span className="text-sm md:text-base font-medium">
                                         {String(index + 1).padStart(2, '0')}. {item}
@@ -161,9 +168,15 @@ function CustomMobileAppDevelopmentServices() {
                         </div>
 
                         {/* Content Area */}
-                        <div className={`lg:w-3/5 bg-gradient-to-br ${services[activeService].contentGradient} p-6 md:p-10 lg:p-12 text-white transition-all duration-700`}>
-                            <div className="space-y-6">
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                        <div className={`lg:w-3/5 bg-gradient-to-br ${services[activeService].contentGradient} p-6 md:p-10 lg:p-12 text-white transition-all duration-700 ease-in-out rounded-xl`}>
+                            <div 
+                                className={`space-y-6 transition-all duration-500 ease-in-out ${
+                                    isTransitioning 
+                                        ? 'opacity-0 translate-y-4' 
+                                        : 'opacity-100 translate-y-0'
+                                }`}
+                            >
+                                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
                                     {services[activeService].title}
                                 </h2>
 
@@ -173,11 +186,17 @@ function CustomMobileAppDevelopmentServices() {
 
                                 <div className="space-y-4">
                                     {services[activeService].features.map((feature, index) => (
-                                        <div key={index} className="flex items-start space-x-3">
+                                        <div 
+                                            key={index} 
+                                            className={`flex items-start space-x-3 transition-all duration-500 ease-in-out ${
+                                                isTransitioning 
+                                                    ? 'opacity-0 translate-x-4' 
+                                                    : 'opacity-100 translate-x-0'
+                                            }`}
+                                            style={{ transitionDelay: `${index * 50}ms` }}
+                                        >
                                             <div className="flex-shrink-0 mt-1">
-
                                                 <CheckCheck className="w-4 h-4 text-white" />
-
                                             </div>
                                             <p className="text-white/90 text-sm md:text-base leading-relaxed">
                                                 {feature}
@@ -190,22 +209,20 @@ function CustomMobileAppDevelopmentServices() {
                                     {services[activeService].additionalText}
                                 </p>
 
-                                <button onClick={() => setIsModalOpen(true)} className="flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
-                                    <ShinyText
-                                        text="Lets Build Together"
-                                        disabled={false}
-                                        speed={3}
-                                        className='custom-class'
-                                    />
+                                <button 
+                                    onClick={() => setIsModalOpen(true)} 
+                                    className={`flex uppercase flex-col sm:flex-row items-center gap-2 px-6 py-3 rounded-full font-medium border border-white/20 ${services[activeService].textColor} bg-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer`}
+                                >
+                                    Lets Build Together
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <ContactModal 
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
             />
         </div>
     );
