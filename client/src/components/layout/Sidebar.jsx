@@ -4,6 +4,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
+// Inline SVG components (no lucide-react needed)
+const CloseIcon = ({ className }) => (
+    <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+);
+
+const ChevronDown = ({ className }) => (
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <polyline points="6 9 12 15 18 9" />
+    </svg>
+);
+
 function Sidebar({
     mobileMenuRef,
     isMobileMenuOpen,
@@ -21,12 +35,11 @@ function Sidebar({
             className={`lg:hidden z-[9999] fixed right-0 top-0 h-full w-[85%] max-w-sm shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col bg-white text-black ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
             {/* Fixed Header with Close Button */}
-            <div className={`flex justify-between items-center px-4 py-5 border-b flex-shrink-0 border-gray-200`}>
-
-                 <Link  onClick={() => setIsMobileMenuOpen(false)} href='/'>
+            <div className="flex justify-between items-center px-4 py-5 border-b flex-shrink-0 border-gray-200">
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/'>
                     <Image
-                        className={`h-auto transition-all duration-300 w-20 lg:w-28`}
-                        src={`/cn-logo.svg`}
+                        className="h-auto transition-all duration-300 w-20 lg:w-28"
+                        src="/cn-logo.svg"
                         alt="Code Neptune Logo"
                         height={200}
                         width={200}
@@ -35,30 +48,21 @@ function Sidebar({
 
                 <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={` rounded-full transition-colors ${shouldUseScrolledColors ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
-                        }`}
+                    className="rounded-full transition-colors hover:bg-gray-100"
                     aria-label="Close menu"
                 >
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
+                    <CloseIcon className="w-6 h-6" />
                 </button>
             </div>
 
             {/* Scrollable Navigation Links */}
             <nav className='flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
-                <Link  onClick={() => setIsMobileMenuOpen(false)} href='/' className='hover:text-blue-500 py-2 block'>Home</Link>
-                <Link  onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>About</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/' className='hover:text-blue-500 py-2 block'>
+                    Home
+                </Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>
+                    About
+                </Link>
 
                 {/* Mobile Services Dropdown */}
                 <div className='flex flex-col'>
@@ -67,14 +71,7 @@ function Sidebar({
                         onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
                     >
                         Services
-                        <svg
-                            className={`w-4 h-4 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <ChevronDown className={`transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
                     </button>
 
                     {/* Mobile Services Submenu */}
@@ -85,7 +82,12 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>App Development</h4>
                             {appDevelopment.map((service) => (
-                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link 
+                                    onClick={() => setIsMobileMenuOpen(false)} 
+                                    key={service.name} 
+                                    href={service.href} 
+                                    className="block py-1 text-sm hover:text-blue-500"
+                                >
                                     {service.name}
                                 </Link>
                             ))}
@@ -93,7 +95,12 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Web Development</h4>
                             {webDevelopment.map((service) => (
-                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link 
+                                    onClick={() => setIsMobileMenuOpen(false)} 
+                                    key={service.name} 
+                                    href={service.href} 
+                                    className="block py-1 text-sm hover:text-blue-500"
+                                >
                                     {service.name}
                                 </Link>
                             ))}
@@ -101,7 +108,12 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Creative & Cloud</h4>
                             {creativeCloud.map((service) => (
-                                <Link onClick={() => setIsMobileMenuOpen(false)} key={service.name} href={service.href} className="block py-1 text-sm hover:text-blue-500">
+                                <Link 
+                                    onClick={() => setIsMobileMenuOpen(false)} 
+                                    key={service.name} 
+                                    href={service.href} 
+                                    className="block py-1 text-sm hover:text-blue-500"
+                                >
                                     {service.name}
                                 </Link>
                             ))}
@@ -109,14 +121,16 @@ function Sidebar({
                     </div>
                 </div>
 
-                {/* <Link href='/about' className='hover:text-blue-500 py-2 block'>Solutions</Link> */}
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/blog' className='hover:text-blue-500 py-2 block'>Blog</Link>
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/contact' className='hover:text-blue-500 py-2 block'>Contact Us</Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/blog' className='hover:text-blue-500 py-2 block'>
+                    Blog
+                </Link>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/contact' className='hover:text-blue-500 py-2 block'>
+                    Contact Us
+                </Link>
             </nav>
 
             {/* Fixed Footer with Contact Button */}
-            <div className={`p-4 border-t flex-shrink-0 ${shouldUseScrolledColors ? 'border-gray-200' : 'border-gray-700'
-                }`}>
+            <div className="p-4 border-t flex-shrink-0 border-gray-200">
                 <button
                     className='text-white px-6 py-3 rounded-full font-bold text-sm w-full transition-all duration-300 ease-in-out'
                     style={{
@@ -132,4 +146,4 @@ function Sidebar({
     )
 }
 
-export default Sidebar
+export default React.memo(Sidebar)
