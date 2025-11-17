@@ -120,7 +120,7 @@ export async function POST(request) {
       formType: formType || 'contact-form',
       submittedFrom: submittedFrom || '/',
       submittedAt: new Date(),
-      status: 'new',
+      status: 1,
       userAgent,
       referrer: referer,
       recaptchaVerified: recaptchaResult.success,

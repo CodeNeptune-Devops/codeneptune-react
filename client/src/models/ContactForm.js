@@ -68,9 +68,9 @@ const ContactFormSchema = new mongoose.Schema({
     default: '/'
   },
   status: {
-    type: String,
-    enum: ['new', 'contacted', 'in_progress', 'completed', 'archived'],
-    default: 'new'
+    type: Number,
+    enum: [0,1,2,3],
+    default: 1
   },
   submittedAt: {
     type: Date,

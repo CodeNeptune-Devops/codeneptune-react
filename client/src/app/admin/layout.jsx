@@ -2,13 +2,14 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { 
-  Home, 
-  ShoppingBag, 
-  BarChart3, 
-  Building2, 
-  Calendar, 
-  FileText, 
+import { useSelector } from "react-redux";
+import {
+  Home,
+  ShoppingBag,
+  BarChart3,
+  Building2,
+  Calendar,
+  FileText,
   GraduationCap,
   ScrollText,
   Users,
@@ -19,15 +20,22 @@ import {
   Search,
   Bell,
   Settings,
-  ChevronRight
+  ChevronRight,
+  ExternalLink, 
+  LogOut
 } from "lucide-react";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
+import Image from "next/image";
+import axiosInstance from "@/lib/axios";
+import { logout } from "@/store/slices/authSlice";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 const navigation = {
   overview: [
     { name: "Dashboard", icon: Home, href: "/admin/dashboard" },
-    { name: "Forms", icon: ScrollText, href: "/admin/form-submissions" },
+    { name: "Forms", icon: ScrollText, href: "/admin/form-submissions", requiresSuperAdmin: true },
   ],
   management: [
     { name: "User", icon: Users, href: "/admin/user", hasSubmenu: true },
@@ -39,7 +47,12 @@ const navigation = {
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // Get user role from Redux store
+  const userRole = useSelector((state) => state.auth.user?.role);
+  const isSuperAdmin = userRole === 'superadmin';
 
   // Don't show layout on login page
   const isLoginPage = pathname === "/admin/login";
@@ -47,6 +60,26 @@ export default function AdminLayout({ children }) {
   if (isLoginPage) {
     return children;
   }
+
+  // Filter navigation items based on role
+  const filteredOverview = navigation.overview.filter(item => {
+    if (item.requiresSuperAdmin) {
+      return isSuperAdmin;
+    }
+    return true;
+  });
+
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/auth/logout');
+      dispatch(logout());
+      router.push('/admin/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      dispatch(logout());
+      router.push('/admin/login');
+    }
+  };
 
   return (
     <ProtectedRoute>
@@ -62,32 +95,39 @@ export default function AdminLayout({ children }) {
               >
                 {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
-              
+
               {/* Logo */}
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">
-                  M
+                <div className="w-28 h-28 flex items-center justify-center text-white font-bold">
+                  <Image
+                    src={'/cn-logo.svg'}
+                    alt="Logo"
+                    height={200}
+                    width={200}
+                    className="h-full w-full"
+                  />
                 </div>
-                <span className="font-semibold text-gray-900 hidden sm:block">Team 1</span>
-                <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded hidden sm:block">
-                  Free
-                </span>
               </div>
             </div>
 
             {/* Right side */}
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-gray-100 rounded-lg">
-                <Search size={20} className="text-gray-600" />
+              <Link 
+              href={'/'}
+              target="_blank"
+                className="flex items-center gap-2 px-4 py-2 text-sm rounded-md bg-purple-100 text-purple-600 hover:bg-purple-200 transition-all duration-300 cursor-pointer"
+              >
+                <ExternalLink size={16} />
+                View Site
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 text-sm rounded-md bg-red-100 text-red-600 hover:bg-red-200 transition-all duration-300 cursor-pointer"
+              >
+                <LogOut size={16} />
+                Logout
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg relative">
-                <Bell size={20} className="text-gray-600" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg">
-                <Settings size={20} className="text-gray-600" />
-              </button>
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full ml-2"></div>
             </div>
           </div>
         </header>
@@ -105,7 +145,7 @@ export default function AdminLayout({ children }) {
                 Overview
               </h3>
               <nav className="space-y-1">
-                {navigation.overview.map((item) => {
+                {filteredOverview.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
                   return (
