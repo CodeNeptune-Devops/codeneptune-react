@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import Loader from "../loader/Loader";
 import WhatsappPopUp from "../WhatsappPopUp";
 
-const Header = dynamic(() => import("../layout/Header"), {
+const Header = dynamic(() => import("./Header"), {
   loading: () => <Loader />,
 });
 
