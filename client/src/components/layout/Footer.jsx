@@ -71,7 +71,12 @@ function Footer() {
     <footer className="w-full flex flex-col justify-center items-center z-[52] ">
 
 
-      <div className="w-full bg-[#171717] text-white">
+      <div className="w-full bg-[#171717] text-white relative z-10">
+
+        <div className='-z-5   inset-0 absolute flex justify-center items-end'>
+           <h5 className='hidden xl:block text-[13.5rem] text-[#1e1e1e] font-black uppercase  -mb-20'>Lets Build It</h5>
+        </div>
+
         <div className="max-w-7xl mx-auto w-full px-4 pt-20 py-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-center items-start justify-items-center gap-5">
 

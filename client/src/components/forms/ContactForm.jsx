@@ -56,7 +56,7 @@ export default function ContactForm() {
     // ✅ LOAD RECAPTCHA WHEN FORM ENTERS VIEWPORT
     // ============================================================
     useEffect(() => {
-        const element = document.getElementById("contact-form-container");
+        const element = document.getElementById("contact-form");
         let observer;
 
         const loadRecaptcha = () => {
@@ -190,7 +190,7 @@ export default function ContactForm() {
 
     return (
         <div
-            id="contact-form-container"
+            id="contact-form"
             className='w-full pt-12 sm:pt-16 md:pt-24 px-4 sm:px-6 lg:px-8'
         >
             <div className='w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-start items-start gap-5 sm:gap-8 lg:gap-5 relative'>

@@ -16,11 +16,78 @@ import Location from "@/components/Location";
 import OurTrustedPartners from "@/components/OutTrustedPartners";
 import TechStack from "@/components/TechStack";
 import Testimonials from "@/components/Testimonials";
-import Image from "next/image";
+import Script from "next/script";
 
 export default function Home() {
   return (
+    <>
+    {/* Organization Schema */}
+      <Script
+        id="organization-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Code Neptune Technologies Pvt Ltd",
+            "url": "https://www.codeneptune.com/",
+            "logo": "",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-63829 58105",
+              "contactType": "sales",
+              "areaServed": [
+                "US","GB","CA","AU","FR","DE","IN","MY","NL","NZ",
+                "NG","RU","LK","AE","ZW","002","150"
+              ],
+              "availableLanguage": "en"
+            }
+          })
+        }}
+      />
+
+      {/* LocalBusiness Schema */}
+      <Script
+        id="localbusiness-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Code Neptune Technologies Pvt Ltd",
+            "image": "",
+            "@id": "",
+            "url": "https://www.codeneptune.com/",
+            "telephone": "+91-63829 58105",
+            "priceRange": "$$$",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "No. 624, 3rd Floor – S2, Khivraj Building",
+              "addressLocality": "Anna Salai, Chennai",
+              "postalCode": "600006",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 13.0653908,
+              "longitude": 80.2599582
+            },
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday","Tuesday","Wednesday",
+                "Thursday","Friday","Saturday"
+              ],
+              "opens": "10:00",
+              "closes": "19:15"
+            }
+          })
+        }}
+      />
     <div>
+
       <Hero />
       <BuildIntelligentValue />
       <OurImpactInNumbers />
@@ -40,5 +107,6 @@ export default function Home() {
       <ContactForm /> 
       <Location /> 
     </div>
+    </>
   );
 }

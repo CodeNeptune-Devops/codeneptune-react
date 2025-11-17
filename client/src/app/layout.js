@@ -4,33 +4,33 @@ import { headers } from "next/headers";
 import Layout from "@/components/layout/Layout";
 import ReactQueryProvider from "./providers";
 import { ReduxProvider } from "@/store/provider";
+import Script from "next/script";   // <-- ADD THIS
 
-// inter font style with optimized display for better load speed
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap", // Improves font loading performance
+  display: "swap",
 });
 
-// no follow no index for vercel preview and default domains
 export async function generateMetadata() {
   const h = await headers();
   const host = h.get("host") || "";
-  const isNoIndex = host === "codeneptune-react.vercel.app/" ;
+  const isNoIndex = host === "codeneptune-react.vercel.app/";
 
   return {
     title: {
       default: "Code Neptune - Mobile App & Web Development Company",
-      template: "%s | Code Neptune"
+      template: "%s | Code Neptune",
     },
-    description: "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites for businesses worldwide.",
+    description:
+      "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites for businesses worldwide.",
     keywords: [
       "mobile app development",
       "web development",
       "custom apps",
       "responsive websites",
       "digital solutions",
-      "software development"
+      "software development",
     ],
     authors: [{ name: "Code Neptune" }],
     creator: "Code Neptune",
@@ -39,12 +39,10 @@ export async function generateMetadata() {
     icons: {
       icon: [
         { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon-16.png", sizes: "16x16", type: "image/png" }
+        { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
       ],
       shortcut: "/cn-favicon.ico",
-      apple: [
-        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
-      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
     },
     manifest: "/manifest.json",
     robots: isNoIndex
@@ -55,11 +53,12 @@ export async function generateMetadata() {
       locale: "en_US",
       url: `https://${host}`,
       title: "Code Neptune - Mobile App & Web Development Company",
-      description: "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites.",
+      description:
+        "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites.",
       siteName: "Code Neptune",
       images: [
         {
-          url: "/og-image.png", // You'll need to add this image
+          url: "/og-image.png",
           width: 1200,
           height: 630,
           alt: "Code Neptune - Mobile App & Web Development",
@@ -69,52 +68,68 @@ export async function generateMetadata() {
     twitter: {
       card: "summary_large_image",
       title: "Code Neptune - Mobile App & Web Development Company",
-      description: "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites.",
-      images: ["/twitter-image.png"], // You'll need to add this image
+      description:
+        "Leading mobile app development and web development company. We create innovative digital solutions, custom apps, and responsive websites.",
+      images: ["/twitter-image.png"],
     },
     alternates: {
       canonical: `https://${host}`,
     },
-    verification: {
-      // Add your verification codes here
-      // google: "your-google-site-verification-code",
-      // bing: "your-bing-verification-code",
-    },
   };
 }
-
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Preconnect to external domains for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Enhanced favicon setup */}
-        <link rel="icon" type="image/x-icon" href="/cn-favicon.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="/cn-favicon.ico" />
+        {/* Google Analytics (GA4) */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-4WFWR3ERYM"
+        />
+        <Script id="ga-script" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4WFWR3ERYM');
+          `}
+        </Script>
+
+        {/* Preconnect */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
+        {/* Favicons */}
+        <link rel="icon" href="/cn-favicon.ico" />
+        <link rel="shortcut icon" href="/cn-favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-        {/* Additional meta tags for better SEO */}
+        {/* Meta */}
         <meta name="theme-color" content="#000000" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
+
       <body
         className={`${inter.variable} font-sans`}
-        style={{ fontFamily: "var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
+        style={{
+          fontFamily:
+            "var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+        }}
       >
-       <ReduxProvider>
-        <ReactQueryProvider>
-         <Layout>
-          {children}
-        </Layout>
-       </ReactQueryProvider>
-       </ReduxProvider>
+        <ReduxProvider>
+          <ReactQueryProvider>
+            <Layout>{children}</Layout>
+          </ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

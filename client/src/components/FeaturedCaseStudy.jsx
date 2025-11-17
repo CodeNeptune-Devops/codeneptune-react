@@ -138,10 +138,10 @@ function FeaturedCaseStudy() {
                   {caseStudies.map((study, index) => (
                     <div
                       key={index}
-                      className=" flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden"
+                      className=" flex-shrink-0 w-[98%] sm:w-[85%] md:w-[80%] h-[85vh] sm:h-[65vh] md:h-[60vh] lg:h-[70vh] relative rounded-xl sm:rounded-2xl overflow-hidden border border-blue-500"
                       style={{
                         backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.2) 100%), url('${study.bgImage}')`,
-                        backgroundSize: '100% 100%',
+                        backgroundSize: '105% 100%',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat'
                       }}
