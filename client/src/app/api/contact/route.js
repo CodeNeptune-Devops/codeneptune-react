@@ -6,182 +6,162 @@ import ContactForm from '@/models/ContactForm';
 import connectDB from '@/lib/db';
 import { sendContactEmail } from "@/lib/server/sendEmail";
 
-// ✅ Verify reCAPTCHA with Google
+
+
 async function verifyRecaptcha(token) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
   if (!secretKey) {
-    console.error('❌ RECAPTCHA_SECRET_KEY not configured');
-    throw new Error('Server configuration error');
+    console.error("❌ Missing RECAPTCHA_SECRET_KEY");
+    throw new Error("Server misconfigured");
   }
 
-  try {
-    const response = await fetch(
-      "https://www.google.com/recaptcha/api/siteverify",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `secret=${secretKey}&response=${token}`,
-      }
-    );
+  const params = new URLSearchParams();
+  params.append("secret", secretKey);
+  params.append("response", token);
 
-    const result = await response.json();
-    console.log('🔐 reCAPTCHA verification result:', result);
-    
-    return result;
-  } catch (error) {
-    console.error('❌ reCAPTCHA verification error:', error);
-    throw error;
-  }
+  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params,
+  });
+
+  const result = await response.json();
+  console.log("🔐 RECAPTCHA RESULT:", result);
+  return result;
 }
 
+// -----------------------------------------------------
+//  POST CONTROLLER
+// -----------------------------------------------------
 export async function POST(request) {
   try {
     await connectDB();
-
     const body = await request.json();
-    const { name, mobile, email, foundUs, message, formType, submittedFrom, recaptchaToken, service } = body;
 
-    console.log('📥 Received form submission:', {
+    const {
+      name,
+      mobile,
+      email,
+      foundUs,
+      message,
+      formType,
+      submittedFrom,
+      recaptchaToken,
+      service
+    } = body;
+
+    console.log("📩 Received contact form:", {
       name,
       email,
       formType,
-      hasRecaptchaToken: !!recaptchaToken,
-      environment: process.env.NODE_ENV
+      hasRecaptchaToken: !!recaptchaToken
     });
 
-    // ============================================================
-    // ✅ BASIC VALIDATION
-    // ============================================================
-    if (!name || !mobile || !email) {
-      return NextResponse.json({ error: "Name, mobile & email are required" }, { status: 400 });
+    // -------------------------
+    // BASIC VALIDATION
+    // -------------------------
+    if (!name || !mobile || !email)
+      return NextResponse.json(
+        { error: "Name, mobile & email are required." },
+        { status: 400 }
+      );
+
+    if (formType !== "contact-modal" && !message)
+      return NextResponse.json(
+        { error: "Message is required." },
+        { status: 400 }
+      );
+
+    if (formType === "contact-page-form" && !service)
+      return NextResponse.json(
+        { error: "Service selection is required." },
+        { status: 400 }
+      );
+
+    // -------------------------
+    //  RECAPTCHA VALIDATION (Local + Prod)
+    // -------------------------
+    if (!recaptchaToken)
+      return NextResponse.json(
+        { error: "reCAPTCHA is required." },
+        { status: 400 }
+      );
+
+    const result = await verifyRecaptcha(recaptchaToken);
+
+    if (!result.success) {
+      console.error("❌ reCAPTCHA FAILED:", result);
+      return NextResponse.json(
+        { error: "Failed reCAPTCHA verification." },
+        { status: 400 }
+      );
     }
 
-    if (formType !== "contact-modal" && !message) {
-      return NextResponse.json({ error: "Message is required" }, { status: 400 });
-    }
+    // -------------------------
+    //  EMAIL & PHONE VALIDATION
+    // -------------------------
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return NextResponse.json({ error: "Invalid email." }, { status: 400 });
 
-    if (formType === "contact-page-form" && !service) {
-      return NextResponse.json({ error: "Service selection is required" }, { status: 400 });
-    }
+    if (!/^[0-9]{10,15}$/.test(mobile.replace(/[^\d]/g, "")))
+      return NextResponse.json({ error: "Invalid mobile number." }, { status: 400 });
 
-    // ============================================================
-    // ✅ RECAPTCHA VERIFICATION (PRODUCTION ONLY)
-    // ============================================================
-    const isDev = process.env.NODE_ENV === "development";
-    const hasRecaptchaSecret = !!process.env.RECAPTCHA_SECRET_KEY;
-
-    if (!isDev) {
-      // Production mode - reCAPTCHA is REQUIRED
-      if (!recaptchaToken) {
-        console.error('❌ No reCAPTCHA token provided in production');
-        return NextResponse.json({ 
-          error: "reCAPTCHA verification is required" 
-        }, { status: 400 });
-      }
-
-      if (!hasRecaptchaSecret) {
-        console.error('❌ RECAPTCHA_SECRET_KEY not configured');
-        return NextResponse.json({ 
-          error: "Server configuration error. Please contact support." 
-        }, { status: 500 });
-      }
-
-      try {
-        const verificationResult = await verifyRecaptcha(recaptchaToken);
-
-        if (!verificationResult.success) {
-          console.error('❌ reCAPTCHA verification failed:', verificationResult);
-          return NextResponse.json({ 
-            error: "reCAPTCHA verification failed. Please try again." 
-          }, { status: 400 });
-        }
-
-        console.log('✅ reCAPTCHA verified successfully');
-      } catch (error) {
-        console.error('❌ reCAPTCHA verification error:', error);
-        return NextResponse.json({ 
-          error: "Failed to verify reCAPTCHA. Please try again." 
-        }, { status: 500 });
-      }
-    } else {
-      console.log('⚠️ Development mode - skipping reCAPTCHA verification');
-    }
-
-    // ============================================================
-    // ✅ EMAIL & PHONE VALIDATION
-    // ============================================================
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
-    }
-
-    if (!/^[0-9]{10,15}$/.test(mobile.replace(/[\s+()-]/g, ""))) {
-      return NextResponse.json({ error: "Invalid mobile number format" }, { status: 400 });
-    }
-
-    // ============================================================
-    // ✅ CREATE DATABASE ENTRY
-    // ============================================================
+    // -------------------------
+    // CREATE DB ENTRY
+    // -------------------------
     const newEntry = await ContactForm.create({
       name,
       mobile,
       email,
-      message: message || '',
-      service: service || null,
+      message: message || "",
       foundUs: foundUs || "not_specified",
       formType: formType || "contact-form",
       submittedFrom: submittedFrom || "/",
-      submittedAt: new Date(),
+      service: service || null,
+      recaptchaVerified: true, // Always true here since verification passed
       status: 1,
+      submittedAt: new Date(),
     });
 
-    console.log('✅ Form saved to database:', newEntry._id);
+    console.log("✅ Form saved:", newEntry._id);
 
-    // ============================================================
-    // ⚡ SEND EMAIL IN BACKGROUND (NON-BLOCKING)
-    // ============================================================
+    // -------------------------
+    // SEND EMAIL NON-BLOCKING
+    // -------------------------
     setImmediate(() => {
       sendContactEmail({
         name,
         email,
         mobile,
         message,
-        service,
         foundUs,
+        service,
         formType,
         submittedFrom,
-      }).catch(err => {
-        console.error('❌ Email sending failed:', err);
-      });
+      }).catch((err) => console.error("Email Error:", err));
     });
 
-    // ============================================================
-    // ✅ RETURN SUCCESS RESPONSE
-    // ============================================================
     return NextResponse.json(
-      { 
-        success: true, 
-        message: "Thank you! Your message has been received.", 
-        id: newEntry._id 
+      {
+        success: true,
+        message: "Thank you! Your message has been received.",
+        id: newEntry._id,
       },
       { status: 201 }
     );
 
   } catch (err) {
     console.error("❌ Contact Form Error:", err);
-
-    // Handle duplicate email error
-    if (err.code === 11000) {
-      return NextResponse.json({ 
-        error: "This email has already been submitted recently." 
-      }, { status: 409 });
-    }
-
-    return NextResponse.json({ 
-      error: "Server error. Please try again later." 
-    }, { status: 500 });
+    return NextResponse.json(
+      { error: "Server error. Please try again later." },
+      { status: 500 }
+    );
   }
 }
+
 
 export async function GET(request) {
   try {

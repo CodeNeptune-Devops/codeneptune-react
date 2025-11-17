@@ -73,7 +73,7 @@ function Footer() {
 
       <div className="w-full bg-[#171717] text-white relative z-10">
 
-        <div className='-z-5   inset-0 absolute flex justify-center items-end'>
+        <div className='-z-5 hidden xl:block   inset-0 absolute flex justify-center items-end overflow-hidden'>
            <h5 className='hidden xl:block text-[13.5rem] text-[#1e1e1e] font-black uppercase  -mb-20'>Lets Build It</h5>
         </div>
 
