@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import ContactForm from '@/models/ContactForm';
-import { connectDB } from "@/lib/db";
+import connectDB from '@/lib/db';
 import nodemailer from 'nodemailer';
 import fs from 'fs';
 import path from 'path';

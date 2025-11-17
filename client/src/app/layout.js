@@ -3,6 +3,7 @@ import "./globals.css";
 import { headers } from "next/headers";
 import Layout from "@/components/layout/Layout";
 import ReactQueryProvider from "./providers";
+import { ReduxProvider } from "@/store/provider";
 
 // inter font style with optimized display for better load speed
 const inter = Inter({
@@ -107,11 +108,13 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} font-sans`}
         style={{ fontFamily: "var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
-       <ReactQueryProvider>
+       <ReduxProvider>
+        <ReactQueryProvider>
          <Layout>
           {children}
         </Layout>
        </ReactQueryProvider>
+       </ReduxProvider>
       </body>
     </html>
   );

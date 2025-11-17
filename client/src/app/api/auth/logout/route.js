@@ -1,18 +1,21 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextResponse } from 'next/server';
+import { clearAuthCookies } from '@/utils/cookies';
 
-export async function POST() {
-  // MUST await cookies()
-  const cookieStore = await cookies();
+export async function POST(request) {
+  try {
+    const response = NextResponse.json(
+      { success: true, message: 'Logged out successfully' },
+      { status: 200 }
+    );
 
-  cookieStore.set("cnAdmin", "", {
-    maxAge: 0,
-    httpOnly: true,
-    secure: true,
-    path: "/",
-  });
+    clearAuthCookies(response);
 
-  return NextResponse.json({
-    message: "Logged out successfully",
-  });
+    return response;
+  } catch (error) {
+    console.error('Logout error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }

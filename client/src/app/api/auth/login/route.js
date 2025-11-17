@@ -1,58 +1,95 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import Admin from "@/models/Admin";
-import { connectDB } from "@/lib/db";
-import { generateToken } from "@/lib/generateToken";
-import bcrypt from "bcryptjs";
+import { NextResponse } from 'next/server';
+import connectDB from '@/lib/db';
+import User from '@/models/User';
+import { generateAccessToken, generateRefreshToken } from '@/lib/jwt';
+import { setRefreshTokenCookie } from '@/utils/cookies';
+import { validateEmail, sanitizeInput } from '@/utils/validation';
 
 export async function POST(request) {
   try {
-    const { email, password } = await request.json();
-
     await connectDB();
 
+    const { email, password } = await request.json();
+
+    // Validation
     if (!email || !password) {
       return NextResponse.json(
-        { message: "Email and password are required" },
+        { success: false, message: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    const user = await Admin.findOne({ email });
+    if (!validateEmail(email)) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid email format' },
+        { status: 400 }
+      );
+    }
+
+    // Find user
+    const user = await User.findOne({ email: sanitizeInput(email.toLowerCase()) });
     if (!user) {
       return NextResponse.json(
-        { message: "Invalid email or password" },
+        { success: false, message: 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
+    // Check if user is active
+    if (!user.isActive) {
       return NextResponse.json(
-        { message: "Invalid email or password" },
+        { success: false, message: 'Account is deactivated' },
+        { status: 403 }
+      );
+    }
+
+    // Verify password
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    const token = await generateToken(user);
+    // Update last login
+    user.lastLogin = new Date();
+    await user.save();
 
-    // FIXED: cookies() must be awaited
-    const cookieStore = await cookies();
-    cookieStore.set("cnAdmin", token, {
-      maxAge: 24 * 60 * 60, // 1 day
-      httpOnly: true,
-      secure: true,
-      path: "/",
+    // Generate tokens
+    const accessToken = generateAccessToken({
+      userId: user._id,
+      email: user.email,
+      role: user.role,
     });
 
-    return NextResponse.json({
-      message: "Sign in successful",
-      data: { email },
+    const refreshToken = generateRefreshToken({
+      userId: user._id,
     });
+
+    // Set refresh token in HTTP-only cookie
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: 'Login successful',
+        accessToken,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
+      },
+      { status: 200 }
+    );
+
+    setRefreshTokenCookie(response, refreshToken);
+
+    return response;
   } catch (error) {
-    console.log("Error from signin route", error);
+    console.error('Login error:', error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { success: false, message: 'Internal server error' },
       { status: 500 }
     );
   }
