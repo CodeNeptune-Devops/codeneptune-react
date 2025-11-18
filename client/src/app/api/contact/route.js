@@ -40,7 +40,13 @@ async function verifyRecaptcha(token) {
 // -----------------------------------------------------
 export async function POST(request) {
   try {
+    console.log("\n==============================");
+    console.log("📥 NEW CONTACT FORM SUBMISSION");
+    console.log("==============================");
+
     await connectDB();
+    console.log("🔗 MongoDB Connected");
+
     const body = await request.json();
 
     const {
@@ -55,37 +61,35 @@ export async function POST(request) {
       service,
     } = body;
 
-    console.log("📩 Received contact form:", {
+    console.log("📩 Form Received:", {
       name,
       email,
+      mobile,
       formType,
+      submittedFrom,
       hasRecaptchaToken: !!recaptchaToken,
     });
 
-    if (!name || !mobile || !email)
+    // -----------------------------
+    // VALIDATION SECTION
+    // -----------------------------
+    if (!name || !mobile || !email) {
+      console.warn("⚠️ Missing required fields");
       return NextResponse.json(
         { error: "Name, mobile & email are required." },
         { status: 400 }
       );
+    }
 
-    if (formType !== "contact-modal" && !message)
-      return NextResponse.json(
-        { error: "Message is required." },
-        { status: 400 }
-      );
-
-    if (formType === "contact-page-form" && !service)
-      return NextResponse.json(
-        { error: "Service selection is required." },
-        { status: 400 }
-      );
-
-    if (!recaptchaToken)
+    if (!recaptchaToken) {
+      console.warn("⚠️ No reCAPTCHA token received");
       return NextResponse.json(
         { error: "reCAPTCHA is required." },
         { status: 400 }
       );
+    }
 
+    console.log("🔐 Verifying reCAPTCHA...");
     const result = await verifyRecaptcha(recaptchaToken);
 
     if (!result.success) {
@@ -95,22 +99,12 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    console.log("🟢 reCAPTCHA Passed");
 
-    // -------------------------
-    // EMAIL / PHONE VALIDATION
-    // -------------------------
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      return NextResponse.json({ error: "Invalid email." }, { status: 400 });
-
-    if (!/^[0-9]{10,15}$/.test(mobile.replace(/[^\d]/g, "")))
-      return NextResponse.json(
-        { error: "Invalid mobile number." },
-        { status: 400 }
-      );
-
-    // -------------------------
+    // -----------------------------
     // SAVE TO DATABASE
-    // -------------------------
+    // -----------------------------
+    console.log("💾 Saving form to database...");
     const newEntry = await ContactForm.create({
       name,
       mobile,
@@ -125,14 +119,21 @@ export async function POST(request) {
       submittedAt: new Date(),
     });
 
-    console.log("✅ Form saved:", newEntry._id);
+    console.log("✅ Form Saved to DB:", newEntry._id);
 
-    // -------------------------
-    // SEND EMAIL (NON-BLOCKING) - NOW DYNAMIC!
-    // -------------------------
+    // -----------------------------
+    // SEND EMAIL ASYNC
+    // -----------------------------
+    console.log("📨 Preparing to send email...");
+
     setImmediate(async () => {
+      console.log("\n-----------------------------");
+      console.log("📤 EMAIL SEND JOB STARTED");
+      console.log("-----------------------------");
+
       try {
-        // Use sendEmailWithFallback for automatic failover
+        console.log("📡 Sending email using dynamic provider...");
+
         await sendEmailWithFallback(
           "contact",
           {
@@ -151,12 +152,24 @@ export async function POST(request) {
             replyTo: email,
           }
         );
-        console.log("✅ Email sent successfully via dynamic provider");
+
+        console.log("📬 EMAIL SUCCESSFULLY SENT");
+        console.log("📦 Provider:", process.env.MAIN_EMAIL_PROVIDER || "smtp");
       } catch (err) {
-        console.error("❌ Email Error:", err);
-        // Optionally log to error tracking service
+        console.error("❌ EMAIL SENDING FAILED");
+        console.error("Error:", err.message);
       }
+
+      console.log("-----------------------------");
+      console.log("📤 EMAIL SEND JOB FINISHED");
+      console.log("-----------------------------\n");
     });
+
+    // -----------------------------
+    // RESPONSE TO FRONTEND
+    // -----------------------------
+    console.log("🎉 Response sent to client");
+    console.log("==============================\n");
 
     return NextResponse.json(
       {
@@ -166,14 +179,17 @@ export async function POST(request) {
       },
       { status: 201 }
     );
+
   } catch (err) {
-    console.error("❌ Contact Form Error:", err);
+    console.error("❌ UNEXPECTED SERVER ERROR:", err);
+    console.log("==============================\n");
     return NextResponse.json(
       { error: "Server error. Please try again later." },
       { status: 500 }
     );
   }
 }
+
 
 // -----------------------------------------------------
 //  GET: FETCH SUBMISSIONS
