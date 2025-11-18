@@ -25,11 +25,16 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
-// Response interceptor - simplified
+// Response interceptor - fixed to prevent infinite loop
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    // CRITICAL: Don't intercept refresh endpoint failures
+    if (originalRequest.url?.includes('/auth/refresh')) {
+      return Promise.reject(error);
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
@@ -56,8 +61,15 @@ axiosInstance.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
         
+        // Clear any auth state here if using Redux/Context
         if (typeof window !== 'undefined') {
-          window.location.href = '/admin/login';
+          // Optional: Clear local storage or cookies
+          // localStorage.removeItem('user');
+          
+          // Only redirect if not already on login page
+          if (!window.location.pathname.includes('/admin/login')) {
+            window.location.href = '/admin/login';
+          }
         }
         
         return Promise.reject(err);

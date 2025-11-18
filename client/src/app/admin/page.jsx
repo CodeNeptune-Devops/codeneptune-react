@@ -13,47 +13,60 @@ export default function AdminPage() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const checkAuthAndRedirect = async () => {
-      // If already authenticated, redirect to dashboard
-      if (isAuthenticated && user) {
-        router.replace('/admin/dashboard');
-        return;
-      }
+    let mounted = true;
 
-      // Try to refresh token to check if user has valid session
+    const checkAuthAndRedirect = async () => {
       try {
+        // If already authenticated, redirect to dashboard
+        if (isAuthenticated && user) {
+          if (mounted) router.replace('/admin/dashboard');
+          return;
+        }
+
+        // Try to refresh token to check if user has valid session
         const { data } = await axiosInstance.post('/auth/refresh');
         
-        if (data.success && data.user) {
+        if (!mounted) return;
+
+        if (data?.success && data?.user) {
           dispatch(setCredentials({
             user: data.user,
             accessToken: data.accessToken,
           }));
-          
-          // Redirect to dashboard after successful refresh
           router.replace('/admin/dashboard');
         } else {
-          // No valid session, redirect to login
           router.replace('/admin/login');
         }
       } catch (error) {
-        // Token refresh failed, redirect to login
-        router.replace('/admin/login');
+        console.error('Auth check failed:', error);
+        if (mounted) {
+          router.replace('/admin/login');
+        }
       } finally {
-        setChecking(false);
+        if (mounted) {
+          setChecking(false);
+        }
       }
     };
 
     checkAuthAndRedirect();
-  }, [isAuthenticated, user, router, dispatch]);
+
+    return () => {
+      mounted = false;
+    };
+  }, []); // Empty deps to run only once
 
   // Show loading state while checking authentication
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Redirecting...</p>
+  if (checking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Redirecting...</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 }

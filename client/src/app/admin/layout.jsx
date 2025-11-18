@@ -59,7 +59,7 @@ export default function AdminLayout({ children }) {
   const isLoginPage = pathname === "/admin/login";
 
   if (isLoginPage) {
-    return <PublicRoute>{children}</PublicRoute>;
+    return children;
   }
 
   // Filter navigation items based on role
