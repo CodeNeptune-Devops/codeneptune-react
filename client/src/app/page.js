@@ -2,7 +2,6 @@ import Faqs from "@/components/Faqs";
 import ContactForm from "@/components/forms/ContactForm";
 import BuildIntelligentValue from "@/components/home/BuildIntelligentValue";
 import FeaturedCaseStudy from "@/components/FeaturedCaseStudy";
-import Hero from "@/components/Hero";
 import HowWeBuildIntelligentSolutions from "@/components/home/HowWeBuildIntelligentSolutions";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
 import OurImpactInNumbers from "@/components/home/OurImpactInNumbers";
@@ -17,6 +16,7 @@ import OurTrustedPartners from "@/components/OutTrustedPartners";
 import TechStack from "@/components/TechStack";
 import Testimonials from "@/components/Testimonials";
 import Script from "next/script";
+import Hero from "@/components/home/Hero";
 
 export default function Home() {
   return (
