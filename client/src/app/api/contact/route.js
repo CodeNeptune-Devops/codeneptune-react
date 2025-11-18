@@ -4,10 +4,10 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import ContactForm from "@/models/ContactForm";
 import connectDB from "@/lib/db";
-import { sendEmail, sendEmailWithFallback } from "@/lib/server/emailService";
+import { sendEmailWithFallback } from "@/lib/server/emailService";
 
 // -----------------------------------------------------
-//  VERIFY RECAPTCHA
+// VERIFY RECAPTCHA
 // -----------------------------------------------------
 async function verifyRecaptcha(token) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
@@ -122,48 +122,36 @@ export async function POST(request) {
     console.log("✅ Form Saved to DB:", newEntry._id);
 
     // -----------------------------
-    // SEND EMAIL ASYNC
+    // SEND EMAIL (NOW SYNCHRONOUS)
     // -----------------------------
-    console.log("📨 Preparing to send email...");
+    console.log("📨 Sending email BEFORE sending response...");
 
-    setImmediate(async () => {
-      console.log("\n-----------------------------");
-      console.log("📤 EMAIL SEND JOB STARTED");
-      console.log("-----------------------------");
+    try {
+      const emailResult = await sendEmailWithFallback(
+        "contact",
+        {
+          fullName: name,
+          email,
+          phoneNumber: mobile,
+          message: message || "",
+          service: service || "",
+          foundUs: foundUs || "",
+          formType: formType || "",
+          submittedFrom: submittedFrom || "",
+        },
+        {
+          to: process.env.RECEIVER_EMAIL,
+          subject: `New Contact Form Submission - ${name}`,
+          replyTo: email,
+        }
+      );
 
-      try {
-        console.log("📡 Sending email using dynamic provider...");
-
-        await sendEmailWithFallback(
-          "contact",
-          {
-            fullName: name,
-            email,
-            phoneNumber: mobile,
-            message: message || "",
-            service: service || "",
-            foundUs: foundUs || "",
-            formType: formType || "",
-            submittedFrom: submittedFrom || "",
-          },
-          {
-            to: process.env.RECEIVER_EMAIL,
-            subject: `New Contact Form Submission - ${name}`,
-            replyTo: email,
-          }
-        );
-
-        console.log("📬 EMAIL SUCCESSFULLY SENT");
-        console.log("📦 Provider:", process.env.MAIN_EMAIL_PROVIDER || "smtp");
-      } catch (err) {
-        console.error("❌ EMAIL SENDING FAILED");
-        console.error("Error:", err.message);
-      }
-
-      console.log("-----------------------------");
-      console.log("📤 EMAIL SEND JOB FINISHED");
-      console.log("-----------------------------\n");
-    });
+      console.log("📬 EMAIL SENT SUCCESSFULLY");
+      console.log("📦 Provider:", emailResult?.provider || "smtp");
+    } catch (emailErr) {
+      console.error("❌ EMAIL SENDING FAILED");
+      console.error("Error:", emailErr.message);
+    }
 
     // -----------------------------
     // RESPONSE TO FRONTEND
