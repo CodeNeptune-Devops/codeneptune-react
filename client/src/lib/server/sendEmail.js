@@ -1,37 +1,29 @@
 // src/lib/server/sendEmail.js
 import nodemailer from "nodemailer";
-import fs from "fs";
-import path from "path";
+import { getEmailTemplate } from "./emailTemplates.js";
 
-/**
- * Send contact email via SMTP
- * @param {string} templateType - Template type (e.g., 'contact')
- * @param {object} templateData - Data for template placeholders
- * @param {object} emailOptions - Email configuration (to, subject, replyTo)
- */
 export async function sendContactEmail(templateType, templateData, emailOptions) {
   try {
+    console.log("=========== 📩 EMAIL DEBUG START ===========");
+
+    // Log incoming payload
+    console.log("➡️ Template Type:", templateType);
+    console.log("➡️ Template Data:", templateData);
+    console.log("➡️ Email Options:", emailOptions);
+
     // Validate template type
     if (templateType !== 'contact') {
       throw new Error(`Unsupported template type: ${templateType}`);
     }
 
-    // Path to email template
-    const templatePath = path.join(
-      process.cwd(), 
-      "src", 
-      "lib", 
-      "email-templates", 
-      `${templateType}.html`
-    );
+    // Load template
+    let html = getEmailTemplate(templateType);
 
-    if (!fs.existsSync(templatePath)) {
-      throw new Error(`Email template not found: ${templatePath}`);
+    if (!html) {
+      throw new Error(`Email template not found: ${templateType}`);
     }
 
-    let html = fs.readFileSync(templatePath, "utf8");
-
-    // Replace placeholders with actual data
+    // Replace placeholders
     html = html
       .replace(/{{fullName}}/g, templateData.fullName || "")
       .replace(/{{email}}/g, templateData.email || "")
@@ -42,48 +34,86 @@ export async function sendContactEmail(templateType, templateData, emailOptions)
       .replace(/{{formType}}/g, templateData.formType || "")
       .replace(/{{submittedFrom}}/g, templateData.submittedFrom || "");
 
-    // Validate SMTP configuration
+    console.log("📄 HTML Template Loaded");
+
+    // Log SMTP ENV VALUES (critical)
+    console.log("=========== 🔐 SMTP ENV CHECK ===========");
+    console.log("SMTP_HOST      =>", process.env.SMTP_HOST);
+    console.log("SMTP_PORT      =>", process.env.SMTP_PORT);
+    console.log("SMTP_SECURE    =>", process.env.SMTP_SECURE);
+    console.log("SMTP_USER      =>", process.env.SMTP_USER);
+    console.log("SMTP_PASS LEN  =>", process.env.SMTP_PASS ? process.env.SMTP_PASS.length : "MISSING");
+    console.log("SENDER_EMAIL   =>", process.env.SENDER_EMAIL);
+    console.log("NODE_ENV       =>", process.env.NODE_ENV);
+
+    // Validate SMTP ENV
     if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
       throw new Error("Missing SMTP configuration. Check environment variables.");
     }
 
-    // Configure transporter
+    console.log("=========== 📤 CREATING TRANSPORTER ===========");
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: process.env.SMTP_PORT === "465", // true for 465, false for other ports
+      secure: process.env.SMTP_SECURE === "true",
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      tls: { 
-        rejectUnauthorized: false // Only use this for testing, remove in production
-      }
+      ...(process.env.NODE_ENV === 'development' && {
+        tls: { rejectUnauthorized: false }
+      })
     });
 
-    // Verify connection
-    await transporter.verify();
-    console.log("✅ SMTP connection verified");
+    console.log("🔧 Transporter Config:", {
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT),
+      secure: process.env.SMTP_SECURE === "true",
+      user: process.env.SMTP_USER,
+      passLength: process.env.SMTP_PASS?.length,
+    });
 
-    // Send email
+    console.log("=========== 🧪 VERIFYING SMTP CONNECTION ===========");
+
+    // Verify with timeout
+    await Promise.race([
+      transporter.verify().then(() => {
+        console.log("✅ SMTP VERIFY SUCCESS");
+      }).catch((err) => {
+        console.error("❌ SMTP VERIFY ERROR:", err);
+        throw err;
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('SMTP connection timeout')), 10000)
+      )
+    ]);
+
+    console.log("=========== 📧 SENDING EMAIL ===========");
+
     const info = await transporter.sendMail({
-      from: emailOptions.from || process.env.SENDER_EMAIL || process.env.SMTP_USER,
+      from: process.env.SENDER_EMAIL || process.env.SMTP_USER,
       to: emailOptions.to || process.env.RECEIVER_EMAIL,
       subject: emailOptions.subject || `New Contact Form Submission`,
       html,
       replyTo: emailOptions.replyTo || templateData.email,
     });
 
-    console.log("📧 SMTP Email sent successfully:", {
+    console.log("📨 EMAIL SENT:", {
       messageId: info.messageId,
       to: emailOptions.to,
       name: templateData.fullName
     });
 
+    console.log("=========== 🎉 EMAIL PROCESS DONE ===========");
+
     return { success: true, messageId: info.messageId, provider: 'smtp' };
 
   } catch (err) {
-    console.error("❌ SMTP Email Error:", err.message);
-    throw err; // Re-throw so fallback can catch it
+    console.error("=========== ❌ EMAIL ERROR ===========");
+    console.error("Error Message:", err.message);
+    console.error("Full Error:", err);
+    console.error("======================================");
+    throw err;
   }
 }

@@ -146,7 +146,7 @@ export async function POST(request) {
             submittedFrom: submittedFrom || "",
           },
           {
-            to: "sanjayjay564@gmail.com",
+            to: process.env.RECEIVER_EMAIL,
             subject: `New Contact Form Submission - ${name}`,
             replyTo: email,
           }
