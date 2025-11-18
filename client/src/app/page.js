@@ -16,7 +16,7 @@ import OurTrustedPartners from "@/components/OutTrustedPartners";
 import TechStack from "@/components/TechStack";
 import Testimonials from "@/components/Testimonials";
 import Script from "next/script";
-import Hero from "@/components/home/Hero";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
