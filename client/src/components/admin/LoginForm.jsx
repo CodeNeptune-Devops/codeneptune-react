@@ -130,14 +130,14 @@ export default function LoginForm() {
             {loading || isPending ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <div className="text-center">
+          {/* <div className="text-center">
             <a
               href="/admin/signup"
               className="text-sm text-blue-600 hover:text-blue-500"
             >
               Don't have an account? Sign up
             </a>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

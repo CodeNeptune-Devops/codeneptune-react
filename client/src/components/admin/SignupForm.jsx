@@ -150,14 +150,14 @@ export default function SignupForm() {
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
 
-          <div className="text-center">
+          {/* <div className="text-center">
             <a
               href="/admin/login"
               className="text-sm text-blue-600 hover:text-blue-500"
             >
               Already have an account? Sign in
             </a>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
