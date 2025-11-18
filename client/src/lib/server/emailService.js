@@ -41,32 +41,61 @@ export async function sendEmail(templateType, templateData, emailOptions) {
 export async function sendEmailWithFallback(templateType, templateData, emailOptions) {
   try {
     const activeProvider = await EmailSettings.getActiveProvider();
-    
+
     console.log(`📧 Attempting email with: ${activeProvider}`);
+
+    // Choose receiver email based on provider
+    const primaryTo =
+      activeProvider === "smtp"
+        ? process.env.RECEIVER_EMAIL
+        : process.env.RESEND_RECEIVER_EMAIL;
+
+    console.log(`📨 Primary TO set as: ${primaryTo}`);
 
     try {
       // Try primary provider
-      if (activeProvider === 'smtp') {
-        return await sendContactEmail(templateType, templateData, emailOptions);
+      if (activeProvider === "smtp") {
+        return await sendContactEmail(templateType, templateData, {
+          ...emailOptions,
+          to: primaryTo,
+        });
       } else {
-        return await resendEmailWithTemplate(templateType, templateData, emailOptions);
+        return await resendEmailWithTemplate(templateType, templateData, {
+          ...emailOptions,
+          to: primaryTo,
+        });
       }
     } catch (primaryError) {
       console.warn(`⚠️ Primary provider (${activeProvider}) failed:`, primaryError.message);
-      console.log(`🔄 Trying fallback provider...`);
-      
-      // Try fallback provider
-      const fallbackProvider = activeProvider === 'smtp' ? 'resend' : 'smtp';
+      console.log("🔄 Trying fallback provider...");
+
+      // Switch provider
+      const fallbackProvider = activeProvider === "smtp" ? "resend" : "smtp";
+
+      // Choose fallback receiver
+      const fallbackTo =
+        fallbackProvider === "smtp"
+          ? process.env.RECEIVER_EMAIL
+          : process.env.RESEND_RECEIVER_EMAIL;
+
+      console.log(`📨 Fallback TO set as: ${fallbackTo}`);
       console.log(`📧 Fallback provider: ${fallbackProvider}`);
-      
-      if (fallbackProvider === 'smtp') {
-        return await sendContactEmail(templateType, templateData, emailOptions);
+
+      if (fallbackProvider === "smtp") {
+        return await sendContactEmail(templateType, templateData, {
+          ...emailOptions,
+          to: fallbackTo,
+        });
       } else {
-        return await resendEmailWithTemplate(templateType, templateData, emailOptions);
+        return await resendEmailWithTemplate(templateType, templateData, {
+          ...emailOptions,
+          to: fallbackTo,
+        });
       }
     }
-  } catch (error) {
-    console.error('❌ All email providers failed:', error);
-    throw error;
+
+  } catch (err) {
+    console.error("❌ All email providers failed:", err);
+    throw err;
   }
 }
