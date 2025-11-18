@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '@/store/slices/authSlice';
 import axiosInstance from '@/lib/axios';
 
-export default function AdminPage() {
+export default function PublicRoute({ children, redirectTo = '/admin/dashboard' }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
@@ -16,7 +16,7 @@ export default function AdminPage() {
     const checkAuthAndRedirect = async () => {
       // If already authenticated, redirect to dashboard
       if (isAuthenticated && user) {
-        router.replace('/admin/dashboard');
+        router.replace(redirectTo);
         return;
       }
 
@@ -30,30 +30,32 @@ export default function AdminPage() {
             accessToken: data.accessToken,
           }));
           
-          // Redirect to dashboard after successful refresh
-          router.replace('/admin/dashboard');
+          // User is authenticated, redirect away from public page
+          router.replace(redirectTo);
         } else {
-          // No valid session, redirect to login
-          router.replace('/admin/login');
+          // No valid session, allow access to public page
+          setChecking(false);
         }
       } catch (error) {
-        // Token refresh failed, redirect to login
-        router.replace('/admin/login');
-      } finally {
+        // Token refresh failed, allow access to public page
         setChecking(false);
       }
     };
 
     checkAuthAndRedirect();
-  }, [isAuthenticated, user, router, dispatch]);
+  }, [isAuthenticated, user, router, dispatch, redirectTo]);
 
-  // Show loading state while checking authentication
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Redirecting...</p>
+  if (checking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  // Only render children if user is NOT authenticated
+  return !isAuthenticated ? children : null;
 }

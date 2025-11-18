@@ -31,6 +31,7 @@ import axiosInstance from "@/lib/axios";
 import { logout } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import PublicRoute from "@/components/admin/PublicRoute";
 
 const navigation = {
   overview: [
@@ -54,11 +55,11 @@ export default function AdminLayout({ children }) {
   const userRole = useSelector((state) => state.auth.user?.role);
   const isSuperAdmin = userRole === 'superadmin';
 
-  // Don't show layout on login page
+  // Don't show layout on login page - just render with PublicRoute protection
   const isLoginPage = pathname === "/admin/login";
 
   if (isLoginPage) {
-    return children;
+    return <PublicRoute>{children}</PublicRoute>;
   }
 
   // Filter navigation items based on role
@@ -113,8 +114,8 @@ export default function AdminLayout({ children }) {
             {/* Right side */}
             <div className="flex items-center gap-2">
               <Link 
-              href={'/'}
-              target="_blank"
+                href={'/'}
+                target="_blank"
                 className="flex items-center gap-2 px-4 py-2 text-sm rounded-md bg-purple-100 text-purple-600 hover:bg-purple-200 transition-all duration-300 cursor-pointer"
               >
                 <ExternalLink size={16} />
