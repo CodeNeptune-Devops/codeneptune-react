@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { TrendingUp, Users, Clock, CheckCircle, Mail, Phone, Calendar, ExternalLink, BarChart3, PieChart, Activity } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 // Fetch function for contact submissions
 const fetchContacts = async () => {
@@ -27,7 +28,7 @@ const fetchContacts = async () => {
 };
 
 export default function ContactAnalyticsDashboard() {
-  const [timeRange, setTimeRange] = useState('all');
+  const [timeRange, setTimeRange] = useState('7days');
 
   // Use TanStack Query to fetch contacts
   const { data: contacts = [], isLoading, error } = useQuery({
@@ -92,13 +93,20 @@ export default function ContactAnalyticsDashboard() {
     return acc;
   }, {});
 
-  const trendData = Object.entries(dailyData)
+  const allTrendData = Object.entries(dailyData)
     .map(([date, count]) => ({
-      date: date,
-      submissions: count
+      day: new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      submissions: count,
+      fullDate: date
     }))
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .slice(-14);
+    .sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
+
+  // Filter based on time range
+  const trendData = timeRange === '7days' 
+    ? allTrendData.slice(-7)
+    : timeRange === '30days'
+    ? allTrendData.slice(-30)
+    : allTrendData; // yearly shows all data
 
   const pageData = contactsArray.reduce((acc, contact) => {
     const page = contact.submittedFrom || '/';
@@ -214,26 +222,79 @@ export default function ContactAnalyticsDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Submissions Trend */}
           <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Submissions Trend</h3>
-              <Activity className="w-5 h-5 text-blue-600" />
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Submissions Overview</h3>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setTimeRange('7days')}
+                  className={`px-3 py-1 text-sm rounded-md font-medium cursor-pointer ${
+                    timeRange === '7days' 
+                      ? 'bg-blue-100 text-blue-700' 
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  7 Days
+                </button>
+                <button 
+                  onClick={() => setTimeRange('30days')}
+                  className={`px-3 py-1 text-sm rounded-md font-medium cursor-pointer ${
+                    timeRange === '30days' 
+                      ? 'bg-blue-100 text-blue-700' 
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  30 Days
+                </button>
+                <button 
+                  onClick={() => setTimeRange('yearly')}
+                  className={`px-3 py-1 text-sm rounded-md font-medium cursor-pointer ${
+                    timeRange === 'yearly' 
+                      ? 'bg-blue-100 text-blue-700' 
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  Yearly
+                </button>
+              </div>
             </div>
-            <div className="space-y-3">
-              {trendData.slice(-7).map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 w-24">{item.date}</span>
-                  <div className="flex-1 mx-4">
-                    <div className="bg-gray-200 rounded-full h-3">
-                      <div
-                        className="bg-blue-500 h-3 rounded-full flex items-center justify-end px-2"
-                        style={{ width: `${(item.submissions / Math.max(...trendData.map(d => d.submissions))) * 100}%` }}
-                      >
-                        <span className="text-xs text-white font-semibold">{item.submissions}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={trendData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <XAxis
+                    dataKey="day"
+                    tick={{ fontSize: 11, fill: '#6b7280' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis 
+                    allowDecimals={false}
+                    tick={{ fontSize: 11, fill: '#6b7280' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: '#1f2937',
+                      border: 'none',
+                      borderRadius: '6px',
+                      color: 'white',
+                      fontSize: '12px',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#9ca3af', marginBottom: '4px' }}
+                    itemStyle={{ color: 'white' }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="submissions" 
+                    stroke="#1f7ae0" 
+                    strokeWidth={2.5}
+                    dot={{ fill: '#1f7ae0', r: 4 }}
+                    activeDot={{ r: 6, fill: '#1f7ae0' }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </div>
 

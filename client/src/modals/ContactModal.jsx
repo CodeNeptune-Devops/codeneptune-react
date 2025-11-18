@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from "react-toastify";
 
@@ -12,6 +12,7 @@ function ContactModal({ isOpen, onClose }) {
   // ⭐ reCAPTCHA v2 state
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const recaptchaRendered = useRef(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -50,11 +51,21 @@ function ContactModal({ isOpen, onClose }) {
   // 🚀 Load reCAPTCHA v2 when modal opens
   // ======================================================
   useEffect(() => {
-    if (!isOpen || recaptchaLoaded) return;
+    if (!isOpen) return;
 
-    if (window.grecaptcha) {
+    if (window.grecaptcha && window.grecaptcha.render) {
       setRecaptchaLoaded(true);
       return;
+    }
+
+    if (document.getElementById("recaptcha-script-modal")) {
+      const checkInterval = setInterval(() => {
+        if (window.grecaptcha && window.grecaptcha.render) {
+          setRecaptchaLoaded(true);
+          clearInterval(checkInterval);
+        }
+      }, 100);
+      return () => clearInterval(checkInterval);
     }
 
     const script = document.createElement("script");
@@ -62,13 +73,17 @@ function ContactModal({ isOpen, onClose }) {
     script.src = "https://www.google.com/recaptcha/api.js";
     script.async = true;
     script.defer = true;
-    script.onload = () => setRecaptchaLoaded(true);
+    script.onload = () => {
+      setRecaptchaLoaded(true);
+    };
 
     document.body.appendChild(script);
   }, [isOpen]);
 
   // Set up reCAPTCHA v2 callbacks and render widget
   useEffect(() => {
+    if (!isOpen || !recaptchaLoaded) return;
+
     // Define global callback functions
     window.onRecaptchaSuccessModal = (token) => {
       setRecaptchaToken(token);
@@ -79,28 +94,53 @@ function ContactModal({ isOpen, onClose }) {
       toast.warning('reCAPTCHA expired. Please verify again.');
     };
 
-    // Render reCAPTCHA when script is loaded and modal is open
-    if (recaptchaLoaded && isOpen && window.grecaptcha && window.grecaptcha.render) {
-      const recaptchaContainer = document.getElementById('recaptcha-container-modal');
-      if (recaptchaContainer && !recaptchaContainer.hasChildNodes()) {
-        try {
-          window.grecaptcha.render('recaptcha-container-modal', {
-            sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-            callback: 'onRecaptchaSuccessModal',
-            'expired-callback': 'onRecaptchaExpiredModal',
-            theme: 'light'
-          });
-        } catch (error) {
-          console.error('reCAPTCHA render error:', error);
+    // Use a small delay to ensure DOM is ready
+    const renderTimeout = setTimeout(() => {
+      if (window.grecaptcha && window.grecaptcha.render) {
+        const recaptchaContainer = document.getElementById('recaptcha-container-modal');
+        
+        if (recaptchaContainer && !recaptchaRendered.current) {
+          try {
+            // Clear any existing content
+            recaptchaContainer.innerHTML = '';
+            
+            window.grecaptcha.render('recaptcha-container-modal', {
+              sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // Test key for demo
+              callback: 'onRecaptchaSuccessModal',
+              'expired-callback': 'onRecaptchaExpiredModal',
+              theme: 'light'
+            });
+            
+            recaptchaRendered.current = true;
+          } catch (error) {
+            console.error('reCAPTCHA render error:', error);
+            recaptchaRendered.current = false;
+          }
         }
       }
-    }
+    }, 100);
 
     return () => {
+      clearTimeout(renderTimeout);
       delete window.onRecaptchaSuccessModal;
       delete window.onRecaptchaExpiredModal;
     };
   }, [recaptchaLoaded, isOpen]);
+
+  // Reset reCAPTCHA when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      recaptchaRendered.current = false;
+      setRecaptchaToken(null);
+      if (window.grecaptcha) {
+        try {
+          window.grecaptcha.reset();
+        } catch (e) {
+          // Ignore reset errors
+        }
+      }
+    }
+  }, [isOpen]);
 
   // ======================================================
   // Modal Animation Handling
@@ -203,6 +243,7 @@ function ContactModal({ isOpen, onClose }) {
           window.grecaptcha.reset();
         }
         setRecaptchaToken(null);
+        recaptchaRendered.current = false;
       }
     } catch (err) {
       toast.error("Something went wrong. Try again.");
@@ -213,6 +254,7 @@ function ContactModal({ isOpen, onClose }) {
         window.grecaptcha.reset();
       }
       setRecaptchaToken(null);
+      recaptchaRendered.current = false;
     }
 
     setIsSubmitting(false);
