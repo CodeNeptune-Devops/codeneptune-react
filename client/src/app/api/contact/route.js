@@ -1,13 +1,14 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-import { NextResponse } from 'next/server';
-import ContactForm from '@/models/ContactForm';
-import connectDB from '@/lib/db';
-import { sendContactEmail } from "@/lib/server/sendEmail";
+import { NextResponse } from "next/server";
+import ContactForm from "@/models/ContactForm";
+import connectDB from "@/lib/db";
+import { sendEmail, sendEmailWithFallback } from "@/lib/server/emailService";
 
-
-
+// -----------------------------------------------------
+//  VERIFY RECAPTCHA
+// -----------------------------------------------------
 async function verifyRecaptcha(token) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
@@ -20,13 +21,14 @@ async function verifyRecaptcha(token) {
   params.append("secret", secretKey);
   params.append("response", token);
 
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: params,
-  });
+  const response = await fetch(
+    "https://www.google.com/recaptcha/api/siteverify",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+    }
+  );
 
   const result = await response.json();
   console.log("🔐 RECAPTCHA RESULT:", result);
@@ -34,7 +36,7 @@ async function verifyRecaptcha(token) {
 }
 
 // -----------------------------------------------------
-//  POST CONTROLLER
+//  POST: SUBMIT CONTACT FORM
 // -----------------------------------------------------
 export async function POST(request) {
   try {
@@ -50,19 +52,16 @@ export async function POST(request) {
       formType,
       submittedFrom,
       recaptchaToken,
-      service
+      service,
     } = body;
 
     console.log("📩 Received contact form:", {
       name,
       email,
       formType,
-      hasRecaptchaToken: !!recaptchaToken
+      hasRecaptchaToken: !!recaptchaToken,
     });
 
-    // -------------------------
-    // BASIC VALIDATION
-    // -------------------------
     if (!name || !mobile || !email)
       return NextResponse.json(
         { error: "Name, mobile & email are required." },
@@ -81,9 +80,6 @@ export async function POST(request) {
         { status: 400 }
       );
 
-    // -------------------------
-    //  RECAPTCHA VALIDATION (Local + Prod)
-    // -------------------------
     if (!recaptchaToken)
       return NextResponse.json(
         { error: "reCAPTCHA is required." },
@@ -101,16 +97,19 @@ export async function POST(request) {
     }
 
     // -------------------------
-    //  EMAIL & PHONE VALIDATION
+    // EMAIL / PHONE VALIDATION
     // -------------------------
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       return NextResponse.json({ error: "Invalid email." }, { status: 400 });
 
     if (!/^[0-9]{10,15}$/.test(mobile.replace(/[^\d]/g, "")))
-      return NextResponse.json({ error: "Invalid mobile number." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid mobile number." },
+        { status: 400 }
+      );
 
     // -------------------------
-    // CREATE DB ENTRY
+    // SAVE TO DATABASE
     // -------------------------
     const newEntry = await ContactForm.create({
       name,
@@ -121,7 +120,7 @@ export async function POST(request) {
       formType: formType || "contact-form",
       submittedFrom: submittedFrom || "/",
       service: service || null,
-      recaptchaVerified: true, // Always true here since verification passed
+      recaptchaVerified: true,
       status: 1,
       submittedAt: new Date(),
     });
@@ -129,19 +128,34 @@ export async function POST(request) {
     console.log("✅ Form saved:", newEntry._id);
 
     // -------------------------
-    // SEND EMAIL NON-BLOCKING
+    // SEND EMAIL (NON-BLOCKING) - NOW DYNAMIC!
     // -------------------------
-    setImmediate(() => {
-      sendContactEmail({
-        name,
-        email,
-        mobile,
-        message,
-        foundUs,
-        service,
-        formType,
-        submittedFrom,
-      }).catch((err) => console.error("Email Error:", err));
+    setImmediate(async () => {
+      try {
+        // Use sendEmailWithFallback for automatic failover
+        await sendEmailWithFallback(
+          "contact",
+          {
+            fullName: name,
+            email,
+            phoneNumber: mobile,
+            message: message || "",
+            service: service || "",
+            foundUs: foundUs || "",
+            formType: formType || "",
+            submittedFrom: submittedFrom || "",
+          },
+          {
+            to: "sanjayjay564@gmail.com",
+            subject: `New Contact Form Submission - ${name}`,
+            replyTo: email,
+          }
+        );
+        console.log("✅ Email sent successfully via dynamic provider");
+      } catch (err) {
+        console.error("❌ Email Error:", err);
+        // Optionally log to error tracking service
+      }
     });
 
     return NextResponse.json(
@@ -152,7 +166,6 @@ export async function POST(request) {
       },
       { status: 201 }
     );
-
   } catch (err) {
     console.error("❌ Contact Form Error:", err);
     return NextResponse.json(
@@ -162,7 +175,9 @@ export async function POST(request) {
   }
 }
 
-
+// -----------------------------------------------------
+//  GET: FETCH SUBMISSIONS
+// -----------------------------------------------------
 export async function GET(request) {
   try {
     await connectDB();
@@ -191,11 +206,11 @@ export async function GET(request) {
       data: submissions,
       pagination: { total, page, limit, pages: Math.ceil(total / limit) },
     });
-
   } catch (err) {
     console.error("❌ Get submissions error:", err);
-    return NextResponse.json({ 
-      error: "Failed to fetch submissions" 
-    }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch submissions" },
+      { status: 500 }
+    );
   }
 }

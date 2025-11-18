@@ -21,8 +21,10 @@ import {
   Bell,
   Settings,
   ChevronRight,
+  ChevronDown,
   ExternalLink, 
-  LogOut
+  LogOut,
+  Mail
 } from "lucide-react";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -39,9 +41,15 @@ const navigation = {
     { name: "Forms", icon: ScrollText, href: "/admin/form-submissions", requiresSuperAdmin: true },
   ],
   management: [
-    { name: "User", icon: Users, href: "/admin/user", hasSubmenu: true },
-    { name: "Product", icon: Package, href: "/admin/product", hasSubmenu: true },
-    { name: "Order", icon: ShoppingCart, href: "/admin/order", hasSubmenu: true },
+    { 
+      name: "Settings", 
+      icon: Settings, 
+      href: "/admin/settings", 
+      hasSubmenu: true,
+      subMenus: [
+        { name: "Email Sender", icon: Mail, href: "/admin/settings/email-sender" },
+      ]
+    },
   ],
 };
 
@@ -50,6 +58,7 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState({});
   
   // Get user role from Redux store
   const userRole = useSelector((state) => state.auth.user?.role);
@@ -80,6 +89,13 @@ export default function AdminLayout({ children }) {
       dispatch(logout());
       router.push('/admin/login');
     }
+  };
+
+  const toggleSubmenu = (itemName) => {
+    setOpenSubmenus(prev => ({
+      ...prev,
+      [itemName]: !prev[itemName]
+    }));
   };
 
   return (
@@ -176,22 +192,68 @@ export default function AdminLayout({ children }) {
                 {navigation.management.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname.startsWith(item.href);
+                  const isOpen = openSubmenus[item.name];
+                  
                   return (
-                    <button
-                      key={item.name}
-                      onClick={() => router.push(item.href)}
-                      className={`w-full cursor-pointer flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        isActive
-                          ? "bg-emerald-50 text-emerald-600"
-                          : "text-gray-700 hover:bg-gray-50"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon size={18} />
-                        <span>{item.name}</span>
-                      </div>
-                      {item.hasSubmenu && <ChevronRight size={16} />}
-                    </button>
+                    <div key={item.name}>
+                      <button
+                        onClick={() => {
+                          if (item.hasSubmenu) {
+                            toggleSubmenu(item.name);
+                          } else {
+                            router.push(item.href);
+                          }
+                        }}
+                        className={`w-full cursor-pointer flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-emerald-50 text-emerald-600"
+                            : "text-gray-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon size={18} />
+                          <span>{item.name}</span>
+                        </div>
+                        {item.hasSubmenu && (
+                          <ChevronDown 
+                            size={16} 
+                            className={`transition-transform duration-200 ${
+                              isOpen ? 'rotate-180' : ''
+                            }`}
+                          />
+                        )}
+                      </button>
+                      
+                      {/* Submenu with smooth animation */}
+                      {item.hasSubmenu && (
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                          }`}
+                        >
+                          <div className="pl-4 mt-1 space-y-1">
+                            {item.subMenus.map((subItem) => {
+                              const SubIcon = subItem.icon;
+                              const isSubActive = pathname === subItem.href;
+                              return (
+                                <button
+                                  key={subItem.name}
+                                  onClick={() => router.push(subItem.href)}
+                                  className={`w-full cursor-pointer flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                                    isSubActive
+                                      ? "bg-emerald-100 text-emerald-700"
+                                      : "text-gray-600 hover:bg-gray-50"
+                                  }`}
+                                >
+                                  <SubIcon size={16} />
+                                  <span>{subItem.name}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </nav>
