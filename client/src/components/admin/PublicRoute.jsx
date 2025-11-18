@@ -2,48 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '@/store/slices/authSlice';
-import axiosInstance from '@/lib/axios';
+import { useSelector } from 'react-redux';
 
 export default function PublicRoute({ children, redirectTo = '/admin/dashboard' }) {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const checkAuthAndRedirect = async () => {
-      // If already authenticated, redirect to dashboard
+    const checkAuth = () => {
+      // Simply check Redux state - no API calls needed
       if (isAuthenticated && user) {
         router.replace(redirectTo);
-        return;
-      }
-
-      // Try to refresh token to check if user has valid session
-      try {
-        const { data } = await axiosInstance.post('/auth/refresh');
-        
-        if (data.success && data.user) {
-          dispatch(setCredentials({
-            user: data.user,
-            accessToken: data.accessToken,
-          }));
-          
-          // User is authenticated, redirect away from public page
-          router.replace(redirectTo);
-        } else {
-          // No valid session, allow access to public page
-          setChecking(false);
-        }
-      } catch (error) {
-        // Token refresh failed, allow access to public page
+      } else {
         setChecking(false);
       }
     };
 
-    checkAuthAndRedirect();
-  }, [isAuthenticated, user, router, dispatch, redirectTo]);
+    checkAuth();
+  }, [isAuthenticated, user, router, redirectTo]);
 
   if (checking) {
     return (
