@@ -32,7 +32,7 @@ function Sidebar({
     return (
         <div
             ref={mobileMenuRef}
-            className={`lg:hidden z-[9999] fixed right-0 top-0 h-full w-[85%] max-w-sm shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col bg-white text-black ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`lg:hidden z-[9999999999] fixed right-0 top-0 h-full w-[85%] max-w-sm shadow-2xl transition-transform duration-300 ease-in-out  flex flex-col bg-white text-black ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
             {/* Fixed Header with Close Button */}
             <div className="flex justify-between items-center px-4 py-5 border-b flex-shrink-0 border-gray-200">
@@ -82,10 +82,10 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>App Development</h4>
                             {appDevelopment.map((service) => (
-                                <Link 
-                                    onClick={() => setIsMobileMenuOpen(false)} 
-                                    key={service.name} 
-                                    href={service.href} 
+                                <Link
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    key={service.name}
+                                    href={service.href}
                                     className="block py-1 text-sm hover:text-blue-500"
                                 >
                                     {service.name}
@@ -95,10 +95,10 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Web Development</h4>
                             {webDevelopment.map((service) => (
-                                <Link 
-                                    onClick={() => setIsMobileMenuOpen(false)} 
-                                    key={service.name} 
-                                    href={service.href} 
+                                <Link
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    key={service.name}
+                                    href={service.href}
                                     className="block py-1 text-sm hover:text-blue-500"
                                 >
                                     {service.name}
@@ -108,10 +108,10 @@ function Sidebar({
                         <div className='py-2'>
                             <h4 className='text-blue-500 font-semibold text-sm mb-2'>Creative & Cloud</h4>
                             {creativeCloud.map((service) => (
-                                <Link 
-                                    onClick={() => setIsMobileMenuOpen(false)} 
-                                    key={service.name} 
-                                    href={service.href} 
+                                <Link
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    key={service.name}
+                                    href={service.href}
                                     className="block py-1 text-sm hover:text-blue-500"
                                 >
                                     {service.name}
@@ -130,17 +130,18 @@ function Sidebar({
             </nav>
 
             {/* Fixed Footer with Contact Button */}
-            <div className="p-4 border-t flex-shrink-0 border-gray-200">
-                <button
-                    className='text-white px-6 py-3 rounded-full font-bold text-sm w-full transition-all duration-300 ease-in-out'
+            <div className="p-3 border-t flex justify-center items-center border-gray-200 w-full ">
+                <Link
+                    href={'tel:+916382958105'}
+                    className='text-white px-6 py-3 rounded-full w-full flex justify-center items-center font-bold text-sm  transition-all duration-300 ease-in-out'
                     style={{
                         background: 'linear-gradient(to right,#4A3AFF 0%, #744EDF 100%)',
                         border: '0.67px solid #897FFF',
                         boxShadow: '0px 4px 5.33px rgba(223, 229, 255, 0.3), 0px 1.33px 1.33px rgba(255, 255, 255, 0.35%)'
                     }}
                 >
-                    Contact Us
-                </button>
+                    Call Us
+                </Link>
             </div>
         </div>
     )
