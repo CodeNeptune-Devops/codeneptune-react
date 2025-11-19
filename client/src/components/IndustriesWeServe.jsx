@@ -9,7 +9,7 @@ function IndustriesWeServe({padding = 'pb-0'}) {
         { id: 2, name: 'Entertainment', icon: '/industries-we-serve/entertainment.svg' },
         { id: 3, name: 'Government', icon: '/industries-we-serve/government.svg' },
         { id: 4, name: 'Restaurant', icon: '/industries-we-serve/restaurant.svg' },
-        { id: 5, name: 'E-commerce', icon: '/industries-we-serve/eCommerce.svg' },
+        { id: 5, name: 'E-commerce', icon: '/industries-we-serve/ecommerce.svg' },
         { id: 6, name: 'Travel', icon: '/industries-we-serve/travel.svg' },
         { id: 7, name: 'Social Media', icon: '/industries-we-serve/socialMedia.svg' },
         { id: 8, name: 'Agriculture', icon: '/industries-we-serve/agriculture.svg' },
