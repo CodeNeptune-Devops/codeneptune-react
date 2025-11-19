@@ -5,40 +5,38 @@ import { useQuery } from '@tanstack/react-query';
 import { TrendingUp, Users, Clock, CheckCircle, Mail, Phone, Calendar, ExternalLink, BarChart3, PieChart, Activity } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
-// Fetch function for contact submissions
-const fetchContacts = async () => {
-  const response = await fetch('/api/contact');
+// Fetch function for contact submissions with pagination
+const fetchContacts = async ({ page = 1, limit = 1000 }) => {
+  const response = await fetch(`/api/contact?page=${page}&limit=${limit}&sortBy=newest`);
   if (!response.ok) {
     throw new Error('Failed to fetch contacts');
   }
-  const data = await response.json();
+  const result = await response.json();
 
-  // Handle different response structures
-  // If data is wrapped in an object with a contacts/data/submissions property
-  if (data.contacts) return data.contacts;
-  if (data.data) return data.data;
-  if (data.submissions) return data.submissions;
-
-  // If data is already an array
-  if (Array.isArray(data)) return data;
-
-  // Otherwise return empty array
-  console.log('Unexpected API response format:', data);
-  return [];
+  // Return the data array from the API response
+  return {
+    contacts: result.data || [],
+    pagination: result.pagination || {}
+  };
 };
 
 export default function ContactAnalyticsDashboard() {
   const [timeRange, setTimeRange] = useState('7days');
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Use TanStack Query to fetch contacts
-  const { data: contacts = [], isLoading, error } = useQuery({
-    queryKey: ['contacts'],
-    queryFn: fetchContacts,
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['contacts', currentPage],
+    queryFn: () => fetchContacts({ page: currentPage, limit: 1000 }),
   });
+
+  const contacts = data?.contacts || [];
+  const pagination = data?.pagination || {};
 
   // Debug: Log the data
   console.log('Contacts data:', contacts);
   console.log('Total contacts:', contacts.length);
+  console.log('Pagination:', pagination);
 
   // Map numeric status to labels
   const statusLabels = {
@@ -50,7 +48,7 @@ export default function ContactAnalyticsDashboard() {
 
   // Analytics calculations
   const contactsArray = Array.isArray(contacts) ? contacts : [];
-  const totalSubmissions = contactsArray.length;
+  const totalSubmissions = pagination.total || contactsArray.length;
 
   const statusData = contactsArray.reduce((acc, contact) => {
     const status = contact.status !== undefined ? contact.status : 1; // Default to 'new' (1)
@@ -415,10 +413,15 @@ export default function ContactAnalyticsDashboard() {
           </div>
         </div>
 
-        {/* Recent Submissions Table */}
+        {/* All Submissions Table */}
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Recent Submissions</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              All Submissions 
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                (Showing {contactsArray.length} of {totalSubmissions} total)
+              </span>
+            </h3>
             <Clock className="w-5 h-5 text-blue-600" />
           </div>
           <div className="overflow-x-auto">
@@ -430,6 +433,12 @@ export default function ContactAnalyticsDashboard() {
                     <div className="flex items-center">
                       <Mail className="w-4 h-4 mr-1" />
                       Email
+                    </div>
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <div className="flex items-center">
+                      <Phone className="w-4 h-4 mr-1" />
+                      Mobile
                     </div>
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service</th>
@@ -444,31 +453,35 @@ export default function ContactAnalyticsDashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {contactsArray.slice(0, 10).map((contact) => (
+                {contactsArray.map((contact) => (
                   <tr key={contact._id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-medium text-gray-900">{contact.name}</td>
                     <td className="px-4 py-3 text-sm text-gray-600">{contact.email}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600">{contact.mobile}</td>
                     <td className="px-4 py-3 text-sm text-gray-600 capitalize">
                       {(contact.service || "other").replace(/-/g, ' ')}
                     </td>
-
                     <td className="px-4 py-3 text-sm text-gray-600 capitalize">
                       {(contact.foundUs || "unknown").replace(/_/g, ' ')}
                     </td>
-
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${contact.status === 1 ? 'bg-blue-100 text-blue-800' :
-                          contact.status === 2 ? 'bg-yellow-100 text-yellow-800' :
-                            contact.status === 3 ? 'bg-green-100 text-green-800' :
-                              'bg-red-100 text-red-800'
-                        }`}>
+                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
+                        contact.status === 1 ? 'bg-blue-100 text-blue-800' :
+                        contact.status === 2 ? 'bg-yellow-100 text-yellow-800' :
+                        contact.status === 3 ? 'bg-green-100 text-green-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
                         {contact.status === 3 && <CheckCircle className="w-3 h-3 mr-1" />}
                         {contact.status === 1 && <Clock className="w-3 h-3 mr-1" />}
                         {statusLabels[contact.status] || 'Unknown'}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600">
-                      {new Date(contact.submittedAt).toLocaleDateString()}
+                      {new Date(contact.submittedAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
                     </td>
                   </tr>
                 ))}
@@ -478,6 +491,40 @@ export default function ContactAnalyticsDashboard() {
           {contactsArray.length === 0 && (
             <div className="text-center py-8 text-gray-500">
               No submissions yet
+            </div>
+          )}
+          
+          {/* Pagination Info */}
+          {pagination.pages > 1 && (
+            <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-4">
+              <div className="text-sm text-gray-700">
+                Page <span className="font-medium">{pagination.page}</span> of{' '}
+                <span className="font-medium">{pagination.pages}</span>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={!pagination.hasPrev}
+                  className={`px-4 py-2 text-sm font-medium rounded-md ${
+                    pagination.hasPrev
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  Previous
+                </button>
+                <button
+                  onClick={() => setCurrentPage(prev => prev + 1)}
+                  disabled={!pagination.hasNext}
+                  className={`px-4 py-2 text-sm font-medium rounded-md ${
+                    pagination.hasNext
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           )}
         </div>
