@@ -1,6 +1,36 @@
 // models/ContactForm.js
 import mongoose from 'mongoose';
 
+// Status History Schema
+const StatusHistorySchema = new mongoose.Schema({
+  status: {
+    type: Number,
+    required: true,
+    enum: [0, 1, 2, 3]
+  },
+  changedBy: {
+    type: String,
+    default: 'System'
+  },
+  assignedTo: {
+    type: String,
+    default: null
+  },
+  note: {
+    type: String,
+    maxlength: [1000, 'Note cannot exceed 1000 characters'],
+    default: null
+  },
+  followUpDate: {
+    type: Date,
+    default: null
+  },
+  changedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, { _id: true });
+
 const ContactFormSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -39,7 +69,6 @@ const ContactFormSchema = new mongoose.Schema({
   message: {
     type: String,
     required: function() {
-      // Message is required for all form types except 'contact-modal'
       return this.formType !== 'contact-modal';
     },
     trim: true,
@@ -50,7 +79,6 @@ const ContactFormSchema = new mongoose.Schema({
     enum: ['web-design', 'web-development', 'mobile-app', 'ui-ux', 'consulting', 'not_specified'],
     default: 'not_specified',
     required: function() {
-      // Service is required only for 'contact-page-form'
       return this.formType === 'contact-page-form';
     }
   },
@@ -69,16 +97,12 @@ const ContactFormSchema = new mongoose.Schema({
   },
   status: {
     type: Number,
-    enum: [0,1,2,3],
+    enum: [0, 1, 2, 3],
     default: 1
   },
   submittedAt: {
     type: Date,
     default: Date.now
-  },
-  notes: {
-    type: String,
-    maxlength: [1000, 'Notes cannot exceed 1000 characters']
   },
   assignedTo: {
     type: String,
@@ -95,6 +119,16 @@ const ContactFormSchema = new mongoose.Schema({
   recaptchaVerified: {
     type: Boolean,
     default: false
+  },
+  // Status history array
+  statusHistory: {
+    type: [StatusHistorySchema],
+    default: []
+  },
+  // Latest follow-up date (for quick queries)
+  nextFollowUpDate: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true
@@ -107,8 +141,31 @@ ContactFormSchema.index({ createdAt: -1 });
 ContactFormSchema.index({ formType: 1, submittedAt: -1 });
 ContactFormSchema.index({ submittedFrom: 1 });
 ContactFormSchema.index({ recaptchaVerified: 1 });
+ContactFormSchema.index({ nextFollowUpDate: 1 });
+ContactFormSchema.index({ assignedTo: 1 });
 
-// Add a method to format the submission data
+// Method to add status history entry
+ContactFormSchema.methods.addStatusHistory = function(statusData) {
+  this.statusHistory.push({
+    status: statusData.status,
+    changedBy: statusData.changedBy || 'System',
+    assignedTo: statusData.assignedTo || null,
+    note: statusData.note || null,
+    followUpDate: statusData.followUpDate || null,
+    changedAt: new Date()
+  });
+
+  // Update main status and assignedTo
+  this.status = statusData.status;
+  if (statusData.assignedTo) {
+    this.assignedTo = statusData.assignedTo;
+  }
+  if (statusData.followUpDate) {
+    this.nextFollowUpDate = statusData.followUpDate;
+  }
+};
+
+// Method to format the submission data
 ContactFormSchema.methods.toClientJSON = function() {
   return {
     id: this._id,
@@ -122,7 +179,10 @@ ContactFormSchema.methods.toClientJSON = function() {
     submittedFrom: this.submittedFrom,
     status: this.status,
     submittedAt: this.submittedAt,
-    recaptchaVerified: this.recaptchaVerified
+    assignedTo: this.assignedTo,
+    recaptchaVerified: this.recaptchaVerified,
+    nextFollowUpDate: this.nextFollowUpDate,
+    statusHistoryCount: this.statusHistory.length
   };
 };
 

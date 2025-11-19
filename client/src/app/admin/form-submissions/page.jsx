@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Search, Download, Eye, ChevronLeft, ChevronRight, RefreshCw, Filter, X } from 'lucide-react';
 import ViewModal from '@/components/admin/form-submissions/ViewModal';
+import { useUpdateContactStatus } from '@/hooks/useContactForm';
 
 const AdminDashboard = () => {
   const queryClient = useQueryClient();
+  const updateStatusMutation = useUpdateContactStatus();
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,43 +35,29 @@ const AdminDashboard = () => {
     formType: '',
     submittedFrom: '',
     foundUs: '',
+    service: '',
     sortBy: 'newest',
     searchTerm: ''
   });
 
   const [selectedSubmission, setSelectedSubmission] = useState(null);
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   const formTypes = ['contact-modal', 'contact-page-form', 'contact-form'];
-  const foundUsOptions = ['social_media', 'google_search', 'referral', 'advertisement', 'other', 'not_specified'];
+  const foundUsOptions = ['google', 'social_media', 'friends', 'referral', 'others', 'not_specified'];
+  const serviceOptions = ['web-design', 'web-development', 'mobile-app', 'ui-ux', 'consulting', 'not_specified'];
 
-  // Status update mutation
-  const statusMutation = useMutation({
-    mutationFn: async ({ id, status }) => {
-      const response = await fetch(`/api/contact/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to update status');
-      }
-
-      return response.json();
-    },
-    onSuccess: () => {
-      // Invalidate and refetch submissions
-      queryClient.invalidateQueries({ queryKey: ['submissions'] });
-    },
-    onError: (error) => {
-      console.error('Error updating status:', error);
-      alert(`Failed to update status: ${error.message}`);
+  // Lock body scroll when offcanvas is open
+  useEffect(() => {
+    if (showFilters) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
-  });
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showFilters]);
 
   // Fetch submissions with TanStack Query
   const { data, isLoading, error, refetch } = useQuery({
@@ -80,7 +68,11 @@ const AdminDashboard = () => {
         limit: itemsPerPage,
         ...(filters.status !== '' && { status: filters.status }),
         ...(filters.formType && { formType: filters.formType }),
-        ...(filters.submittedFrom && { submittedFrom: filters.submittedFrom })
+        ...(filters.submittedFrom && { submittedFrom: filters.submittedFrom }),
+        ...(filters.service && { service: filters.service }),
+        ...(filters.foundUs && { foundUs: filters.foundUs }),
+        ...(filters.sortBy && { sortBy: filters.sortBy }),
+        ...(filters.searchTerm && { searchTerm: filters.searchTerm })
       });
 
       const response = await fetch(`/api/contact?${params}`);
@@ -90,32 +82,8 @@ const AdminDashboard = () => {
       const data = await response.json();
 
       if (data.success) {
-        let filteredData = data.data;
-
-        // Client-side filtering
-        if (filters.foundUs) {
-          filteredData = filteredData.filter(sub => sub.foundUs === filters.foundUs);
-        }
-
-        if (filters.searchTerm) {
-          const term = filters.searchTerm.toLowerCase();
-          filteredData = filteredData.filter(sub =>
-            sub.name?.toLowerCase().includes(term) ||
-            sub.email?.toLowerCase().includes(term) ||
-            sub.mobile?.includes(term) ||
-            sub.message?.toLowerCase().includes(term)
-          );
-        }
-
-        // Sort by date
-        filteredData.sort((a, b) => {
-          const dateA = new Date(a.submittedAt).getTime();
-          const dateB = new Date(b.submittedAt).getTime();
-          return filters.sortBy === 'newest' ? dateB - dateA : dateA - dateB;
-        });
-
         return {
-          submissions: filteredData,
+          submissions: data.data,
           pagination: data.pagination
         };
       }
@@ -140,6 +108,7 @@ const AdminDashboard = () => {
       formType: '',
       submittedFrom: '',
       foundUs: '',
+      service: '',
       sortBy: 'newest',
       searchTerm: ''
     });
@@ -147,20 +116,28 @@ const AdminDashboard = () => {
   };
 
   const getActiveFiltersCount = () => {
-    return Object.values(filters).filter(value => value !== '').length;
+    return Object.values(filters).filter(value => value !== '' && value !== 'newest').length;
   };
 
-  // Handle status change from modal
-  const handleStatusChange = async (id, newStatus) => {
-    await statusMutation.mutateAsync({ id, status: newStatus });
-    
-    // Update the selected submission to reflect the change
-    setSelectedSubmission(prev => {
-      if (prev && prev._id === id) {
-        return { ...prev, status: newStatus };
-      }
-      return prev;
-    });
+  // Handle status change from modal with note/followup data
+  const handleStatusChange = async (id, statusData) => {
+    try {
+      await updateStatusMutation.mutateAsync({
+        id,
+        statusData
+      });
+
+      // Update the selected submission to reflect the change
+      setSelectedSubmission(prev => {
+        if (prev && prev._id === id) {
+          return { ...prev, status: statusData.status };
+        }
+        return prev;
+      });
+    } catch (error) {
+      console.error('Error updating status:', error);
+      alert(`Failed to update status: ${error.message}`);
+    }
   };
 
   const exportToCSV = () => {
@@ -218,7 +195,7 @@ const AdminDashboard = () => {
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Form Submissions</h1>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Form Submissions</h2>
               <p className="text-gray-600 flex items-center gap-2">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                   {totalItems} Total
@@ -230,7 +207,7 @@ const AdminDashboard = () => {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <button
-                onClick={() => setShowFilters(!showFilters)}
+                onClick={() => setShowFilters(true)}
                 className="flex items-center cursor-pointer gap-2 px-4 py-2.5 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all shadow-sm border border-gray-200 font-medium"
               >
                 <Filter size={18} />
@@ -260,148 +237,6 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Filters Panel */}
-        {showFilters && (
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-6 transition-all">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <Filter size={20} className="text-blue-600" />
-                Filter Options
-              </h2>
-              {getActiveFiltersCount() > 0 && (
-                <button
-                  onClick={resetFilters}
-                  className="flex items-center cursor-pointer gap-2 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium"
-                >
-                  <X size={16} />
-                  Clear All
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {/* Search */}
-              <div className="lg:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Search
-                </label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Search by name, email, mobile..."
-                    value={filters.searchTerm}
-                    onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  />
-                </div>
-              </div>
-
-              {/* Sort By Date */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sort By Date
-                </label>
-                <select
-                  value={filters.sortBy}
-                  onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="oldest">Oldest First</option>
-                </select>
-              </div>
-
-              {/* Status Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <select
-                  value={filters.status}
-                  onChange={(e) => handleFilterChange('status', e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
-                >
-                  <option value="">All Statuses</option>
-                  {STATUS_OPTIONS.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Form Type Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Form Type
-                </label>
-                <select
-                  value={filters.formType}
-                  onChange={(e) => handleFilterChange('formType', e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
-                >
-                  <option value="">All Types</option>
-                  {formTypes.map(type => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Found Us Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Found Us
-                </label>
-                <select
-                  value={filters.foundUs}
-                  onChange={(e) => handleFilterChange('foundUs', e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
-                >
-                  <option value="">All Sources</option>
-                  {foundUsOptions.map(option => (
-                    <option key={option} value={option}>{option.replace('_', ' ')}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Submitted From Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Submitted From
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g., /contact"
-                  value={filters.submittedFrom}
-                  onChange={(e) => handleFilterChange('submittedFrom', e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                />
-              </div>
-
-              {/* Items Per Page */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Items Per Page
-                </label>
-                <select
-                  value={itemsPerPage}
-                  onChange={(e) => {
-                    setItemsPerPage(Number(e.target.value));
-                    setCurrentPage(1);
-                  }}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
-                >
-                  <option value={15}>15</option>
-                  <option value={20}>20</option>
-                  <option value={25}>25</option>
-                  <option value={50}>50</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Table */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
@@ -459,7 +294,7 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
-                    {submissions.map((submission, index) => (
+                    {submissions.map((submission) => (
                       <tr key={submission._id} className="hover:bg-blue-50/50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-semibold text-gray-900">{submission.name}</div>
@@ -486,7 +321,7 @@ const AdminDashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
                             onClick={() => setSelectedSubmission(submission)}
-                            className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
+                            className="inline-flex items-center cursor-pointer gap-2 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
                           >
                             <Eye size={16} />
                             View
@@ -504,14 +339,14 @@ const AdminDashboard = () => {
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
-                    className="relative inline-flex items-center cursor-pointer px-4 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 shadow-sm"
+                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 shadow-sm"
                   >
                     Previous
                   </button>
                   <button
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages}
-                    className="ml-3 relative inline-flex items-center cursor-pointer px-4 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 shadow-sm"
+                    className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 shadow-sm"
                   >
                     Next
                   </button>
@@ -551,7 +386,213 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Modal - NOW WITH onStatusChange PROP */}
+      {/* Offcanvas Filters Panel */}
+      {showFilters && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/20 bg-opacity-50 z-40 transition-opacity"
+            onClick={() => setShowFilters(false)}
+          />
+
+          {/* Offcanvas */}
+          <div className="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out overflow-y-auto">
+            {/* Header */}
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 flex items-center justify-between shadow-lg z-10">
+              <div className="flex items-center gap-3">
+                <Filter size={24} />
+                <div>
+                  <h2 className="text-xl font-bold">Filter Options</h2>
+                  {getActiveFiltersCount() > 0 && (
+                    <p className="text-sm text-blue-100">
+                      {getActiveFiltersCount()} active filter{getActiveFiltersCount() > 1 ? 's' : ''}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={() => setShowFilters(false)}
+                className="p-2 hover:bg-blue-800 rounded-lg transition-colors cursor-pointer"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Filters Content */}
+            <div className="p-6 space-y-6">
+              {/* Search */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Search
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    type="text"
+                    placeholder="Search by name, email, mobile..."
+                    value={filters.searchTerm}
+                    onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center justify-center w-full gap-4'>
+                {/* Sort By Date */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Sort By Date
+                  </label>
+                  <select
+                    value={filters.sortBy}
+                    onChange={(e) => handleFilterChange('sortBy', e.target.value)}
+                     className="w-full pl-4 pr-10 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                  </select>
+                </div>
+
+                {/* Status Filter */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Status
+                  </label>
+                  <select
+                    value={filters.status}
+                    onChange={(e) => handleFilterChange('status', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="">All Statuses</option>
+                    {STATUS_OPTIONS.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className='flex items-center justify-center w-full gap-4'>
+                {/* Form Type Filter */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Form Type
+                  </label>
+                  <select
+                    value={filters.formType}
+                    onChange={(e) => handleFilterChange('formType', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="">All Types</option>
+                    {formTypes.map(type => (
+                      <option key={type} value={type}>
+                        {type.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Found Us Filter */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Found Us
+                  </label>
+                  <select
+                    value={filters.foundUs}
+                    onChange={(e) => handleFilterChange('foundUs', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="">All Sources</option>
+                    {foundUsOptions.map(option => (
+                      <option key={option} value={option}>
+                        {option.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+             
+              <div className='flex items-center justify-center w-full gap-4'>
+                {/* Service Filter */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Service
+                  </label>
+                  <select
+                    value={filters.service}
+                    onChange={(e) => handleFilterChange('service', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="">All Services</option>
+                    {serviceOptions.map(option => (
+                      <option key={option} value={option}>
+                        {option.replace(/-/g, ' ').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Items Per Page */}
+                <div className='flex-1'>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Items Per Page
+                  </label>
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
+              </div>
+              
+               {/* Submitted From Filter */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Submitted From
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g., /contact"
+                  value={filters.submittedFrom}
+                  onChange={(e) => handleFilterChange('submittedFrom', e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+
+            </div>
+
+            {/* Footer Actions */}
+            <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex gap-3">
+              {getActiveFiltersCount() > 0 && (
+                <button
+                  onClick={resetFilters}
+                  className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-4 py-3 text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-all font-semibold border-2 border-red-200"
+                >
+                  <X size={18} />
+                  Clear All
+                </button>
+              )}
+              <button
+                onClick={() => setShowFilters(false)}
+                className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all font-semibold shadow-lg"
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* View Modal */}
       {selectedSubmission && (
         <ViewModal
           submission={selectedSubmission}

@@ -180,40 +180,118 @@ export async function POST(request) {
 
 
 // -----------------------------------------------------
-//  GET: FETCH SUBMISSIONS
+//  GET: FETCH SUBMISSIONS WITH ALL FILTERS
 // -----------------------------------------------------
 export async function GET(request) {
   try {
     await connectDB();
 
+    // Parse all query parameters
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get("status");
-    const formType = searchParams.get("formType");
-    const submittedFrom = searchParams.get("submittedFrom");
-    const limit = parseInt(searchParams.get("limit")) || 50;
-    const page = parseInt(searchParams.get("page")) || 1;
+    const page = parseInt(searchParams.get('page')) || 1;
+    const limit = parseInt(searchParams.get('limit')) || 15;
+    const status = searchParams.get('status');
+    const formType = searchParams.get('formType');
+    const submittedFrom = searchParams.get('submittedFrom');
+    const service = searchParams.get('service');
+    const foundUs = searchParams.get('foundUs');
+    const sortBy = searchParams.get('sortBy') || 'newest';
+    const searchTerm = searchParams.get('searchTerm');
 
-    const query = {};
-    if (status) query.status = status;
-    if (formType) query.formType = formType;
-    if (submittedFrom) query.submittedFrom = submittedFrom;
+    console.log('🔍 GET Request Params:', {
+      page,
+      limit,
+      status,
+      formType,
+      submittedFrom,
+      service,
+      foundUs,
+      sortBy,
+      searchTerm
+    });
 
-    const submissions = await ContactForm.find(query)
-      .sort({ submittedAt: -1 })
-      .limit(limit)
-      .skip((page - 1) * limit);
+    // Build MongoDB filter object
+    const filter = {};
 
-    const total = await ContactForm.countDocuments(query);
+    // Status filter (convert string to number)
+    if (status !== null && status !== '' && status !== undefined) {
+      filter.status = parseInt(status);
+    }
+
+    // Form type filter (exact match)
+    if (formType) {
+      filter.formType = formType;
+    }
+
+    // Submitted from filter (partial match, case-insensitive)
+    if (submittedFrom) {
+      filter.submittedFrom = { $regex: submittedFrom, $options: 'i' };
+    }
+
+    // Service filter (exact match)
+    if (service) {
+      filter.service = service;
+    }
+
+    // Found us filter (exact match)
+    if (foundUs) {
+      filter.foundUs = foundUs;
+    }
+
+    // Search term filter (searches across multiple fields)
+    if (searchTerm && searchTerm.trim() !== '') {
+      filter.$or = [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { email: { $regex: searchTerm, $options: 'i' } },
+        { mobile: { $regex: searchTerm, $options: 'i' } },
+        { message: { $regex: searchTerm, $options: 'i' } }
+      ];
+    }
+
+    console.log('📋 MongoDB Filter:', JSON.stringify(filter, null, 2));
+
+    // Calculate pagination
+    const skip = (page - 1) * limit;
+
+    // Determine sort order
+    const sortOrder = sortBy === 'oldest' ? 1 : -1;
+
+    // Execute queries in parallel for better performance
+    const [submissions, total] = await Promise.all([
+      ContactForm.find(filter)
+        .sort({ submittedAt: sortOrder })
+        .skip(skip)
+        .limit(limit)
+        .lean(), // Use .lean() for better performance
+      ContactForm.countDocuments(filter)
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    console.log('✅ Query Results:', {
+      found: submissions.length,
+      total,
+      totalPages,
+      currentPage: page
+    });
 
     return NextResponse.json({
       success: true,
       data: submissions,
-      pagination: { total, page, limit, pages: Math.ceil(total / limit) },
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1
+      }
     });
+
   } catch (err) {
     console.error("❌ Get submissions error:", err);
     return NextResponse.json(
-      { error: "Failed to fetch submissions" },
+      { error: "Failed to fetch submissions", message: err.message },
       { status: 500 }
     );
   }
