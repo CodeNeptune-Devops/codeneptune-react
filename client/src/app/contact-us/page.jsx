@@ -11,7 +11,7 @@ export const metadata = {
   description:
     "Get in touch with Code Neptune for mobile app development, web development, UI UX design, and digital solutions. Our team is ready to discuss your project and support you.",
   alternates: {
-    canonical: "https://www.codeneptune.com/contact",
+    canonical: "https://www.codeneptune.com/contact-us",
   },
 };
 
@@ -24,7 +24,7 @@ export default function ContactPage() {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://www.codeneptune.com" },
-          { name: "Contact", url: "https://www.codeneptune.com/contact" },
+          { name: "Contact", url: "https://www.codeneptune.com/contact-us" },
         ]}
       />
 

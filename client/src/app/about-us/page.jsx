@@ -18,7 +18,7 @@ export const metadata = {
   description:
     "Learn about Code Neptune, a leading web and mobile app development company in Chennai delivering innovative digital solutions, UI UX design, and scalable tech products.",
   alternates: {
-    canonical: "https://www.codeneptune.com/about",
+    canonical: "https://www.codeneptune.com/about-us",
   },
 };
 
@@ -112,7 +112,7 @@ function AboutContent() {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://www.codeneptune.com" },
-          { name: "About", url: "https://www.codeneptune.com/about" },
+          { name: "About", url: "https://www.codeneptune.com/about-us" },
         ]}
       />
 
