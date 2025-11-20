@@ -20,7 +20,7 @@ function ServicesDropdown({
     creativeCloud
 }) {
     return (
-        <div className={`fixed top-[50px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full z-[999] transition-all duration-200  ${isScrolled ? 'py-4' : 'py-7'} ${isServicesOpen
+        <div className={`fixed top-[60px] left-1/2 transform -translate-x-1/2 max-w-7xl mx-auto w-full z-[999] transition-all duration-200  ${isScrolled ? 'py-4' : 'py-7'} ${isServicesOpen
             ? 'opacity-100 visible translate-y-0'
             : 'opacity-0 invisible -translate-y-2'
             } `}>

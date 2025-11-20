@@ -60,7 +60,7 @@ function Sidebar({
                 <Link onClick={() => setIsMobileMenuOpen(false)} href='/' className='hover:text-blue-500 py-2 block'>
                     Home
                 </Link>
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about' className='hover:text-blue-500 py-2 block'>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/about-us' className='hover:text-blue-500 py-2 block'>
                     About
                 </Link>
 
@@ -124,7 +124,7 @@ function Sidebar({
                 <Link onClick={() => setIsMobileMenuOpen(false)} href='/blog' className='hover:text-blue-500 py-2 block'>
                     Blog
                 </Link>
-                <Link onClick={() => setIsMobileMenuOpen(false)} href='/contact' className='hover:text-blue-500 py-2 block'>
+                <Link onClick={() => setIsMobileMenuOpen(false)} href='/contact-us' className='hover:text-blue-500 py-2 block'>
                     Contact Us
                 </Link>
             </nav>

@@ -13,11 +13,11 @@ function Footer() {
   ];
 
   const quickLinks = [
-    { label: 'About Us', href: '/about' },
+    { label: 'About Us', href: '/about-us' },
     { label: 'Blog', href: '/blog' },
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms & Conditions', href: '/terms-and-conditions' },
-    { label: 'Contact Us', href: '/contact' },
+    { label: 'Contact Us', href: '/contact-us' },
   ];
 
   const services = [
@@ -81,7 +81,9 @@ function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-center items-start justify-items-center gap-5">
 
             <div className="flex col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1 flex-col justify-start items-start gap-8 w-full">
+              <Link href={'/'}>
               <img src="/cn-footer-logo.svg" alt="Logo" className="w-48 h-full" />
+              </Link>
               <div className="flex flex-col justify-start items-start text-[#CCCCCC] gap-5">
 
                 <p className='text-sm'>
