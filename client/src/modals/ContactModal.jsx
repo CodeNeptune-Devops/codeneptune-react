@@ -487,7 +487,7 @@ function ContactModal({ isOpen, onClose }) {
             </button>
 
             <div className="text-xs text-gray-500 space-y-1">
-              <p>• You will receive a response within <b>2 minutes</b></p>
+              <p>• You can expect a quick reply from our team.</p>
               <p>• Your idea is protected under our <b>NDA policy</b></p>
             </div>
           </div>

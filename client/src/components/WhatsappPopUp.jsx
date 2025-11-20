@@ -44,12 +44,12 @@ function WhatsappPopUp() {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/20 bg-opacity-50 z-[999998]"
+          className="fixed inset-0 bg-black/20 bg-opacity-50 z-[999999998]"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999999]">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[999999999]">
         {/* Popup */}
         <div
           className={`absolute bottom-16 sm:bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-80 md:w-96 max-w-96 bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-out ${

@@ -12,7 +12,88 @@ function SectionTitle({ textColor, title, description }) {
   );
 }
 
-function HowWeWorkOurEcommerceDevelopment() {
+const data = [
+  {
+    number: "1",
+    icon: <Search className="w-8 h-8" />,
+    title: "Discovery & Strategy",
+    description: "We begin by understanding your business, audience, and market to lay the foundation for a successful eCommerce solution.",
+    points: [
+      "Conduct detailed consultations to define business goals and user needs",
+      "Analyze competitors to identify market opportunities",
+      "Select the appropriate technology stack and platform",
+      "Outline project scope, timelines, and milestones"
+    ],
+    outcome: "A clear project roadmap and strategic direction tailored to your business objectives"
+  },
+  {
+    number: "2",
+    icon: <Target className="w-8 h-8" />,
+    title: "UI/UX Design & Prototyping",
+    description: "We translate strategy into engaging, intuitive design that aligns with your brand and optimizes user experience.",
+    points: [
+      "Develop wireframes and design key user flows",
+      "Create responsive and mobile-friendly UI designs",
+      "Build interactive prototypes for feedback and iteration",
+      "Refine designs based on usability insights and stakeholder input"
+    ],
+    outcome: "A user-focused interface that increases engagement and enhances the shopping experience"
+  },
+  {
+    number: "3",
+    icon: <Package className="w-8 h-8" />,
+    title: "Development & Integration",
+    description: "Once the design is approved, we move into development to bring your eCommerce platform to life.",
+    points: [
+      "Code frontend and backend using modern frameworks",
+      "Integrate secure payment gateways and third-party APIs",
+      "Ensure SEO-friendly development and mobile optimization",
+      "Configure backend systems for inventory, orders, and user management"
+    ],
+    outcome: "A fully functional, reliable eCommerce platform ready for real-world use"
+  },
+  {
+    number: "4",
+    icon: <TestTube className="w-8 h-8" />,
+    title: "Testing & Quality Assurance",
+    description: "Before going live, we thoroughly test the platform to ensure it is robust, secure, and error-free.",
+    points: [
+      "Perform functionality, performance, and load testing",
+      "Test across devices, browsers, and screen sizes",
+      "Conduct security reviews and compliance checks",
+      "Fix bugs and refine UX based on test results"
+    ],
+    outcome: "A high-quality, stable eCommerce site ready for launch"
+  },
+  {
+    number: "5",
+    icon: <Rocket className="w-8 h-8" />,
+    title: "Launch and Deployment",
+    description: "We ensure a smooth and well-coordinated go-live process for your new eCommerce platform.",
+    points: [
+      "Deploy the application to the live environment",
+      "Configure hosting, domain, SSL, and performance tools",
+      "Monitor system behavior during the initial rollout",
+      "Provide launch-day support and oversight"
+    ],
+    outcome: "A professional, timely launch that ensures stability and reliability"
+  },
+  {
+    number: "6",
+    icon: <Headphones className="w-8 h-8" />,
+    title: "Ongoing Support and Maintenance",
+    description: "After launch, we provide continuous support to ensure long-term performance and growth.",
+    points: [
+      "Monitor application performance and uptime",
+      "Provide regular updates, security patches, and backups",
+      "Offer support for new feature implementation",
+      "Assist with marketing and analytics tools integration"
+    ],
+    outcome: "Reliable post-launch support that keeps your platform secure, updated, and aligned with business goals"
+  }
+];
+
+function HowWeWorkOurEcommerceDevelopment({ processes = data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
 
@@ -32,86 +113,7 @@ function HowWeWorkOurEcommerceDevelopment() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const processes = [
-    {
-      number: "1",
-      icon: <Search className="w-8 h-8" />,
-      title: "Discovery & Strategy",
-      description: "We begin by understanding your business, audience, and market to lay the foundation for a successful eCommerce solution.",
-      points: [
-        "Conduct detailed consultations to define business goals and user needs",
-        "Analyze competitors to identify market opportunities",
-        "Select the appropriate technology stack and platform",
-        "Outline project scope, timelines, and milestones"
-      ],
-      outcome: "A clear project roadmap and strategic direction tailored to your business objectives"
-    },
-    {
-      number: "2",
-      icon: <Target className="w-8 h-8" />,
-      title: "UI/UX Design & Prototyping",
-      description: "We translate strategy into engaging, intuitive design that aligns with your brand and optimizes user experience.",
-      points: [
-        "Develop wireframes and design key user flows",
-        "Create responsive and mobile-friendly UI designs",
-        "Build interactive prototypes for feedback and iteration",
-        "Refine designs based on usability insights and stakeholder input"
-      ],
-      outcome: "A user-focused interface that increases engagement and enhances the shopping experience"
-    },
-    {
-      number: "3",
-      icon: <Package className="w-8 h-8" />,
-      title: "Development & Integration",
-      description: "Once the design is approved, we move into development to bring your eCommerce platform to life.",
-      points: [
-        "Code frontend and backend using modern frameworks",
-        "Integrate secure payment gateways and third-party APIs",
-        "Ensure SEO-friendly development and mobile optimization",
-        "Configure backend systems for inventory, orders, and user management"
-      ],
-      outcome: "A fully functional, reliable eCommerce platform ready for real-world use"
-    },
-    {
-      number: "4",
-      icon: <TestTube className="w-8 h-8" />,
-      title: "Testing & Quality Assurance",
-      description: "Before going live, we thoroughly test the platform to ensure it is robust, secure, and error-free.",
-      points: [
-        "Perform functionality, performance, and load testing",
-        "Test across devices, browsers, and screen sizes",
-        "Conduct security reviews and compliance checks",
-        "Fix bugs and refine UX based on test results"
-      ],
-      outcome: "A high-quality, stable eCommerce site ready for launch"
-    },
-    {
-      number: "5",
-      icon: <Rocket className="w-8 h-8" />,
-      title: "Launch and Deployment",
-      description: "We ensure a smooth and well-coordinated go-live process for your new eCommerce platform.",
-      points: [
-        "Deploy the application to the live environment",
-        "Configure hosting, domain, SSL, and performance tools",
-        "Monitor system behavior during the initial rollout",
-        "Provide launch-day support and oversight"
-      ],
-      outcome: "A professional, timely launch that ensures stability and reliability"
-    },
-    {
-      number: "6",
-      icon: <Headphones className="w-8 h-8" />,
-      title: "Ongoing Support and Maintenance",
-      description: "After launch, we provide continuous support to ensure long-term performance and growth.",
-      points: [
-        "Monitor application performance and uptime",
-        "Provide regular updates, security patches, and backups",
-        "Offer support for new feature implementation",
-        "Assist with marketing and analytics tools integration"
-      ],
-      outcome: "Reliable post-launch support that keeps your platform secure, updated, and aligned with business goals"
-    }
-  ];
+
 
   const maxIndex = processes.length - cardsPerView;
 
@@ -188,7 +190,8 @@ function HowWeWorkOurEcommerceDevelopment() {
                     </div>
 
                     {/* Points */}
-                    <ul className="space-y-3 mb-6 flex-grow">
+                    {process.points && (
+                      <ul className="space-y-3 mb-6 flex-grow">
                       {process.points.map((point, idx) => (
                         <li key={idx} className="flex items-start text-gray-300">
                           <span className="text-blue-400 mr-3 mt-1 flex-shrink-0">◆</span>
@@ -196,6 +199,7 @@ function HowWeWorkOurEcommerceDevelopment() {
                         </li>
                       ))}
                     </ul>
+                    )}
 
                     {/* Outcome */}
                     <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 mt-auto border border-gray-600">
@@ -216,11 +220,10 @@ function HowWeWorkOurEcommerceDevelopment() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === index
+                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === index
                     ? 'bg-blue-600 w-8'
                     : 'bg-gray-600 hover:bg-gray-500'
-                }`}
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
