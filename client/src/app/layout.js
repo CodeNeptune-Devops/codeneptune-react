@@ -73,7 +73,7 @@ export async function generateMetadata() {
       images: ["/twitter-image.png"],
     },
     alternates: {
-      canonical: `https://${host}`,
+      canonical: "https://www.codeneptune.com",
     },
   };
 }

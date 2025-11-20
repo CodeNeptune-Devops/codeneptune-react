@@ -102,7 +102,7 @@ export default function Hero({
         {/* Heading */}
         <div className="flex flex-col items-center justify-center  gap-4 mt-0 min-h-[120px] sm:min-h-[200px]  w-[13rem] sm:w-full">
           <div className="flex flex-col w-full justify-center items-center gap-10 sm:gap-2 sm:gap-2">
-            <h2
+            <h1
               className={`hidden sm:block text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
                 !headingFadeComplete
                   ? "scale-150 opacity-0"
@@ -122,9 +122,9 @@ export default function Hero({
                   className={`text-lg md:text-4xl lg:text-5xl text-center justify-center leading-relaxed text-white font-extrabold ${plus_jakarta_sans.className}`}
                 />
               </div>
-            </h2>
+            </h1>
 
-             <h2
+             <h1
               className={`sm:hidden block text-lg md:text-4xl lg:text-5xl text-center font-extrabold transition-all ease-out ${
                 !headingFadeComplete
                   ? "scale-150 opacity-0"
@@ -144,7 +144,7 @@ export default function Hero({
                   className={`text-3xl md:text-4xl lg:text-5xl text-center justify-center  text-white font-extrabold ${bebas_neue.className}`}
                 />
               </div>
-            </h2>
+            </h1>
 
             <h2
               className={`hidden sm:block text-xl md:text-5xl lg:text-5xl text-center scale-150 leading-tight bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa] bg-clip-text text-transparent transition-all duration-700 ease-out ${
